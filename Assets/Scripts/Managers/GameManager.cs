@@ -22,8 +22,6 @@ public class GameManager : Singleton<GameManager>
         get { return this.isDone; }
     }
 
-    private Controls controls;
-
     #region Initialization
     public void Initialize()
     {
