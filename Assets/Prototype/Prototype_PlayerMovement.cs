@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Prototype_PlayerMovement : MonoBehaviour
 {
+    [Header("Test Skill Check")]
+    [SerializeField] SkillCheck skillCheck;
+
     [Header("Player Physics")]
     [SerializeField] float playerSpeed;
 
@@ -24,6 +27,14 @@ public class Prototype_PlayerMovement : MonoBehaviour
 
         playerOxygen.value = 1.0f;
         playerPanicMeter.value = 0.0f;
+
+        SkillCheck.PlayerSkillCheckDifficulty difficulty = new SkillCheck.PlayerSkillCheckDifficulty();
+        difficulty.modes = PlayerSkillCheckDifficultyModes.Easy;
+        difficulty.skillCheckSpeed = 35f;
+        difficulty.rotateSkillCheckRandom = true;
+
+
+        skillCheck.TriggerSkillCheck(difficulty);
     }
 
     void Update()
