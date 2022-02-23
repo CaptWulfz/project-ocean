@@ -72,8 +72,8 @@ public class SkillCheck : MonoBehaviour
         {
             playerPrompt.text = (Random.Range(5.0f, 5000.0f).ToString() + ": Failed Skill Check"); //temporary
             Parameters param = new Parameters();
-            param.AddParameter<bool>(EventName_SkillCheck.EVENT_SKILLCHECK_RESULT, false);
-            eventBroadcaster.PostEvent(EventName_SkillCheck.EVENT_SKILLCHECK_FAIL, param);
+            param.AddParameter<bool>(EventNames.EVENT_SKILLCHECK_RESULT, false);
+            eventBroadcaster.PostEvent(EventNames.EVENT_SKILLCHECK_FAIL, param);
             this.gameObject.SetActive(false);
         }
 
@@ -81,8 +81,8 @@ public class SkillCheck : MonoBehaviour
         {
             playerPrompt.text = (Random.Range(5.0f, 5000.0f).ToString() + ": Successful Skill Check"); //temporary
             Parameters param = new Parameters();
-            param.AddParameter<bool>(EventName_SkillCheck.EVENT_SKILLCHECK_RESULT, true);
-            eventBroadcaster.PostEvent(EventName_SkillCheck.EVENT_SKILLCHECK_FAIL, param);
+            param.AddParameter<bool>(EventNames.EVENT_SKILLCHECK_RESULT, true);
+            eventBroadcaster.PostEvent(EventNames.EVENT_SKILLCHECK_FAIL, param);
             this.gameObject.SetActive(false);
         }
     }
@@ -149,11 +149,4 @@ public enum PlayerSkillCheckDifficultyModes
     Easy,
     Medium,
     Hard
-}
-
-public partial class EventName_SkillCheck
-{
-    public const string EVENT_SKILLCHECK_RESULT = "Skill Check Results";
-    public const string EVENT_SKILLCHECK_FAIL = "Failed Skill Check";
-    public const string EVENT_SKILLCHECK_SUCCESS = "Succeeded Skill Check";
 }
