@@ -68,9 +68,9 @@ public class Player : Entity //
 
     private void FixedUpdate()
     {
-        //MovePlayerWASD();
-        MovePlayerMouse();
-        currentSpeed = this.rigidBody.velocity.magnitude;
+        //MovePlayerWASD();                   USES WASD
+        MovePlayerMouse();                  //USES MOUSE
+        currentSpeed = this.rigidBody.velocity.magnitude;   //Just records the current speed
         //Debug.Log(currentSpeed);
     }
     #endregion
