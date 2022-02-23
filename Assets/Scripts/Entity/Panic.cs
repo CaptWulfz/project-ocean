@@ -25,7 +25,10 @@ public class Panic : MonoBehaviour
     {
         get { return this.panicState; }
     }
+
     private float panicValue = 0f;
+
+    private float panicMultiplier = 0f;
 
     private void Awake()
     {
@@ -37,27 +40,32 @@ public class Panic : MonoBehaviour
         this.panicValue = 0f;
         this.panicState = PanicState.CALM;
     }
-    public void IncreasePanicValue(float val)
+
+    private void Update()
     {
-        this.panicValue += val;
-        Parameters param = new Parameters();
-        float updatedPanicValue = this.panicValue / MAX_THRESHOLD;
-        param.AddParameter<float>("currPanicValue", updatedPanicValue);
-        EventBroadcaster.Instance.PostEvent(EventNames.ON_PANIC_INCREASE, param);
+        this.panicValue += this.panicMultiplier * Time.deltaTime;
 
         DeterminePanicState();
     }
 
-    public void DecreasePanicValue(float value)
+    public void IncreasePanicValue(float val)
     {
-        
-        this.panicValue -= value;
-        Parameters param2= new Parameters();
-        float updatedPanicValue = this.panicValue / MAX_THRESHOLD;
-        param2.AddParameter<float>("currPanicValue", updatedPanicValue);
-        EventBroadcaster.Instance.PostEvent(EventNames.ON_PANIC_DECREASE, param2);
+        this.panicValue += val;
+    }
 
-        DeterminePanicState();
+    public void ApplyPanicPressure(float value)
+    {
+        this.panicMultiplier += value;
+    }
+
+    public void RemovePanicPressure(float value)
+    {
+        this.panicMultiplier -= value;
+    }
+
+    public void DecreasePanicValue(float value)
+    {      
+        this.panicValue -= value;
     }
 
     private void DeterminePanicState()
@@ -81,6 +89,11 @@ public class Panic : MonoBehaviour
         {
             this.panicState = PanicState.DEAD;
         }
+
+        Parameters param = new Parameters();
+        float updatedPanicValue = this.panicValue / MAX_THRESHOLD;
+        param.AddParameter<float>("currPanicValue", updatedPanicValue);
+        EventBroadcaster.Instance.PostEvent(EventNames.ON_PANIC_MODIFIED, param);
 
         this.player.EvaluatePanicState();
     }

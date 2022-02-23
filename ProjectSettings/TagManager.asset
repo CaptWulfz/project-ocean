@@ -7,6 +7,7 @@ TagManager:
   - PopupCanvas
   - HudCanvas
   - Boundary
+  - Damage
   layers:
   - Default
   - TransparentFX
