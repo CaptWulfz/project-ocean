@@ -276,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 035aef8ef3b994a48ae02841ead418e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1573154391}
 --- !u!114 &1573154393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b20706cfa9e9b948847a035b70fc5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1573154391}
 --- !u!81 &1573154394
 AudioListener:
   m_ObjectHideFlags: 0

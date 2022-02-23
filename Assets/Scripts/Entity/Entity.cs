@@ -36,6 +36,11 @@ public class Entity : MonoBehaviour
         this.rigidBody.MovePosition(Vector2.MoveTowards(this.transform.position, target.position, speed * Time.deltaTime));
     }
 
+    protected void PerformDeath()
+    {
+
+    }
+
     #region Collision Events
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {

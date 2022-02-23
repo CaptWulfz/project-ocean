@@ -24,7 +24,6 @@ public class SoundSource : Entity
     }
 
     private Player target;
-    private string sourceName;
 
     public void Setup(SoundModel model)
     {
