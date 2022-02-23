@@ -29,6 +29,7 @@ public class Panic : MonoBehaviour
 
     private void Awake()
     {
+
         EventBroadcaster.Instance.AddObserver(EventNames.EVENT_SKILLCHECK_RESULT, SkillCheckResult);
     }
 
