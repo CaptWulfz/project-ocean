@@ -13,11 +13,30 @@ public class Entity : MonoBehaviour
         set { this.controls = value; }
     }
 
-    private float speed = 5f;
-    protected float Speed
+    [SerializeField] private float currentSpeed = 0f;
+    [SerializeField] private float maxSpeed = 10f;
+    [SerializeField] private float minSpeed = 5f;
+    [SerializeField] private float midSpeed = 6.5f;
+
+    protected float CurrentSpeed
     {
-        get { return this.speed; }
-        set { this.speed = value; }
+        get { return this.currentSpeed; }
+        set { this.currentSpeed = value; }
+    }
+    protected float MaxSpeed
+    {
+        get { return this.maxSpeed; }
+        set { this.maxSpeed = value; }
+    }
+    protected float MidSpeed
+    {
+        get { return this.midSpeed; }
+        set { this.midSpeed = value; }
+    }
+    protected float MinSpeed
+    {
+        get { return this.minSpeed; }
+        set { this.minSpeed = value; }
     }
 
     protected virtual void Initialize()
