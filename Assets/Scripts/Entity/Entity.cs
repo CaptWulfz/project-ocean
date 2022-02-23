@@ -13,6 +13,7 @@ public class Entity : MonoBehaviour
         set { this.controls = value; }
     }
 
+    protected string sourceName = "";
     private float speed = 5f;
     protected float Speed
     {
@@ -29,8 +30,18 @@ public class Entity : MonoBehaviour
     {
         this.rigidBody.velocity = move;
     }
-    #region Collision Events
 
+    protected void FollowTarget(Transform target, float speed)
+    {
+        this.rigidBody.MovePosition(Vector2.MoveTowards(this.transform.position, target.position, speed * Time.deltaTime));
+    }
+
+    protected void PerformDeath()
+    {
+
+    }
+
+    #region Collision Events
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         
