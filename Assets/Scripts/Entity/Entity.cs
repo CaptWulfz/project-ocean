@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    [Header("Player Settings")]
     [SerializeField] protected Rigidbody2D rigidBody;
 
     private Controls controls;
@@ -11,32 +12,6 @@ public class Entity : MonoBehaviour
     {
         get { return this.controls; }
         set { this.controls = value; }
-    }
-
-    [SerializeField] private float currentSpeed = 0f;
-    [SerializeField] private float maxSpeed = 10f;
-    [SerializeField] private float minSpeed = 5f;
-    [SerializeField] private float midSpeed = 6.5f;
-
-    protected float CurrentSpeed
-    {
-        get { return this.currentSpeed; }
-        set { this.currentSpeed = value; }
-    }
-    protected float MaxSpeed
-    {
-        get { return this.maxSpeed; }
-        set { this.maxSpeed = value; }
-    }
-    protected float MidSpeed
-    {
-        get { return this.midSpeed; }
-        set { this.midSpeed = value; }
-    }
-    protected float MinSpeed
-    {
-        get { return this.minSpeed; }
-        set { this.minSpeed = value; }
     }
 
     protected virtual void Initialize()
