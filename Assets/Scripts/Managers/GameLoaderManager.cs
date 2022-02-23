@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameLoaderManager : Singleton<GameLoaderManager>
 {
     private const string MAIN_HUD_PATH = "Prefabs/UI/MainHud";
 

@@ -5,12 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
-
     [SerializeField] Panic panic;
     [SerializeField] Oxygen oxygen;
-
-    // Heart Monitor
-    // Oxygen
 
     private void onEnable()
     {
@@ -30,12 +26,6 @@ public class Player : Entity
         Initialize();
     }
 
-    private void Awake()
-    {
-        EventBroadcaster.Instance.AddObserver(EventNames.ON_PLAYER_DIED_PANIC, OnPanicStateDead);
-        EventBroadcaster.Instance.AddObserver(EventNames.ON_PLAYER_DIED_OXYGEN, OnOxygenStageDead);
-    }
-
     protected override void Initialize()
     {
         base.Initialize();
@@ -47,7 +37,6 @@ public class Player : Entity
 
     private void Update()
     {
-        MonitorPanicState();
         if (Keyboard.current.pKey.wasReleasedThisFrame)
         {
             Debug.Log("Increased Panic by 10");
@@ -77,7 +66,7 @@ public class Player : Entity
     }
 
     #region State Listeners
-    private void MonitorPanicState()
+    public void EvaluatePanicState()
     {
         switch (this.panic.PanicState)
         {
@@ -93,7 +82,7 @@ public class Player : Entity
             case PanicState.DYING:
                 OnPanicStateDying();
                 break;
-            case PanicState.MAX:
+            case PanicState.DEAD:
                 OnPanicStateDead();
                 break;
         }
@@ -123,16 +112,11 @@ public class Player : Entity
         //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.BREATHING);
         this.oxygen.SetOxygenDecreaseMultiplier(1.25f);
     }
-    private void OnPanicStateDead(Parameters param = null)
+    private void OnPanicStateDead()
     {
-        if (param != null)
-        {
-            // Add Panic Death Animation here
-            param.GetParameter<float>("deathPanic", 1f);
-            this.EntityControls.Player.Movement.Disable();
-            Debug.Log("Character is Scared to Death");
-        }
-        //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.PANIC_DEATH);
+        // Add Panic Death Animation here
+        this.EntityControls.Player.Movement.Disable();
+        Debug.Log("Character is Scared to Death");
     }
     #endregion
 
@@ -140,16 +124,10 @@ public class Player : Entity
     // POSTEVENT = POST VIDEO
     // ADD OBSERVER = NOTIF TO THE VIDEO
     // GET PARAM = Get specific parameter
-    private void OnOxygenStageDead(Parameters param = null)
+    public void OnOxygenStageDead()
     {
-        if (param != null)
-        {
-            // Add Oxygen Death Animation here
-            param.GetParameter<float>("deathOxygen", 0f);
-            this.EntityControls.Player.Movement.Disable();
-            Debug.Log("No more Oxygen, Character is Dead");
-        }
-        //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.PANIC_OXYGEN);
+        this.EntityControls.Player.Movement.Disable();
+        Debug.Log("No more Oxygen, Character is Dead");
     }
     #endregion
 }

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Oxygen : MonoBehaviour
 {
+    [SerializeField] Player player;
+
     // In Seconds
     private const float MAX_OXYGEN = 120f;
 
@@ -30,8 +32,7 @@ public class Oxygen : MonoBehaviour
             this.oxygenTimer -= this.oxygenDecreaseMultiplier * Time.deltaTime;
         } else
         {
-            param.AddParameter<float>("deathOxygen", updatedOxygenValue);
-            EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_OXYGEN, param);
+            this.player.OnOxygenStageDead();
         }
     }
 
