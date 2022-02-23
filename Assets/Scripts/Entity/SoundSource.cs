@@ -6,10 +6,11 @@ using UnityEngine.InputSystem;
 public class SoundSource : Entity
 {
     [SerializeField] AudioSource audioSource;
+    [SerializeField] SoundSourceRange soundRange;
 
     private SoundModel soundModel;
 
-    private const float DISTANCE_FROM_TARGET = 1.5f;
+    private const float DISTANCE_FROM_TARGET = 0f;
 
     private float inflictedPanicValue;
     public float InflictedPanicValue
@@ -28,7 +29,7 @@ public class SoundSource : Entity
     public void Setup(SoundModel model)
     {
         this.soundModel = model;
-        this.sourceName = string.Format("Test-Source@{0}", this.GetInstanceID());
+        this.sourceName = string.Format("Sound-Source@{0}", this.GetInstanceID());
         this.target = GameObject.FindGameObjectWithTag(TagNames.PLAYER).GetComponent<Player>();
         this.Speed = 3f;
         InitializeInflictionValues();
@@ -46,6 +47,7 @@ public class SoundSource : Entity
     {
         this.inflictedPanicValue = this.soundModel.InflictedPanicValue;
         this.inflictedOxygenValue = this.soundModel.InflictedOxygenValue;
+        this.soundRange.SetupInflictionValues(this.inflictedPanicValue, this.inflictedOxygenValue);
     }
 
     private void InitializeAudioSource()
@@ -62,6 +64,15 @@ public class SoundSource : Entity
         if (Vector2.Distance(this.transform.position, this.target.transform.position) > DISTANCE_FROM_TARGET)
         {
             this.FollowTarget(this.target.transform, this.Speed);
+        }
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == TagNames.PLAYER)
+        {
+            Debug.Log("Player Collide");
+            Destroy(this.gameObject);
         }
     }
 }
