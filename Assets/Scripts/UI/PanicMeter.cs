@@ -9,8 +9,7 @@ public class PanicMeter : MonoBehaviour
     private void OnEnable()
     {
         // Adding observer to a script, if this happened then trigger function
-        EventBroadcaster.Instance.AddObserver(EventNames.ON_PANIC_INCREASE, OnPanicModified);
-        EventBroadcaster.Instance.AddObserver(EventNames.ON_PANIC_DECREASE, OnPanicModified);
+        EventBroadcaster.Instance.AddObserver(EventNames.ON_PANIC_MODIFIED, OnPanicModified);
     }
 
     private void OnPanicModified(Parameters param = null)

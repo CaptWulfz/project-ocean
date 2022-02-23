@@ -8,14 +8,14 @@ public class Player : Entity
     [SerializeField] Panic panic;
     [SerializeField] Oxygen oxygen;
 
-    private void onEnable()
+    private void OnEnable()
     {
         //AudioManager.Instance.RegisterAudioSource(AudioKeys.SFX, this.sourceName, this.source);
         //AudioManager.Instance.RegisterAudioSource(AudioKeys.MUSIC, this.sourceName, this.source);
     }
 
     // onDisabled uncheck in Object
-    private void onDisable()
+    private void OnDisable()
     {
         //AudioManager.Instance.UnregisterAudioSource(AudioKeys.SFX, this.sourceName);
         //AudioManager.Instance.UnregisterAudioSource(AudioKeys.MUSIC, this.sourceName);
@@ -89,6 +89,10 @@ public class Player : Entity
     }
     #endregion
 
+    #region Receivers
+
+    #endregion
+
     #region Panic State Evaluators
     private void OnPanicStateCalm()
     {
@@ -132,6 +136,39 @@ public class Player : Entity
     {
         this.EntityControls.Player.Movement.Disable();
         Debug.Log("No more Oxygen, Character is Dead");
+    }
+    #endregion
+
+    #region Listeners
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == TagNames.DAMAGE)
+        {
+            Debug.Log("Enter");
+            Damage damage = collision.GetComponent<Damage>();
+            this.panic.ApplyPanicPressure(damage.PanicInfliction);
+        }
+    }
+
+    protected override void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == TagNames.DAMAGE)
+        {
+            Debug.Log("Exit");
+            Damage damage = collision.GetComponent<Damage>();
+            this.panic.RemovePanicPressure(damage.PanicInfliction);
+        }
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == TagNames.HOSTILE)
+        {
+            Debug.Log("Collide with Damage");
+            SoundSource source = collision.gameObject.GetComponent<SoundSource>();
+            this.panic.IncreasePanicValue(source.InflictedPanicValue * 3);
+        }
     }
     #endregion
 }
