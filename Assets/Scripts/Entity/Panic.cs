@@ -92,8 +92,9 @@ public class Panic : MonoBehaviour
         }
 
         Parameters param = new Parameters();
-        float updatedPanicValue = this.panicValue / MAX_THRESHOLD;
-        param.AddParameter<float>("currPanicValue", updatedPanicValue);
+        //float updatedPanicValue = this.panicValue / MAX_THRESHOLD;
+        param.AddParameter<float>("currPanicValue", this.panicValue);
+        param.AddParameter<float>("maxPanicValue", MAX_THRESHOLD);
         EventBroadcaster.Instance.PostEvent(EventNames.ON_PANIC_MODIFIED, param);
 
         this.player.EvaluatePanicState();
@@ -101,7 +102,7 @@ public class Panic : MonoBehaviour
 
     private void SkillCheckResult(Parameters param = null)
     {
-        bool skillCheck = param.GetParameter<bool>("EVENT_SKILLCHECK_RESULT", false); // you got the value here
+        bool skillCheck = param.GetParameter<bool>(EventNames.EVENT_SKILLCHECK_RESULT, false); // you got the value here
 
         if (!skillCheck)
         {
