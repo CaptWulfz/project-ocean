@@ -96,22 +96,26 @@ public class Player : Entity
     #region Panic State Evaluators
     private void OnPanicStateCalm()
     {
+        //this.heartBeat.HeartBeatSpeed(1f);
         this.oxygen.SetOxygenDecreaseMultiplier(0.5f);
     }
     private void OnPanicStateNormal()
     {
+        //this.heartBeat.HeartBeatSpeed(30f);
         //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.HEART_BEAT);
         //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.BREATHING);
         this.oxygen.SetOxygenDecreaseMultiplier(0.75f);
     }
     private void OnPanicStateDanger()
     {
+        //this.heartBeat.HeartBeatSpeed(60f);
         //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.HEART_BEAT);
         //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.BREATHING);
         this.oxygen.SetOxygenDecreaseMultiplier(1f);
     }
     private void OnPanicStateDying()
     {
+        //this.heartBeat.HeartBeatSpeed(90f);
         //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.HEART_BEAT);
         //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.BREATHING);
         this.oxygen.SetOxygenDecreaseMultiplier(1.25f);
