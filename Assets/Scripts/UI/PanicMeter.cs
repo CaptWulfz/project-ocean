@@ -16,8 +16,8 @@ public class PanicMeter : MonoBehaviour
     {
         if (param != null)
         {
-            float value = param.GetParameter<float>("currPanicValue", 0f);
-            this.panic.value = value;
+            float updatedPanicValue = param.GetParameter<float>("currPanicValue", 0f) / param.GetParameter<float>("maxPanicValue", 0f);
+            this.panic.value = updatedPanicValue;
         }
     }
 }

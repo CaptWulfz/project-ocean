@@ -264,6 +264,7 @@ MonoBehaviour:
   rigidBody: {fileID: 1573154388}
   panic: {fileID: 1573154392}
   oxygen: {fileID: 1573154393}
+  heartBeat: {fileID: 0}
 --- !u!114 &1573154392
 MonoBehaviour:
   m_ObjectHideFlags: 0
