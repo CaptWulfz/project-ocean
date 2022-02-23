@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Oxygen : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Oxygen : MonoBehaviour
     private const float MAX_OXYGEN = 120f;
 
     private float oxygenTimer;
-    private float oxygenDecreaseMultiplier = 1f;
+    private float oxygenDecreaseMultiplier = 0.5f;
 
     public void Initialize()
     {
@@ -17,16 +18,27 @@ public class Oxygen : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("OXYGEN CONSUMPTION: " + oxygenDecreaseMultiplier);
+
+        Parameters param = new Parameters();
+        float updatedOxygenValue = this.oxygenTimer / MAX_OXYGEN;
         if (this.oxygenTimer >= 0.01)
         {
+            param.AddParameter<float>("currOxygenValue", updatedOxygenValue);
+            EventBroadcaster.Instance.PostEvent(EventNames.ON_OXYGEN_MODIFIED, param);
+
             this.oxygenTimer -= this.oxygenDecreaseMultiplier * Time.deltaTime;
+        } else
+        {
+            param.AddParameter<float>("deathOxygen", updatedOxygenValue);
+            EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_OXYGEN, param);
         }
     }
 
     public void SetOxygenDecreaseMultiplier(float value)
     {
-        if (value < 1f)
-            value = 1f;
+        if (value < 0.5f)
+            value = 0.5f;
 
         this.oxygenDecreaseMultiplier = value;
     }
@@ -35,4 +47,5 @@ public class Oxygen : MonoBehaviour
     {
         this.oxygenTimer -= value;
     }
+
 }

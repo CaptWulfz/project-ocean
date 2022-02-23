@@ -136,6 +136,8 @@ GameObject:
   - component: {fileID: 1573154388}
   - component: {fileID: 1573154387}
   - component: {fileID: 1573154391}
+  - component: {fileID: 1573154393}
+  - component: {fileID: 1573154392}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -258,3 +260,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 1573154388}
+  panic: {fileID: 1573154392}
+  oxygen: {fileID: 1573154393}
+--- !u!114 &1573154392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573154386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035aef8ef3b994a48ae02841ead418e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1573154393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573154386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b20706cfa9e9b948847a035b70fc5af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

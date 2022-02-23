@@ -13,6 +13,7 @@ public class Entity : MonoBehaviour
         set { this.controls = value; }
     }
 
+    protected string sourceName = "";
     private float speed = 5f;
     protected float Speed
     {
