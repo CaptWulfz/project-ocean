@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PopupCanvas
   - HudCanvas
+  - Boundary
   layers:
   - Default
   - TransparentFX
