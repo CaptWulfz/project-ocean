@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
-    private Panic panic;
-    private Oxygen oxygen;
+    [SerializeField] Panic panic;
+    [SerializeField] Oxygen oxygen;
     // Heart Monitor
     // Oxygen
 

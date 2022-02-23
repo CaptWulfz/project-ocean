@@ -29,8 +29,13 @@ public class Entity : MonoBehaviour
     {
         this.rigidBody.velocity = move;
     }
-    #region Collision Events
 
+    protected void FollowTarget(Transform target, float speed)
+    {
+        this.rigidBody.MovePosition(Vector2.MoveTowards(this.transform.position, target.position, speed * Time.deltaTime));
+    }
+
+    #region Collision Events
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         
