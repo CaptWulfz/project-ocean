@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PanicState
 {
-    CALM,
-    NORMAL,
-    DANGER,
-    MAX
+    CALM, // 1-29
+    NORMAL, // 30-59
+    DANGER, // 60-89
+    DYING, // 90-99
+    MAX // 100
 }
 public class Panic : MonoBehaviour
 {
     private const float MAX_THRESHOLD = 100f;
-    private const float DANGER_THRESHOLD = 65f;
+    private const float DYING_THRESHOLD = 90f;
+    private const float DANGER_THRESHOLD = 60f;
+    private const float NORMAL_THRESHOLD = 30f;
 
     private PanicState panicState;
     public PanicState PanicState
@@ -21,24 +25,88 @@ public class Panic : MonoBehaviour
     }
     private float panicValue = 0f;
 
-    public void Initialize()
+    private void Awake()
     {
-        this.panicState = PanicState.NORMAL;
-        this.panicValue = 0f;
+        EventBroadcaster.Instance.AddObserver(EventNames.EVENT_SKILLCHECK_RESULT, SkillCheckResult);
     }
 
-    public void ModifyPanicValue(float val)
+    public void Initialize()
+    {
+        this.panicValue = 0f;
+        this.panicState = PanicState.CALM;
+    }
+    public void IncreasePanicValue(float val)
     {
         this.panicValue += val;
-        if (this.panicValue <= DANGER_THRESHOLD)
+        Parameters param = new Parameters();
+        float updatedPanicValue = this.panicValue / MAX_THRESHOLD;
+        param.AddParameter<float>("currPanicValue", updatedPanicValue);
+        EventBroadcaster.Instance.PostEvent(EventNames.ON_PANIC_INCREASE, param);
+        
+        if (this.panicValue < NORMAL_THRESHOLD) //30
+        {
+            this.panicState = PanicState.CALM;
+
+        } else if (this.panicValue >= NORMAL_THRESHOLD && this.panicValue < DANGER_THRESHOLD) //30-59    60
         {
             this.panicState = PanicState.NORMAL;
-        } else if (this.panicValue >= DANGER_THRESHOLD && this.panicValue <= MAX_THRESHOLD)
+
+        } else if (this.panicValue >= DANGER_THRESHOLD && this.panicValue < DYING_THRESHOLD) //60-89     90
         {
             this.panicState = PanicState.DANGER;
+
+        } else if (this.panicValue >= DYING_THRESHOLD && this.panicValue < MAX_THRESHOLD)// 100
+        {
+            this.panicState = PanicState.DYING;
+
         } else if (this.panicValue >= MAX_THRESHOLD)
         {
+            Parameters param2 = new Parameters();
+            float panicMax = this.panicValue / MAX_THRESHOLD;
+            param2.AddParameter<float>("deathPanic", panicMax);
+            EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_PANIC, param2);
+            
             this.panicState = PanicState.MAX;
+        }
+    }
+
+    public void DecreasePanicValue(float value)
+    {
+        
+        this.panicValue -= value;
+        Parameters param2= new Parameters();
+        float updatedPanicValue = this.panicValue / MAX_THRESHOLD;
+        param2.AddParameter<float>("currPanicValue", updatedPanicValue);
+        EventBroadcaster.Instance.PostEvent(EventNames.ON_PANIC_DECREASE, param2);
+        if (this.panicValue < NORMAL_THRESHOLD) //30
+        {
+            this.panicState = PanicState.CALM;
+
+        }
+        else if (this.panicValue >= NORMAL_THRESHOLD && this.panicValue < DANGER_THRESHOLD) //30-59    60
+        {
+            this.panicState = PanicState.NORMAL;
+
+        }
+        else if (this.panicValue >= DANGER_THRESHOLD && this.panicValue < DYING_THRESHOLD) //60-89     90
+        {
+            this.panicState = PanicState.DANGER;
+
+        }
+        else if (this.panicValue >= DYING_THRESHOLD && this.panicValue < MAX_THRESHOLD)// 100
+        {
+            this.panicState = PanicState.DYING;
+
+        }
+    }
+
+    private void SkillCheckResult(Parameters param = null)
+    {
+        bool skillCheck = param.GetParameter<bool>("EVENT_SKILLCHECK_RESULT", false); // you got the value here
+
+        if (!skillCheck)
+        {
+            IncreasePanicValue(3.5f);
         }
     }
 }
