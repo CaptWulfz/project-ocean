@@ -48,6 +48,7 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
         GameObject hud = Instantiate(mainHud, mainCanvas.transform);
         hud.SetActive(false);
         this.mainHud = hud.GetComponent<MainHud>();
+        this.mainHud.Initialize();
         this.isMainHudLoaded = true;
     }
     #endregion

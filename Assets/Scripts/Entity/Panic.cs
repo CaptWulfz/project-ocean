@@ -32,8 +32,7 @@ public class Panic : MonoBehaviour
 
     private void Awake()
     {
-
-        EventBroadcaster.Instance.AddObserver(EventNames.EVENT_SKILLCHECK_RESULT, SkillCheckResult);
+        EventBroadcaster.Instance.AddObserver(EventNames.ON_SKILL_CHECK_FINISHED, SkillCheckResult);
     }
 
     public void Initialize()
@@ -102,7 +101,7 @@ public class Panic : MonoBehaviour
 
     private void SkillCheckResult(Parameters param = null)
     {
-        bool skillCheck = param.GetParameter<bool>(EventNames.EVENT_SKILLCHECK_RESULT, false); // you got the value here
+        bool skillCheck = param.GetParameter<bool>(ParameterNames.SKILLCHECK_RESULT, false); // you got the value here
 
         if (!skillCheck)
         {

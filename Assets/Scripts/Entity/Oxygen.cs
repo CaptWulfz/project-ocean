@@ -20,7 +20,7 @@ public class Oxygen : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("OXYGEN CONSUMPTION: " + oxygenDecreaseMultiplier);
+        //Debug.Log("OXYGEN CONSUMPTION: " + oxygenDecreaseMultiplier);
 
         Parameters param = new Parameters();
         float updatedOxygenValue = this.oxygenTimer / MAX_OXYGEN;

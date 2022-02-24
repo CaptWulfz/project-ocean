@@ -6,9 +6,13 @@ using UnityEngine.InputSystem;
 
 public class GameDirector : Singleton<GameDirector>
 {
-    private const string DIRECTOR_ENTITIES_MAP_PATH = "AssetFiles/DirectorEntitiesMap";
+    private GameDirectorMain gameDirectorMain;
 
+    private const string DIRECTOR_ENTITIES_MAP_PATH = "AssetFiles/DirectorEntitiesMap";
+  
     private DirectorEntitiesMap entitiesMap;
+
+    private bool allowUpdate = false;
 
     private bool isDone = false;
     public bool IsDone
@@ -20,6 +24,8 @@ public class GameDirector : Singleton<GameDirector>
     public void Initialize()
     {
         this.entitiesMap = Resources.Load<DirectorEntitiesMap>(DIRECTOR_ENTITIES_MAP_PATH);
+        this.gameDirectorMain = new GameDirectorMain();
+        this.gameDirectorMain.InitializeSkillCheck();
         StartCoroutine(WaitForInitialization());
     }
 
@@ -32,13 +38,33 @@ public class GameDirector : Singleton<GameDirector>
 
     private void Update()
     {
+       
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            Debug.Log("Spawn Sound Source");
+            Debug.Log("Allow Update");
             GameDirector.Instance.SpawnSoundSourceOutsideOfCamera();
+            //this.allowUpdate = true;
         }
+
+        if (!allowUpdate)
+            return;
+
+        this.gameDirectorMain.UpdateSkillCheck();
     }
 
+    #region Helpers
+    public void RegisterSkillCheck(SkillCheck check)
+    {
+        this.gameDirectorMain.RegisterSkillCheck(check);
+    }
+
+    public void TrackSecondsSpentInMaxSpeedState(float seconds)
+    {
+        this.gameDirectorMain.TrackSecondsSpentInMaxSpeedState(seconds);
+    }
+    #endregion
+
+    #region Test Functions
     public void SpawnSoundSourceOutsideOfCamera()
     {
         Vector2 spawnTransform = Camera.main.ViewportToWorldPoint(new Vector2(-0.1f, 0.5f));
@@ -48,4 +74,5 @@ public class GameDirector : Singleton<GameDirector>
         newSpawn.GetComponent<SoundSource>().Setup(this.entitiesMap.SoundModels[0]);
         newSpawn.transform.position = spawnTransform;
     }
+    #endregion
 }
