@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MainHud : MonoBehaviour
 {
-    private void OnEnable()
+    [SerializeField] SkillCheck skillCheck;
+
+    public void Initialize()
     {
-        
+        GameDirector.Instance.RegisterSkillCheck(this.skillCheck);
     }
 }

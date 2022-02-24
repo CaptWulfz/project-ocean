@@ -20,6 +20,15 @@ public class SkillCheck : MonoBehaviour
     [SerializeField] Slider skillCheckOfPlayer_LeftCorrectSide;
     [SerializeField] Slider skillCheckOfPlayer_LeftWrongSide;
 
+    private Transform target;
+    private SpriteOffset spriteOffset;
+
+    struct SpriteOffset
+    {
+        public float x;
+        public float y;
+    }
+
     /// <summary>
     /// This struct holds the definition of the skill check properties.
     /// PlayerSkillCheckDifficultyModes can either be Easy, Medium, or Hard
@@ -62,37 +71,63 @@ public class SkillCheck : MonoBehaviour
         skillCheckOfPlayer_RightSide.value = 0f;
         skillCheckOfPlayer_LeftCorrectSide.value = 0f;
         skillCheckOfPlayer_LeftWrongSide.value = 0f;
+        this.target = null;
     }
 
     void Update()
     {
+        FollowTarget();
+
         if (isSkillCheckHappening && skillCheckOfPlayer_RightSide.value < correctSkillCheckField.rightValue + playerSkillCheckPin)
             skillCheckOfPlayer_RightSide.value += 0.01f * currentSkillCheckDifficulty.skillCheckSpeed * Time.deltaTime;
         else
         {
-            playerPrompt.text = (Random.Range(5.0f, 5000.0f).ToString() + ": Failed Skill Check"); //temporary
+            //playerPrompt.text = (Random.Range(5.0f, 5000.0f).ToString() + ": Failed Skill Check"); //temporary
             Parameters param = new Parameters();
-            param.AddParameter<bool>(EventNames.EVENT_SKILLCHECK_RESULT, false);
-            eventBroadcaster.PostEvent(EventNames.EVENT_SKILLCHECK_FAIL, param);
+            param.AddParameter<bool>(ParameterNames.SKILLCHECK_RESULT, false);
+            eventBroadcaster.PostEvent(EventNames.ON_SKILL_CHECK_FINISHED, param);
             this.gameObject.SetActive(false);
         }
 
         if (controls.Player.Interact.WasPressedThisFrame() && (skillCheckOfPlayer_RightSide.value < correctSkillCheckField.rightValue && skillCheckOfPlayer_RightSide.value > correctSkillCheckField.leftValue))
         {
-            playerPrompt.text = (Random.Range(5.0f, 5000.0f).ToString() + ": Successful Skill Check"); //temporary
+            //playerPrompt.text = (Random.Range(5.0f, 5000.0f).ToString() + ": Successful Skill Check"); //temporary
             Parameters param = new Parameters();
-            param.AddParameter<bool>(EventNames.EVENT_SKILLCHECK_RESULT, true);
-            eventBroadcaster.PostEvent(EventNames.EVENT_SKILLCHECK_FAIL, param);
+            param.AddParameter<bool>(ParameterNames.SKILLCHECK_RESULT, true);
+            eventBroadcaster.PostEvent(EventNames.ON_SKILL_CHECK_FINISHED, param);
             this.gameObject.SetActive(false);
         }
     }
+
+    #region Follow Player
+    private void AssignTarget(string tagName)
+    {
+        GameObject targetObj = GameObject.FindGameObjectWithTag(tagName);
+        if (targetObj != null)
+        {
+            this.target = targetObj.transform;
+            this.spriteOffset.x = this.target.GetComponent<SpriteRenderer>().bounds.size.x;
+            this.spriteOffset.y = this.target.GetComponent<SpriteRenderer>().bounds.size.y;
+        }
+    }
+
+    private void FollowTarget()
+    {
+        if (this.target != null)
+        {
+            float xOffset = this.spriteOffset.x / 2;
+            this.transform.position = new Vector2(this.target.transform.position.x + xOffset + 0.2f, this.target.transform.position.y);
+        }
+    }
+    #endregion
 
     /// <summary>
     /// Call this function to Enable the SkillCheck object and it will perform one skill check. Please supply a difficulty object that will define the complexity of the skill check.
     /// </summary>
     /// <param name="difficulty"></param>
-    public void TriggerSkillCheck(PlayerSkillCheckDifficulty difficulty)
+    public void TriggerSkillCheck(PlayerSkillCheckDifficulty difficulty, string tagName)
     {
+        AssignTarget(tagName);
         this.gameObject.SetActive(true);
 
         if (difficulty.rotateSkillCheckRandom)

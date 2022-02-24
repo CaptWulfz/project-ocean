@@ -13,7 +13,7 @@ public class HeartBeat : MonoBehaviour
     }
     public void HeartBeatSpeed(Parameters param = null)
     {
-        Debug.Log("HEART BEAT: " + param.GetParameter<float>("currPanicValue", 0f));
+        //Debug.Log("HEART BEAT: " + param.GetParameter<float>("currPanicValue", 0f));
         this.animator.SetFloat("Heart_Beat_Value", param.GetParameter<float>("currPanicValue", 0f));
     }
 }

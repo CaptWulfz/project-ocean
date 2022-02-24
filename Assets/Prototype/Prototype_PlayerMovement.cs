@@ -34,7 +34,7 @@ public class Prototype_PlayerMovement : MonoBehaviour
         difficulty.rotateSkillCheckRandom = true;
 
 
-        skillCheck.TriggerSkillCheck(difficulty);
+        skillCheck.TriggerSkillCheck(difficulty, TagNames.PLAYER);
     }
 
     void Update()

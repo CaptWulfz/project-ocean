@@ -62,6 +62,14 @@ public class Player : Entity
     private void MovePlayer()
     {
         Vector2 move = this.EntityControls.Player.Movement.ReadValue<Vector2>();
+        if (move == Vector2.zero)
+        {
+            GameDirector.Instance.TrackSecondsSpentInMaxSpeedState(0f);
+        } else
+        {
+            GameDirector.Instance.TrackSecondsSpentInMaxSpeedState(1f);
+        }
+
         this.MovePosition(move * this.Speed);
     }
 
