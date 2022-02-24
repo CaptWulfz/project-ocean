@@ -23,6 +23,7 @@ public class Player : Entity //
     
     [SerializeField] Panic panic;
     [SerializeField] Oxygen oxygen;
+    [SerializeField] AudioController audioController;
 
     [Header("Player Settings")]
     //[SerializeField] Rigidbody2D playerRigidbody;
@@ -71,6 +72,7 @@ public class Player : Entity //
         this.currentSpeedState = SpeedStates.MIN; //Init default value
         this.panic.Initialize();
         this.oxygen.Initialize();
+        this.audioController.Initialize();
     }
 
     private void Update()
@@ -372,33 +374,29 @@ public class Player : Entity //
     #region Panic State Evaluators
     private void OnPanicStateCalm()
     {
-        //this.heartBeat.HeartBeatSpeed(1f);
+        Debug.Log("CHECK STATE: " + this.panic.PanicState);
+        this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(0.5f);
     }
     private void OnPanicStateNormal()
     {
-        //this.heartBeat.HeartBeatSpeed(30f);
-        //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.HEART_BEAT);
-        //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.BREATHING);
+        this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(0.75f);
     }
     private void OnPanicStateDanger()
     {
-        //this.heartBeat.HeartBeatSpeed(60f);
-        //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.HEART_BEAT);
-        //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.BREATHING);
+        this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(1f);
     }
     private void OnPanicStateDying()
     {
-        //this.heartBeat.HeartBeatSpeed(90f);
-        //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.HEART_BEAT);
-        //AudioManager.Instance.PlayAudio(AudioKeys.SFX, this.sourceName, SFXKeys.BREATHING);
+        this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(1.25f);
     }
     private void OnPanicStateDead()
     {
         // Add Panic Death Animation here
+        this.audioController.SoundPanicState(this.panic.PanicState);
         this.EntityControls.Player.Movement.Disable();
         Debug.Log("Character is Scared to Death");
     }
@@ -410,6 +408,7 @@ public class Player : Entity //
     // GET PARAM = Get specific parameter
     public void OnOxygenStageDead()
     {
+        this.audioController.SoundOxygenDeath();
         this.EntityControls.Player.Movement.Disable();
         Debug.Log("No more Oxygen, Character is Dead");
     }

@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 478807534573499865, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
+      propertyPath: audioController
+      value: 
+      objectReference: {fileID: 460477513}
     - target: {fileID: 478807534573499866, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -180,6 +184,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
+--- !u!114 &460477513 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5614584996631188798, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
+  m_PrefabInstance: {fileID: 460477512}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecdf318419fb644c95bea7265bc7730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &876810793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -382,6 +397,7 @@ MonoBehaviour:
   rigidBody: {fileID: 1573154388}
   panic: {fileID: 1573154392}
   oxygen: {fileID: 1573154393}
+  audioController: {fileID: 0}
   smoothInputSpeed: 0.1
   currentSpeed: 0
   minSpeed: 3
