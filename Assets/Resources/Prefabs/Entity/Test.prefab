@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 6324780369754342795}
   - component: {fileID: 6324780369754342796}
   - component: {fileID: 687296645207282922}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Test
   m_TagString: Hostile
   m_Icon: {fileID: 0}
