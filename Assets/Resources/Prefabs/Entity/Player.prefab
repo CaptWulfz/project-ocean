@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 722687459}
   - component: {fileID: 722687460}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MouseAngle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 1908302607}
   - component: {fileID: 1908302606}
   - component: {fileID: 1908302605}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: VisionCone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,9 +191,9 @@ GameObject:
   - component: {fileID: 478807533733220149}
   - component: {fileID: 478807533733220150}
   - component: {fileID: 2182801915790795864}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LookCollider
-  m_TagString: Untagged
+  m_TagString: PlayerVision
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 478807534573499869}
   - component: {fileID: 4650467884852086313}
   - component: {fileID: 6123575834019350281}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -552,7 +552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7697215917296831756}
   - component: {fileID: 5151094522965355667}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -9,6 +9,8 @@ TagManager:
   - Boundary
   - DirectionTrigger
   - Damage
+  - Hostile
+  - PlayerVision
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - Water
   - UI
   - Object
-  - 
-  - 
+  - Vision
+  - Range
   - 
   - 
   - 
