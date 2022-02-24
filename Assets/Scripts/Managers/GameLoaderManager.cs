@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameLoaderManager : Singleton<GameLoaderManager>
 {
     private const string MAIN_HUD_PATH = "Prefabs/UI/MainHud";
 
@@ -48,6 +48,7 @@ public class GameManager : Singleton<GameManager>
         GameObject hud = Instantiate(mainHud, mainCanvas.transform);
         hud.SetActive(false);
         this.mainHud = hud.GetComponent<MainHud>();
+        this.mainHud.Initialize();
         this.isMainHudLoaded = true;
     }
     #endregion

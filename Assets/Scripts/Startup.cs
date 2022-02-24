@@ -26,20 +26,23 @@ public class Startup : MonoBehaviour
 
         AudioManager.Instance.Initialize();
         yield return new WaitUntil(() => { return AudioManager.Instance.IsDone; });
-        this.splashScreen.SetLoadingProgress(0.33f);
+        this.splashScreen.SetLoadingProgress(0.25f);
 
         PopupManager.Instance.Initialize();
         yield return new WaitUntil(() => { return PopupManager.Instance.IsDone; });
-        this.splashScreen.SetLoadingProgress(0.66f);
+        this.splashScreen.SetLoadingProgress(0.50f);
 
-        GameManager.Instance.Initialize();
-        yield return new WaitUntil(() => { return GameManager.Instance.IsDone; });
+        GameDirector.Instance.Initialize();
+        yield return new WaitUntil(() => { return GameDirector.Instance.IsDone; });
+        this.splashScreen.SetLoadingProgress(0.75f);
+
+        GameLoaderManager.Instance.Initialize();
+        yield return new WaitUntil(() => { return GameLoaderManager.Instance.IsDone; });
         this.splashScreen.SetLoadingProgress(1.0f);
 
         yield return new WaitForSeconds(0.5f);
 
         this.splashScreen.Hide();
-        GameManager.Instance.ToggleMainHud(true);
-        GameManager.Instance.PlayMainTheme();
+        GameLoaderManager.Instance.ToggleMainHud(true);
     }
 }

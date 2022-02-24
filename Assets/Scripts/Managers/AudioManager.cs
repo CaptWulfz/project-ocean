@@ -118,6 +118,18 @@ public class AudioManager : Singleton<AudioManager>
         source.Play();
     }
 
+    public void PlayAudioWithClip(string audioGroupKey, string sourceKey, AudioClip clip, float localMaxVolume = 1)
+    {
+        AudioSource source = GetAudioSource(audioGroupKey, sourceKey);
+        
+        float globalVolume = GetAudioGroupGlobalVolume(audioGroupKey);
+        float volume = localMaxVolume * globalVolume;
+
+        source.clip = clip;
+        source.volume = volume;
+        source.Play();
+    }
+
     public void SetGlobalMute(bool mute)
     {
         this.isMute = mute;
@@ -316,7 +328,7 @@ public class AudioKeys
 
 public class SFXKeys
 {
-    
+    public const string TOM = "tom";
 }
 
 public class MusicKeys
