@@ -44,5 +44,6 @@ public class Startup : MonoBehaviour
 
         this.splashScreen.Hide();
         GameLoaderManager.Instance.ToggleMainHud(true);
+        //Cursor.visible = false;
     }
 }

@@ -10,4 +10,7 @@ public class TagNames
 
     // OUTPUT
     public const string DAMAGE = "Damage";
+
+    // CAMERA
+    public const string MAIN_CAMERA = "MainCamera";
 }

@@ -5,19 +5,17 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity //
 {    
-    
-
-    enum SpeedStates{
+    public enum SpeedStates{
         MIN,
         MID,
         MAX
     }
+
     private SpeedStates currentSpeedState;
 
     enum LookStates{ //COMPASS
         N, S, E, W, NE, NW, SE, SW
     }
-    private LookStates currentLookState;
     private LookStates currentMoveState;
     
     
@@ -75,21 +73,21 @@ public class Player : Entity //
 
     private void Update()
     {
-        if (Keyboard.current.pKey.wasReleasedThisFrame)
-        {
-            Debug.Log("Increased Panic by 10");
-            this.panic.IncreasePanicValue(10f); // stimuli (collision)
-        }
-        if (Keyboard.current.oKey.wasReleasedThisFrame)
-        {
-            Debug.Log("Decreased Oxygen by 3.5"); // Bump into something
-            this.oxygen.DecreaseOxygenTimer(3.5f);
-        }
-        if (Keyboard.current.lKey.wasReleasedThisFrame)
-        {
-            Debug.Log("Decreased Panic by 10 + Good points");
-            this.panic.DecreasePanicValue(10f); // Panic reduced when looking at source of sounds
-        }
+        //if (Keyboard.current.pKey.wasReleasedThisFrame)
+        //{
+        //    Debug.Log("Increased Panic by 10");
+        //    this.panic.IncreasePanicValue(10f); // stimuli (collision)
+        //}
+        //if (Keyboard.current.oKey.wasReleasedThisFrame)
+        //{
+        //    Debug.Log("Decreased Oxygen by 3.5"); // Bump into something
+        //    this.oxygen.DecreaseOxygenTimer(3.5f);
+        //}
+        //if (Keyboard.current.lKey.wasReleasedThisFrame)
+        //{
+        //    Debug.Log("Decreased Panic by 10 + Good points");
+        //    this.panic.DecreasePanicValue(10f); // Panic reduced when looking at source of sounds
+        //}
     }
 
     private void FixedUpdate()
@@ -98,10 +96,11 @@ public class Player : Entity //
         SwitchLookState();
         currentSpeed = rigidBody.velocity.magnitude;   //Just records the current speed
         //Debug.Log(currentSpeed);
+        GameDirector.Instance.TrackPlayerSpeedState(this.currentSpeedState);
     }
     #endregion
     //--------
-    #region MOVEMENT
+    #region Movement
     private void MovePlayerWASD()
     {
         Vector2 input = this.EntityControls.Player.Movement.ReadValue<Vector2>();
@@ -154,7 +153,7 @@ public class Player : Entity //
     }
     #endregion
     //--------
-    #region STATE SWITCH
+    #region State Switch
     IEnumerator SwitchSpeedState(){
         
         //Debug.Log("SSState");
@@ -178,7 +177,7 @@ public class Player : Entity //
                 else if(goMin && !goMax)
                     currentSpeedState = SpeedStates.MIN;
             }
-        //Debug.Log("Crout State: "+currentSpeedState);
+
         switchStateDelay = null;
     }
     
@@ -188,17 +187,14 @@ public class Player : Entity //
         //N, W, S, E    60deg each
         if ((mouseAngleZ >= 60.0f) && (mouseAngleZ <= 120.0f))              //NORTH
         {
-            currentLookState = LookStates.N;
             goMin = true;
             goMid = false;
             goMax = false;
         }
         else if ((mouseAngleZ >= 150.0f) && (mouseAngleZ <= 210.0f))        //WEST
         {
-            currentLookState = LookStates.W;
             if(currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
             {
-                Debug.Log("Moving OPPOSITE of W");
                 goMin = true;
                 goMid = false;
                 goMax = false;
@@ -212,18 +208,15 @@ public class Player : Entity //
         }
         else if ((mouseAngleZ >= 240.0f) && (mouseAngleZ <= 300.0f))        //SOUTH
         {
-            currentLookState = LookStates.S;
             direction = Vector2.down;
             goMin = true;
             goMid = false;
             goMax = false;
         }
         else if (((mouseAngleZ >= 0.0f) && (mouseAngleZ <= 30.0f)||(mouseAngleZ >= 330.0f) && (mouseAngleZ <= 360.0f)))
-        {
-            currentLookState = LookStates.E;                                //EAST
+        {                            //EAST
             if(currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
             {
-                Debug.Log("Moving OPPOSITE of E");
                 goMin = true;
                 goMid = false;
                 goMax = false;
@@ -238,10 +231,8 @@ public class Player : Entity //
         //NW, SW, SE, NE
         else if ((mouseAngleZ > 120.0) && (mouseAngleZ < 150.0f))           //NORTH WEST
         {
-            currentLookState = LookStates.NW;
             if(currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
             {
-                Debug.Log("Moving OPPOSITE of W");
                 goMin = true;
                 goMid = false;
                 goMax = false;
@@ -255,10 +246,8 @@ public class Player : Entity //
         }
         else if ((mouseAngleZ > 210.0) && (mouseAngleZ < 240.0f))           //SOUTH WEST
         {
-            currentLookState = LookStates.SW;
             if(currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
             {
-                Debug.Log("Moving OPPOSITE of W");
                 goMin = true;
                 goMid = false;
                 goMax = false;
@@ -272,10 +261,8 @@ public class Player : Entity //
         }
         else if ((mouseAngleZ > 300.0) && (mouseAngleZ < 330.0f))           //SOUTH EAST
         {
-            currentLookState = LookStates.SE;
             if(currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
             {
-                Debug.Log("Moving OPPOSITE of SE");
                 goMin = true;
                 goMid = false;
                 goMax = false;
@@ -289,10 +276,8 @@ public class Player : Entity //
         }
         else if ((mouseAngleZ > 30.0) && (mouseAngleZ < 60.0f))             //NORTH EAST
         {
-            currentLookState = LookStates.NE;
             if(currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
             {
-                Debug.Log("Moving OPPOSITE of NE");
                 goMin = true;
                 goMid = false;
                 goMax = false;
@@ -304,7 +289,6 @@ public class Player : Entity //
                 goMax = false;
             }
         }
-        //Debug.Log(currentLookState);
     }
     
     private void SwitchMoveState(Vector2 input){
@@ -345,11 +329,9 @@ public class Player : Entity //
             currentMoveState = LookStates.NE;
         }
 
-        Debug.Log("Moving: "+currentMoveState);
+        //Debug.Log("Moving: "+currentMoveState);
     }
     #endregion
-
-    
 
     #region State Listeners
     public void EvaluatePanicState()
@@ -373,10 +355,6 @@ public class Player : Entity //
                 break;
         }
     }
-    #endregion
-
-    #region Receivers
-
     #endregion
 
     #region Panic State Evaluators
@@ -426,7 +404,6 @@ public class Player : Entity //
     #endregion
 
     #region Listeners
-
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == TagNames.DAMAGE)

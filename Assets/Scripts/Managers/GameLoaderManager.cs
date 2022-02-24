@@ -10,6 +10,7 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
     private const string MAIN_SOURCE = "MAIN_SOURCE";
 
     private Canvas mainCanvas;
+    private CameraFollow mainCamera;
 
     private MainHud mainHud;
     private AudioSource mainSource;
@@ -27,17 +28,21 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
     {
         this.mainCanvas = GameObject.FindGameObjectWithTag(TagNames.HUD_CANVAS).GetComponent<Canvas>();
         this.mainSource = this.gameObject.AddComponent<AudioSource>();
+        this.mainCamera = GameObject.FindGameObjectWithTag(TagNames.MAIN_CAMERA).GetComponent<CameraFollow>();
         AudioManager.Instance.RegisterAudioSource(AudioKeys.MUSIC, MAIN_SOURCE, mainSource);
         StartCoroutine(LoadFirstScene());
     }
 
     private IEnumerator LoadFirstScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneNames.SAMPLE_SCENE, LoadSceneMode.Single);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneNames.DEMO_SCENE, LoadSceneMode.Single);
 
         LoadMainHud();
 
         yield return new WaitUntil(() => { return asyncLoad.isDone && this.isMainHudLoaded; });
+
+        MoveObjectToScene(this.mainCamera.gameObject, SceneManager.GetActiveScene());
+        this.mainCamera.FindPlayer();
 
         this.isDone = true;
     }
@@ -52,6 +57,12 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
         this.isMainHudLoaded = true;
     }
     #endregion
+
+    private void MoveObjectToScene(GameObject obj, Scene scene)
+    {
+        obj.transform.SetParent(null);
+        SceneManager.MoveGameObjectToScene(obj, scene);
+    }
 
     /// <summary>
     /// Plays the Main Theme of the Game
