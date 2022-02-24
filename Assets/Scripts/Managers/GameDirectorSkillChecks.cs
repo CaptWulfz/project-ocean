@@ -14,13 +14,13 @@ public partial class GameDirectorMain
     private const float HARD_SKILL_CHECK_SPEED = 60f;
 
     // Skill Checks
+    private Player.SpeedStates playerSpeedState;
     private SkillCheck skillCheck;
     private SkillCheck.PlayerSkillCheckDifficulty skillCheckDifficulty;
     private PlayerSkillCheckDifficultyModes currentSkillCheckMode;
     private float currentSkillCheckSpeed;
     private bool currentRotateRandom;
     private bool isSkillCheckActive;
-    private float timeInMaxSpeedState;
     private float skillCheckDelay;
     private int successfulSkillChecks;
 
@@ -45,7 +45,7 @@ public partial class GameDirectorMain
         if (this.skillCheck == null)
             return;
 
-        if (this.timeInMaxSpeedState > 0)
+        if (this.playerSpeedState == Player.SpeedStates.MAX)
         {
             if (this.isSkillCheckActive)
                 return;
@@ -118,10 +118,10 @@ public partial class GameDirectorMain
     }
 
     #region Injector Methods
-    public void TrackSecondsSpentInMaxSpeedState(float seconds)
+    public void TrackPlayerSpeedState(Player.SpeedStates state)
     {
-        this.timeInMaxSpeedState = seconds;
-        if (seconds == 0)
+        this.playerSpeedState = state; ;
+        if (state != Player.SpeedStates.MAX)
         {
             InitializeSkillCheckSettings();
             //Debug.Log("QQQ NO SPEED");

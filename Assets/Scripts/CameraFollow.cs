@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-
-    
     [SerializeField] private Transform target;
 
     [SerializeField] [Range(0.01f, 1f)]
@@ -17,9 +15,18 @@ public class CameraFollow : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
     private void Start() {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+       
     }
+
+    public void FindPlayer()
+    {
+        target = GameObject.FindGameObjectWithTag(TagNames.PLAYER).transform;
+    }
+
     private void FixedUpdate() {
+        if (target == null)
+            return;
+
         Vector3 targetPosition = target.position + offset;
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothCameraSpeed);
     }

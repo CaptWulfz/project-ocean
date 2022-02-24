@@ -12,7 +12,7 @@ public class GameDirector : Singleton<GameDirector>
   
     private DirectorEntitiesMap entitiesMap;
 
-    private bool allowUpdate = false;
+    private bool allowUpdate;
 
     private bool isDone = false;
     public bool IsDone
@@ -25,6 +25,7 @@ public class GameDirector : Singleton<GameDirector>
     {
         this.entitiesMap = Resources.Load<DirectorEntitiesMap>(DIRECTOR_ENTITIES_MAP_PATH);
         this.gameDirectorMain = new GameDirectorMain();
+        this.allowUpdate = true;
         this.gameDirectorMain.InitializeSkillCheck();
         StartCoroutine(WaitForInitialization());
     }
@@ -41,9 +42,8 @@ public class GameDirector : Singleton<GameDirector>
        
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            Debug.Log("Allow Update");
+            Debug.Log("Spawn Source Outside of Camera");
             GameDirector.Instance.SpawnSoundSourceOutsideOfCamera();
-            //this.allowUpdate = true;
         }
 
         if (!allowUpdate)
@@ -58,9 +58,9 @@ public class GameDirector : Singleton<GameDirector>
         this.gameDirectorMain.RegisterSkillCheck(check);
     }
 
-    public void TrackSecondsSpentInMaxSpeedState(float seconds)
+    public void TrackPlayerSpeedState(Player.SpeedStates speedState)
     {
-        this.gameDirectorMain.TrackSecondsSpentInMaxSpeedState(seconds);
+        this.gameDirectorMain.TrackPlayerSpeedState(speedState);
     }
     #endregion
 
