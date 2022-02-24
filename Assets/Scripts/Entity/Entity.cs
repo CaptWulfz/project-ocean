@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    [Header("Player Settings")]
     [SerializeField] protected Rigidbody2D rigidBody;
 
     private Controls controls;

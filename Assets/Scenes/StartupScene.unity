@@ -203,7 +203,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 2111625511}
+  m_Camera: {fileID: 1090868526}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -261,7 +261,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2111625512}
+  - {fileID: 1090868527}
   - {fileID: 235365028}
   - {fileID: 1277418515}
   - {fileID: 1430948646}
@@ -565,6 +565,73 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 549517533417153687, guid: de6e24a86828a1a43b4b5b720c0ba256, type: 3}
   m_PrefabInstance: {fileID: 1023739493}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1090868525
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 302637713}
+    m_Modifications:
+    - target: {fileID: 867559646295737772, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_Name
+      value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+--- !u!20 &1090868526 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 867559646295737774, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+  m_PrefabInstance: {fileID: 1090868525}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1090868527 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+  m_PrefabInstance: {fileID: 1090868525}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1277418511
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +701,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 2111625511}
+  m_Camera: {fileID: 1090868526}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -754,7 +821,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 2111625511}
+  m_Camera: {fileID: 1090868526}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
