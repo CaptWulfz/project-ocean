@@ -8,11 +8,12 @@ public class GameDirector : Singleton<GameDirector>
 {
     private GameDirectorMain gameDirectorMain;
 
-    private const string DIRECTOR_ENTITIES_MAP_PATH = "AssetFiles/DirectorEntitiesMap";
-  
-    private DirectorEntitiesMap entitiesMap;
-
-    private bool allowUpdate;
+    private bool gameStart = false;
+    public bool GameStart
+    {
+        get { return this.gameStart; }
+        set { this.gameStart = value; }
+    }
 
     private bool isDone = false;
     public bool IsDone
@@ -23,32 +24,25 @@ public class GameDirector : Singleton<GameDirector>
     #region Initialization
     public void Initialize()
     {
-        this.entitiesMap = Resources.Load<DirectorEntitiesMap>(DIRECTOR_ENTITIES_MAP_PATH);
         this.gameDirectorMain = new GameDirectorMain();
-        this.allowUpdate = true;
         this.gameDirectorMain.InitializeSkillCheck();
+        this.gameDirectorMain.InitializeEntities();
         StartCoroutine(WaitForInitialization());
     }
 
     private IEnumerator WaitForInitialization()
     {
-        yield return new WaitUntil(() => { return this.entitiesMap != null; });
+        yield return new WaitUntil(() => { return this.gameDirectorMain.EntitiesMap != null && this.gameDirectorMain.SpawnPoints != null; });
         this.isDone = true;
     }
     #endregion
 
     private void Update()
     {
-       
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            Debug.Log("Spawn Source Outside of Camera");
-            GameDirector.Instance.SpawnSoundSourceOutsideOfCamera();
-        }
-
-        if (!allowUpdate)
+        if (!this.gameStart)
             return;
 
+        this.gameDirectorMain.UpdateEntities();
         this.gameDirectorMain.UpdateSkillCheck();
     }
 
@@ -62,17 +56,10 @@ public class GameDirector : Singleton<GameDirector>
     {
         this.gameDirectorMain.TrackPlayerSpeedState(speedState);
     }
-    #endregion
 
-    #region Test Functions
-    public void SpawnSoundSourceOutsideOfCamera()
+    public void TrackPlayerLookState(Player.LookStates lookState)
     {
-        Vector2 spawnTransform = Camera.main.ViewportToWorldPoint(new Vector2(-0.1f, 0.5f));
-        SoundSource source = this.entitiesMap.SoundSourceReference;
-        GameObject newSpawn = GameObject.Instantiate(source.gameObject);
-        newSpawn.SetActive(true);
-        newSpawn.GetComponent<SoundSource>().Setup(this.entitiesMap.SoundModels[0]);
-        newSpawn.transform.position = spawnTransform;
+        this.gameDirectorMain.TrackPlayerLookState(lookState);
     }
     #endregion
 }
