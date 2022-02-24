@@ -13,9 +13,11 @@ public class Player : Entity //
 
     private SpeedStates currentSpeedState;
 
-    enum LookStates{ //COMPASS
+    public enum LookStates{ //COMPASS
         N, S, E, W, NE, NW, SE, SW
     }
+
+    private LookStates currentLookState;
     private LookStates currentMoveState;
     
     
@@ -187,13 +189,15 @@ public class Player : Entity //
         //N, W, S, E    60deg each
         if ((mouseAngleZ >= 60.0f) && (mouseAngleZ <= 120.0f))              //NORTH
         {
+            currentLookState = LookStates.N;
             goMin = true;
             goMid = false;
             goMax = false;
         }
         else if ((mouseAngleZ >= 150.0f) && (mouseAngleZ <= 210.0f))        //WEST
         {
-            if(currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
+            currentLookState = LookStates.W;
+            if (currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
             {
                 goMin = true;
                 goMid = false;
@@ -208,14 +212,16 @@ public class Player : Entity //
         }
         else if ((mouseAngleZ >= 240.0f) && (mouseAngleZ <= 300.0f))        //SOUTH
         {
+            currentLookState = LookStates.S;
             direction = Vector2.down;
             goMin = true;
             goMid = false;
             goMax = false;
         }
-        else if (((mouseAngleZ >= 0.0f) && (mouseAngleZ <= 30.0f)||(mouseAngleZ >= 330.0f) && (mouseAngleZ <= 360.0f)))
-        {                            //EAST
-            if(currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
+        else if (((mouseAngleZ >= 0.0f) && (mouseAngleZ <= 30.0f)||(mouseAngleZ >= 330.0f) && (mouseAngleZ <= 360.0f)))  // EAST
+        {
+            currentLookState = LookStates.E;
+            if (currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
             {
                 goMin = true;
                 goMid = false;
@@ -231,7 +237,8 @@ public class Player : Entity //
         //NW, SW, SE, NE
         else if ((mouseAngleZ > 120.0) && (mouseAngleZ < 150.0f))           //NORTH WEST
         {
-            if(currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
+            currentLookState = LookStates.NW;
+            if (currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
             {
                 goMin = true;
                 goMid = false;
@@ -246,7 +253,8 @@ public class Player : Entity //
         }
         else if ((mouseAngleZ > 210.0) && (mouseAngleZ < 240.0f))           //SOUTH WEST
         {
-            if(currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
+            currentLookState = LookStates.SW;
+            if (currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
             {
                 goMin = true;
                 goMid = false;
@@ -261,7 +269,8 @@ public class Player : Entity //
         }
         else if ((mouseAngleZ > 300.0) && (mouseAngleZ < 330.0f))           //SOUTH EAST
         {
-            if(currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
+            currentLookState = LookStates.SE;
+            if (currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
             {
                 goMin = true;
                 goMid = false;
@@ -276,7 +285,8 @@ public class Player : Entity //
         }
         else if ((mouseAngleZ > 30.0) && (mouseAngleZ < 60.0f))             //NORTH EAST
         {
-            if(currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
+            currentLookState = LookStates.NE;
+            if (currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
             {
                 goMin = true;
                 goMid = false;
@@ -289,8 +299,10 @@ public class Player : Entity //
                 goMax = false;
             }
         }
+        //Debug.Log("QQQ CURRENT LOOK STATE: " + currentLookState);
+        GameDirector.Instance.TrackPlayerLookState(this.currentLookState);
     }
-    
+
     private void SwitchMoveState(Vector2 input){
 
         direction = input;
