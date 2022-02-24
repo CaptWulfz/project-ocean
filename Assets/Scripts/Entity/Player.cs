@@ -23,7 +23,7 @@ public class Player : Entity //
     
     [SerializeField] Panic panic;
     [SerializeField] Oxygen oxygen;
-    private AudioController audioController;
+    [SerializeField] AudioController audioController;
 
     [Header("Player Settings")]
     //[SerializeField] Rigidbody2D playerRigidbody;
@@ -72,6 +72,7 @@ public class Player : Entity //
         this.currentSpeedState = SpeedStates.MIN; //Init default value
         this.panic.Initialize();
         this.oxygen.Initialize();
+        this.audioController.Initialize();
     }
 
     private void Update()
@@ -373,24 +374,22 @@ public class Player : Entity //
     #region Panic State Evaluators
     private void OnPanicStateCalm()
     {
-        //this.heartBeat.HeartBeatSpeed(1f);
+        Debug.Log("CHECK STATE: " + this.panic.PanicState);
+        this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(0.5f);
     }
     private void OnPanicStateNormal()
     {
-        //this.heartBeat.HeartBeatSpeed(30f);
         this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(0.75f);
     }
     private void OnPanicStateDanger()
     {
-        //this.heartBeat.HeartBeatSpeed(60f);
         this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(1f);
     }
     private void OnPanicStateDying()
     {
-        //this.heartBeat.HeartBeatSpeed(90f);
         this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(1.25f);
     }

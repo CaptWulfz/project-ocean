@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
-    [SerializeField] Player player;
+
+    public void Initialize()
+    {
+        // Initialize the AudioController, (sorry idk how or what to put here hehe)
+    }
 
     public void SoundOxygenDeath()
     {
@@ -14,6 +18,7 @@ public class AudioController : MonoBehaviour
 
     public void SoundPanicState(PanicState panicState)
     {
+        Debug.Log("SOUND PANIC STATE: " + panicState);
         switch (panicState)
         {
             case PanicState.CALM:
