@@ -423,6 +423,48 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &191262967 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 478807534573499871, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
+  m_PrefabInstance: {fileID: 478807532657163239}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &191262968 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 478807534573499865, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
+  m_PrefabInstance: {fileID: 478807532657163239}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191262967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326758e196939ae4d89a9524691586f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &191262973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191262967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b20706cfa9e9b948847a035b70fc5af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 191262968}
+--- !u!114 &191262974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191262967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035aef8ef3b994a48ae02841ead418e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 191262968}
 --- !u!1 &334709738
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,6 +670,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 478807534573499865, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
+      propertyPath: panic
+      value: 
+      objectReference: {fileID: 191262974}
+    - target: {fileID: 478807534573499865, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
+      propertyPath: oxygen
+      value: 
+      objectReference: {fileID: 191262973}
     - target: {fileID: 478807534573499866, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
       propertyPath: m_RootOrder
       value: 2

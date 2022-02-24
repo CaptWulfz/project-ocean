@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 478807534573499868}
   - component: {fileID: 478807534573499869}
   - component: {fileID: 478807534573499865}
+  - component: {fileID: 4650467884852086313}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -419,7 +420,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &478807534573499868
@@ -472,6 +473,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 478807534573499868}
+  panic: {fileID: 0}
+  oxygen: {fileID: 0}
   smoothInputSpeed: 0.8
   currentSpeed: 0
   minSpeed: 3
@@ -483,6 +486,25 @@ MonoBehaviour:
   goMax: 0
   direction: {x: 0, y: 0}
   mouseAngle: {fileID: 722687459}
+--- !u!95 &4650467884852086313
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478807534573499871}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 291f8742b2e99aa4e9fc2127bdd7181e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7159168481305413434
 GameObject:
   m_ObjectHideFlags: 0
