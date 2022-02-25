@@ -116,7 +116,7 @@ public class SkillCheck : MonoBehaviour
         if (this.target != null)
         {
             float xOffset = this.spriteOffset.x / 2;
-            this.transform.position = new Vector2(this.target.transform.position.x + xOffset + 0.2f, this.target.transform.position.y);
+            this.transform.position = new Vector2(this.target.transform.position.x + xOffset + 0.3f, this.target.transform.position.y);
         }
     }
     #endregion

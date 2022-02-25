@@ -223,7 +223,8 @@ GameObject:
   - component: {fileID: 478807534573499865}
   - component: {fileID: 6326988648292609609}
   - component: {fileID: 1766810478983958887}
-  - component: {fileID: 5614584996631188798}
+  - component: {fileID: 6858184113507697984}
+  - component: {fileID: 6053839845969842730}
   - component: {fileID: 478807534573499868}
   - component: {fileID: 478807534573499869}
   - component: {fileID: 4650467884852086313}
@@ -290,7 +291,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1027684307
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 51d2d5f4c9515de40a4c147339ce773b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -317,6 +318,8 @@ MonoBehaviour:
   rigidBody: {fileID: 478807534573499868}
   panic: {fileID: 6326988648292609609}
   oxygen: {fileID: 1766810478983958887}
+  audioController: {fileID: 6858184113507697984}
+  animController: {fileID: 6053839845969842730}
   smoothInputSpeed: 0.8
   currentSpeed: 0
   minSpeed: 3
@@ -340,7 +343,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 035aef8ef3b994a48ae02841ead418e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 478807534573499865}
 --- !u!114 &1766810478983958887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 478807534573499865}
---- !u!114 &5614584996631188798
+--- !u!114 &6858184113507697984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -366,7 +368,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecdf318419fb644c95bea7265bc7730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 478807534573499865}
+--- !u!114 &6053839845969842730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478807534573499871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90c7e5a75aa50445b140f5293aa4782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 4650467884852086313}
 --- !u!50 &478807534573499868
 Rigidbody2D:
   serializedVersion: 4

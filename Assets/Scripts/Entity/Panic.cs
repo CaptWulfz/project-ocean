@@ -13,8 +13,6 @@ public enum PanicState
 }
 public class Panic : MonoBehaviour
 {
-    [SerializeField] Player player;
-
     private const float MAX_THRESHOLD = 100f;
     private const float DYING_THRESHOLD = 90f;
     private const float DANGER_THRESHOLD = 60f;
@@ -24,6 +22,12 @@ public class Panic : MonoBehaviour
     public PanicState PanicState
     {
         get { return this.panicState; }
+    }
+
+    private bool switchingPanicState = false;
+    public bool SwitchingPanicState
+    {
+        get { return this.switchingPanicState; }
     }
 
     private float panicValue = 0f;
@@ -70,24 +74,25 @@ public class Panic : MonoBehaviour
 
     private void DeterminePanicState()
     {
+        PanicState pendingPanicState = PanicState.CALM;
         if (this.panicValue < NORMAL_THRESHOLD) //30
         {
-            this.panicState = PanicState.CALM;
+            pendingPanicState = PanicState.CALM;
 
         } else if (this.panicValue >= NORMAL_THRESHOLD && this.panicValue < DANGER_THRESHOLD) //30-59    60
         {
-            this.panicState = PanicState.NORMAL;
+            pendingPanicState = PanicState.NORMAL;
 
         } else if (this.panicValue >= DANGER_THRESHOLD && this.panicValue < DYING_THRESHOLD) //60-89     90
         {
-            this.panicState = PanicState.DANGER;
+            pendingPanicState = PanicState.DANGER;
 
         } else if (this.panicValue >= DYING_THRESHOLD && this.panicValue < MAX_THRESHOLD)// 100
         {
-            this.panicState = PanicState.DYING;
+            pendingPanicState = PanicState.DYING;
         } else if (this.panicValue >= MAX_THRESHOLD)
         {
-            this.panicState = PanicState.DEAD;
+            pendingPanicState = PanicState.DEAD;
         }
 
         Parameters param = new Parameters();
@@ -96,7 +101,14 @@ public class Panic : MonoBehaviour
         param.AddParameter<float>("maxPanicValue", MAX_THRESHOLD);
         EventBroadcaster.Instance.PostEvent(EventNames.ON_PANIC_MODIFIED, param);
 
-        this.player.EvaluatePanicState();
+        if (pendingPanicState != this.panicState)
+        {
+            this.panicState = pendingPanicState;
+            this.switchingPanicState = true;
+        } else
+        {
+            this.switchingPanicState = false;
+        }
     }
 
     private void SkillCheckResult(Parameters param = null)
