@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29ea43e4d106ab641a182c5a2f0741d3, type: 3}
-  m_Name: 1.2.1.2
+  m_Name: 1.2.1.2.1
   m_EditorClassIdentifier: 
-  <EventDialogText>k__BackingField: NO
-  <EventDialogPlayerResponses>k__BackingField:
-  - {fileID: 11400000, guid: 501671348956ad646a766571cd66cf1f, type: 2}
+  <SpeakerName>k__BackingField: 0
+  <EventDialogText>k__BackingField: ...
+  <SpeakerImage>k__BackingField: {fileID: 21300000, guid: bfd64ce686b86e84bbc8fb285c17984b, type: 3}
+  <EventDialogPlayerResponses>k__BackingField: []
   <ConfidenceType>k__BackingField: 0
   <EventDialogEffect>k__BackingField: 2
   <DoubtEffect>k__BackingField: 1

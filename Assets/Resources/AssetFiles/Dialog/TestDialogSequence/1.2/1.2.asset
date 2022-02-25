@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29ea43e4d106ab641a182c5a2f0741d3, type: 3}
-  m_Name: 1.2.1.1
+  m_Name: 1.2
   m_EditorClassIdentifier: 
-  <EventDialogText>k__BackingField: IDK
+  <SpeakerName>k__BackingField: 0
+  <EventDialogText>k__BackingField: blue
+  <SpeakerImage>k__BackingField: {fileID: 21300000, guid: d687db9ece5e11c49a1a045dc10dca85, type: 3}
   <EventDialogPlayerResponses>k__BackingField:
-  - {fileID: 11400000, guid: d11853da0436a39498e4f729fb9f5fc3, type: 2}
+  - {fileID: 11400000, guid: afcc3b6f95145ef4283a70a866599ee0, type: 2}
   <ConfidenceType>k__BackingField: 1
   <EventDialogEffect>k__BackingField: 2
   <DoubtEffect>k__BackingField: 1

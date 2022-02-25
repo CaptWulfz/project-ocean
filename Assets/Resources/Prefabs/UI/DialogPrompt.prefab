@@ -377,6 +377,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventDialogGroup: {fileID: 11400000, guid: 1de3ff3f30746cd4da4ef9ae809fb5f5, type: 2}
   eventDialogBox: {fileID: 1038730934270281185}
+  speakerImage: {fileID: 3110350805021223422}
+  speakerName: {fileID: 3110350803286136068}
   dialogText: {fileID: 3110350803776012835}
   dialogOptionArea: {fileID: 3110350803609563560}
 --- !u!114 &3110350803854921270
@@ -543,7 +545,7 @@ GameObject:
   - component: {fileID: 3110350805021223421}
   - component: {fileID: 3110350805021223422}
   m_Layer: 5
-  m_Name: MouseIcon
+  m_Name: SpeakerImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

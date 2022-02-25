@@ -1,13 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName= "EventDialog.asset", menuName = "Event/Dialog")]
 public class EventDialog : ScriptableObject
 {
     [field: Header("Dialog Text")]
     [field: SerializeField]
+    public SpeakerNames SpeakerName { get; set; }
+
+    [field: SerializeField]
     public string EventDialogText { get; set; }
+
+    [field: SerializeField]
+    public Sprite SpeakerImage { get; set; }
 
     [field: Header("Player Responses")]
     [field: SerializeField]
@@ -25,6 +32,13 @@ public class EventDialog : ScriptableObject
 
     [field: SerializeField]
     public float EventDialogPanicDamage { get; set; }
+}
+
+public enum SpeakerNames
+{
+    PLAYER,
+    MR_WALKIE_TALKIE,
+    NONE
 }
 
 public enum ConfidenceTypes
