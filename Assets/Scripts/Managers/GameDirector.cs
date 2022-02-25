@@ -61,5 +61,10 @@ public class GameDirector : Singleton<GameDirector>
     {
         this.gameDirectorMain.TrackPlayerLookState(lookState);
     }
+
+    public void TriggerSkillCheck(Transform target, SkillCheck.PlayerSkillCheckDifficulty difficulty)
+    {
+        this.gameDirectorMain.TriggerSkillCheck(target, difficulty);
+    }
     #endregion
 }
