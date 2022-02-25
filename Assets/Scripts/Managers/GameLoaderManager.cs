@@ -13,7 +13,6 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
     private CameraFollow mainCamera;
 
     private MainHud mainHud;
-    private AudioSource mainSource;
 
     private bool isMainHudLoaded = false;
 
@@ -27,9 +26,7 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
     public void Initialize()
     {
         this.mainCanvas = GameObject.FindGameObjectWithTag(TagNames.HUD_CANVAS).GetComponent<Canvas>();
-        this.mainSource = this.gameObject.AddComponent<AudioSource>();
         this.mainCamera = GameObject.FindGameObjectWithTag(TagNames.MAIN_CAMERA).GetComponent<CameraFollow>();
-        AudioManager.Instance.RegisterAudioSource(AudioKeys.MUSIC, MAIN_SOURCE, mainSource);
         StartCoroutine(LoadFirstScene());
     }
 
@@ -62,16 +59,6 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
     {
         obj.transform.SetParent(null);
         SceneManager.MoveGameObjectToScene(obj, scene);
-    }
-
-    /// <summary>
-    /// Plays the Main Theme of the Game
-    /// </summary>
-    public void PlayMainTheme()
-    {
-        AudioManager.Instance.PlayAudio(AudioKeys.MUSIC, MAIN_SOURCE, MusicKeys.MAIN_THEME);
-        AudioManager.Instance.SetAudioGroupVolume(AudioKeys.MUSIC, 0.5f);
-        AudioManager.Instance.ToggleAudioGroupLoop(AudioKeys.MUSIC, true);
     }
 
     /// <summary>

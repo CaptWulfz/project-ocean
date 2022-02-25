@@ -30,8 +30,15 @@ public class Interactable : MonoBehaviour
 
     protected virtual void OnSkillCheckFinished(Parameters param = null)
     {
+        if (param != null)
+        {
+            
+        }
         EventBroadcaster.Instance.RemoveObserverAtAction(EventNames.ON_SKILL_CHECK_FINISHED, OnSkillCheckFinished);
     }
 
-
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log("Interactable - Trigger Tag: " + collision.tag);
+    }
 }

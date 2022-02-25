@@ -42,8 +42,8 @@ public class GameDirector : Singleton<GameDirector>
         if (!this.gameStart)
             return;
 
-        this.gameDirectorMain.UpdateEntities();
-        this.gameDirectorMain.UpdateSkillCheck();
+        //this.gameDirectorMain.UpdateEntities();
+        //this.gameDirectorMain.UpdateSkillCheck();
     }
 
     #region Helpers
