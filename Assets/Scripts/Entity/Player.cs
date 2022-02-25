@@ -20,10 +20,13 @@ public class Player : Entity
     private LookStates currentLookState;
     private LookStates currentMoveState;
     
-    
+    [Header("Player Values")]
     [SerializeField] Panic panic;
     [SerializeField] Oxygen oxygen;
+
+    [Header("Controllers")]
     [SerializeField] AudioController audioController;
+    [SerializeField] PlayerAnimatorController animController;
 
     [Header("Player Settings")]
     //[SerializeField] Rigidbody2D playerRigidbody;
@@ -33,6 +36,11 @@ public class Player : Entity
     
     [Header("Player Speed")]
     [SerializeField] private float currentSpeed = 0f;
+    public float CurrentSpeed
+    {
+        get { return this.currentSpeed; }
+    }
+
     [SerializeField] private float minSpeed = 3f;
     [SerializeField] private float midSpeed = 4f;
     [SerializeField] private float maxSpeed = 5f;
@@ -71,6 +79,8 @@ public class Player : Entity
         this.panic.Initialize();
         this.oxygen.Initialize();
         this.audioController.Initialize();
+
+        this.animController.InitializeAnimator();
     }
 
     private void Update()
@@ -91,6 +101,7 @@ public class Player : Entity
         //    this.panic.DecreasePanicValue(10f); // Panic reduced when looking at source of sounds
         //}
         EvaluatePanicState();
+        this.animController.UpdateAnimator();
     }
 
     private void FixedUpdate()
@@ -98,7 +109,6 @@ public class Player : Entity
         MovePlayerWASD();                   //USES WASD
         SwitchLookState();
         currentSpeed = rigidBody.velocity.magnitude;   //Just records the current speed
-        //Debug.Log(currentSpeed);
         GameDirector.Instance.TrackPlayerSpeedState(this.currentSpeedState);
     }
     #endregion

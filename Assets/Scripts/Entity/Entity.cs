@@ -22,6 +22,8 @@ public class Entity : MonoBehaviour
         set { this.speed = value; }
     }
 
+    protected Dictionary<string, object> animatorParameters;
+
     protected virtual void Initialize()
     {
         this.EntityControls = InputManager.Instance.GetControls();
