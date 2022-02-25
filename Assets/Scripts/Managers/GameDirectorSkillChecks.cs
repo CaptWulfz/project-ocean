@@ -86,7 +86,7 @@ public partial class GameDirectorMain
                 this.currentRotateRandom = true;
                 break;
             case PlayerSkillCheckDifficultyModes.Hard:
-                float hardSkillCheckSpeed = !fromFailure ? this.currentSkillCheckSpeed : this.currentSkillCheckSpeed + 5;
+                float hardSkillCheckSpeed = !fromFailure ? this.currentSkillCheckSpeed : this.currentSkillCheckSpeed + 15f;
                 this.currentSkillCheckSpeed = hardSkillCheckSpeed;
                 this.currentRotateRandom = true;
                 break;

@@ -8,6 +8,7 @@ public class MainHud : MonoBehaviour
 
     public void Initialize()
     {
+        this.skillCheck.gameObject.SetActive(false);
         GameDirector.Instance.RegisterSkillCheck(this.skillCheck);
     }
 }
