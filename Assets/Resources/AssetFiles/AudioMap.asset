@@ -15,4 +15,8 @@ MonoBehaviour:
   SFX:
   - key: tom
     source: {fileID: 8300000, guid: 85c342474e5dc0d49b2ac9159d4f112f, type: 3}
+  - key: Skillcheck_Success
+    source: {fileID: 8300000, guid: f2a962f65aface848a356e0fb85db5d3, type: 3}
+  - key: Skillcheck_Fail
+    source: {fileID: 8300000, guid: d8febf08cacbed243be825f25fb285ff, type: 3}
   Music: []

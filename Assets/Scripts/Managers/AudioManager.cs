@@ -329,9 +329,11 @@ public class AudioKeys
 public class SFXKeys
 {
     public const string TOM = "tom";
+    public const string SKILLCHECK_SUCCESS = "Skillcheck_Success";
+    public const string SKILLCHECK_FAIL = "Skillcheck_Fail";
 }
 
 public class MusicKeys
 {
-    public const string MAIN_THEME = "Viridescent_Main_Theme";
+   
 }

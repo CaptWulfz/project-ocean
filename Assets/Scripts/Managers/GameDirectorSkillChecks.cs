@@ -151,26 +151,26 @@ public partial class GameDirectorMain
         if (param != null)
         {
             bool success = param.GetParameter<bool>(ParameterNames.SKILLCHECK_RESULT, false);
-            if (success)
-            {
-                this.successfulSkillChecks += 1;
-                EvaluateSuccessfulSkillChecks();
-            } else
-            {
-                if (this.currentSkillCheckMode == PlayerSkillCheckDifficultyModes.Easy)
-                    this.currentSkillCheckMode = PlayerSkillCheckDifficultyModes.Medium;
-                else if (this.currentSkillCheckMode == PlayerSkillCheckDifficultyModes.Medium)
-                {
-                    this.currentSkillCheckMode = PlayerSkillCheckDifficultyModes.Hard;
-                    this.currentSkillCheckSpeed = HARD_SKILL_CHECK_SPEED;
-                }
+            //if (success)
+            //{
+            //    this.successfulSkillChecks += 1;
+            //    EvaluateSuccessfulSkillChecks();
+            //} else
+            //{
+            //    if (this.currentSkillCheckMode == PlayerSkillCheckDifficultyModes.Easy)
+            //        this.currentSkillCheckMode = PlayerSkillCheckDifficultyModes.Medium;
+            //    else if (this.currentSkillCheckMode == PlayerSkillCheckDifficultyModes.Medium)
+            //    {
+            //        this.currentSkillCheckMode = PlayerSkillCheckDifficultyModes.Hard;
+            //        this.currentSkillCheckSpeed = HARD_SKILL_CHECK_SPEED;
+            //    }
 
 
-                EvaluateSkillCheckDifficulty(true);
-            }
+            //    EvaluateSkillCheckDifficulty(true);
+            //}
 
-            this.skillCheckDelay = SKILL_CHECK_DELAY;
-            this.isSkillCheckActive = false;
+            //this.skillCheckDelay = SKILL_CHECK_DELAY;
+            //this.isSkillCheckActive = false;
         }
     }
     #endregion
