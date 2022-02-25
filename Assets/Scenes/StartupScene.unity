@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   splashScreen: {fileID: 160215263}
+  camAudioSource: {fileID: 2117752230}
 --- !u!1001 &385526778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -840,3 +841,14 @@ Canvas:
   m_SortingLayerID: -1729665301
   m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &2117752230 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6618202448413724762, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
+  m_PrefabInstance: {fileID: 1090868525}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7fa65e49c284647a99ef7489f2effa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
