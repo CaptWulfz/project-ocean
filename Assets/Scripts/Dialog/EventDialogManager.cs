@@ -8,6 +8,8 @@ public class EventDialogManager : Singleton<EventDialogManager>
     [SerializeField] EventDialogGroup eventDialogGroup; //Custom Asset for Dialog Group
     [SerializeField] GameObject eventDialogBox; //Prefab of Dialog Option
 
+    [SerializeField] Image speakerImage;
+    [SerializeField] Text speakerName;
     [SerializeField] Text dialogText; //Text for dialog
     [SerializeField] GameObject dialogOptionArea; //Panel to act as parent of dialog options.
 
@@ -23,11 +25,16 @@ public class EventDialogManager : Singleton<EventDialogManager>
 
     public void GenerateDialogSequence(EventDialog eventDialog)
     {
+        speakerImage.sprite = eventDialog.SpeakerImage;
+        speakerName.text = eventDialog.SpeakerName.ToString();
         dialogText.text = eventDialog.EventDialogText;
 
         if (eventDialog.EventDialogPlayerResponses != null)
         {
-            //foreach(GameObject objectToDequeue in )
+            foreach(Button objectToDequeue in dialogOptionArea.GetComponentsInChildren<Button>())
+            {
+                GameObjectPool.Instance.ReturnObject(objectToDequeue.gameObject);
+            }
             //This is if there's still a continuation of the dialog/there needs to be a player response
             foreach (EventDialog playerResponse in eventDialog.EventDialogPlayerResponses)
             {
@@ -35,7 +42,9 @@ public class EventDialogManager : Singleton<EventDialogManager>
                 newObject.transform.SetParent(dialogOptionArea.transform, false);
 
                 newObject.GetComponentInChildren<Text>().text = playerResponse.EventDialogText;
-                newObject.GetComponent<EventDialogBox>().SetDialogBoxProperties(this.gameObject, playerResponse.EventDialogPlayerResponses[0]);
+
+                if (playerResponse.EventDialogPlayerResponses.Length > 0)
+                    newObject.GetComponent<EventDialogBox>().SetDialogBoxProperties(this.gameObject, playerResponse.EventDialogPlayerResponses[0]);
 
                 newObject.SetActive(true);
             }
@@ -111,6 +120,7 @@ public class GameObjectPool : Singleton<GameObjectPool>
     public void ReturnObject(GameObject objectToReturn)
     {
         objectToReturn.SetActive(false);
+        //objectToReturn.transform.SetParent(null);
         objects.Enqueue(objectToReturn);
     }
 }

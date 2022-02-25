@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ea43e4d106ab641a182c5a2f0741d3, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
+  <SpeakerName>k__BackingField: 0
   <EventDialogText>k__BackingField: hi i am red
+  <SpeakerImage>k__BackingField: {fileID: 21300000, guid: bfd64ce686b86e84bbc8fb285c17984b, type: 3}
   <EventDialogPlayerResponses>k__BackingField:
   - {fileID: 11400000, guid: 1ca428cc070dfb74d9faea7f9dffcfbc, type: 2}
   - {fileID: 11400000, guid: d5782c041a437794d956110d50878ad9, type: 2}

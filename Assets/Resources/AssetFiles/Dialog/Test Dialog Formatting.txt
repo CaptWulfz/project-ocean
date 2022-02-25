@@ -1,0 +1,80 @@
+NPC:
+1) hi i am red
+    public string EventDialogText = "hi i am red"
+    public ConfidenceTypes ConfidenceType = None
+    public DialogEffects EventDialogEffect = None
+    public EventDialog[] EventDialogPlayerResponses = { 1.1, 1.2, 1.3 }
+
+CHOICES:
+1.1) red -> confident
+    public string EventDialogText = "red"
+    public ConfidenceTypes ConfidenceType = confident
+    public DialogEffects EventDialogEffect = none
+    public EventDialog[] EventDialogPlayerResponses = { 1.1.1 }
+1.2) blue -> unsure
+    public string EventDialogText = "blue"
+    public ConfidenceTypes ConfidenceType = unsure
+    public DialogEffects EventDialogEffect = none
+    public EventDialog[] EventDialogPlayerResponses = { 1.2.1 }
+1.3) green -> static
+    public string EventDialogText = "green"
+    public ConfidenceTypes ConfidenceType = unsure
+    public DialogEffects EventDialogEffect = none
+    public EventDialog[] EventDialogPlayerResponses = { 1.3.1)
+
+RESULTS:
+1.1.1) nice -> none
+    public string EventDialogText = "nice"
+    public ConfidenceTypes ConfidenceType = confident
+    public DialogEffects EventDialogEffect = none
+    public EventDialog[] EventDialogPlayerResponses = none
+1.2.1) hi i am blue -> unsure
+    public string EventDialogText = "hi i am blue"
+    public ConfidenceTypes ConfidenceType = unsure
+    public DialogEffects EventDialogEffect = none
+    public EventDialog[] EventDialogPlayerResponses = { 1.2.1.1, 1.2.1.2, 1.2.1.3 }
+1.3.1) static noises -> panic (add panic meter)
+    public string EventDialogText = "static noises"
+    public ConfidenceTypes ConfidenceType = unsure
+    public DialogEffects EventDialogEffect = panic
+    public EventDialog[] EventDialogPlayerResponses = none
+
+1.2.1 CHOICES:
+1.2.1.1) IDK -> doubt
+    public string EventDialogText = "IDK"
+    public ConfidenceTypes ConfidenceType = unsure
+    public DialogEffects EventDialogEffect = none
+    public EventDialog[] EventDialogPlayerResponses = { 1.2.1.1.1 }
+1.2.1.2) NO -> none
+    public string EventDialogText = "NO"
+    public ConfidenceTypes ConfidenceType = confident
+    public DialogEffects EventDialogEffect = none
+    public EventDialog[] EventDialogPlayerResponses = { 1.2.1.2.1 }
+1.2.1.3) YES -> panic (add panic meter)
+    public string EventDialogText = "YES"
+    public ConfidenceTypes ConfidenceType = unsure
+    public DialogEffects EventDialogEffect = none
+    public EventDialog[] EventDialogPlayerResponses = { 1.2.1.3.1 }
+
+1.2.1.1 RESULTS:
+1.2.1.1.1) There is a whale coming now -> DoubtEffect -> Finish Convo.
+    public string EventDialogText = "There is a whale coming now"
+    public ConfidenceTypes ConfidenceType = unsure
+    public DialogEffects EventDialogEffect = doubt
+    public EventDialog[] EventDialogPlayerResponses = none
+1.2.1.2.1) NO -> none
+    public string EventDialogText = "..."
+    public ConfidenceTypes ConfidenceType = confident
+    public DialogEffects EventDialogEffect = none
+    public EventDialog[] EventDialogPlayerResponses = none
+1.2.1.3.1) static noises -> panic (add panic meter)
+    public string EventDialogText = "static noises"
+    public ConfidenceTypes ConfidenceType = unsure
+    public DialogEffects EventDialogEffect = panic
+    public EventDialog[] EventDialogPlayerResponses = none
+
+TEMPLATE:
+    public string EventDialogText = 
+    public ConfidenceTypes ConfidenceType = 
+    public DialogEffects EventDialogEffect = 
+    public EventDialog[] EventDialogPlayerResponses =

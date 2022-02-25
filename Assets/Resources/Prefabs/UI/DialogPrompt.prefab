@@ -377,6 +377,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventDialogGroup: {fileID: 11400000, guid: 1de3ff3f30746cd4da4ef9ae809fb5f5, type: 2}
   eventDialogBox: {fileID: 1038730934270281185}
+  speakerImage: {fileID: 3110350805021223422}
+  speakerName: {fileID: 3110350803286136068}
   dialogText: {fileID: 3110350803776012835}
   dialogOptionArea: {fileID: 3110350803609563560}
 --- !u!114 &3110350803854921270
@@ -542,8 +544,9 @@ GameObject:
   - component: {fileID: 3110350805021223423}
   - component: {fileID: 3110350805021223421}
   - component: {fileID: 3110350805021223422}
+  - component: {fileID: 292588751}
   m_Layer: 5
-  m_Name: MouseIcon
+  m_Name: SpeakerImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -606,6 +609,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &292588751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3110350805021223296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 200
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1001 &3110350805297045370
 PrefabInstance:
   m_ObjectHideFlags: 0
