@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 478807534573499865}
   - component: {fileID: 6326988648292609609}
   - component: {fileID: 1766810478983958887}
-  - component: {fileID: 5614584996631188798}
+  - component: {fileID: 6858184113507697984}
   - component: {fileID: 478807534573499868}
   - component: {fileID: 478807534573499869}
   - component: {fileID: 4650467884852086313}
@@ -317,6 +317,7 @@ MonoBehaviour:
   rigidBody: {fileID: 478807534573499868}
   panic: {fileID: 6326988648292609609}
   oxygen: {fileID: 1766810478983958887}
+  audioController: {fileID: 6858184113507697984}
   smoothInputSpeed: 0.8
   currentSpeed: 0
   minSpeed: 3
@@ -354,7 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 478807534573499865}
---- !u!114 &5614584996631188798
+--- !u!114 &6858184113507697984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -366,7 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecdf318419fb644c95bea7265bc7730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 478807534573499865}
 --- !u!50 &478807534573499868
 Rigidbody2D:
   serializedVersion: 4
