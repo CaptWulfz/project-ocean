@@ -14,7 +14,7 @@ public class AnimatorController: MonoBehaviour
 
     public virtual void UpdateAnimator()
     {
-
+        
         
     }
 

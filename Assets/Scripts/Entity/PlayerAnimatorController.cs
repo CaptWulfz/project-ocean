@@ -14,5 +14,7 @@ public class PlayerAnimatorController : AnimatorController
     public override void UpdateAnimator()
     {
         //EvaluateAnimation("Speed");
+        EvaluateAnimation("playerSpeed", this.player.CurrentSpeed);
+        EvaluateAnimation("playerIsFloating", this.player.PlayerIsFloating);
     }
 }
