@@ -14,4 +14,7 @@ public class TagNames
 
     // CAMERA
     public const string MAIN_CAMERA = "MainCamera";
+
+    // INTERACTABLE
+    public const string INTERACTABLE = "Interactable";
 }

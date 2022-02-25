@@ -54,12 +54,17 @@ public class GameDirector : Singleton<GameDirector>
 
     public void TrackPlayerSpeedState(Player.SpeedStates speedState)
     {
-        this.gameDirectorMain.TrackPlayerSpeedState(speedState);
+//        this.gameDirectorMain.TrackPlayerSpeedState(speedState);
     }
 
     public void TrackPlayerLookState(Player.LookStates lookState)
     {
         this.gameDirectorMain.TrackPlayerLookState(lookState);
+    }
+
+    public void TriggerSkillCheck(Transform target, SkillCheck.PlayerSkillCheckDifficulty difficulty)
+    {
+        this.gameDirectorMain.TriggerSkillCheck(target, difficulty);
     }
     #endregion
 }

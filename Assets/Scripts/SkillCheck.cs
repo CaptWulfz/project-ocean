@@ -100,12 +100,12 @@ public class SkillCheck : MonoBehaviour
     }
 
     #region Follow Player
-    private void AssignTarget(string tagName)
+    private void AssignTarget(Transform targetObj)
     {
-        GameObject targetObj = GameObject.FindGameObjectWithTag(tagName);
+        //GameObject targetObj = GameObject.FindGameObjectWithTag(tagName);
         if (targetObj != null)
         {
-            this.target = targetObj.transform;
+            this.target = targetObj;
             this.spriteOffset.x = this.target.GetComponent<SpriteRenderer>().bounds.size.x;
             this.spriteOffset.y = this.target.GetComponent<SpriteRenderer>().bounds.size.y;
         }
@@ -125,9 +125,9 @@ public class SkillCheck : MonoBehaviour
     /// Call this function to Enable the SkillCheck object and it will perform one skill check. Please supply a difficulty object that will define the complexity of the skill check.
     /// </summary>
     /// <param name="difficulty"></param>
-    public void TriggerSkillCheck(PlayerSkillCheckDifficulty difficulty, string tagName)
+    public void TriggerSkillCheck(PlayerSkillCheckDifficulty difficulty, Transform target)
     {
-        AssignTarget(tagName);
+        AssignTarget(target);
         this.gameObject.SetActive(true);
 
         if (difficulty.rotateSkillCheckRandom)

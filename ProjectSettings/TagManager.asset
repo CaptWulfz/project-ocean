@@ -11,6 +11,7 @@ TagManager:
   - Damage
   - Hostile
   - PlayerVision
+  - Interactable
   layers:
   - Default
   - TransparentFX
