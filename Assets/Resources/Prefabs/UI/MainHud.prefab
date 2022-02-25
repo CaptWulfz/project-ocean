@@ -317,7 +317,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.053260874, y: 0.56044817}
   m_AnchorMax: {x: 0.113669, y: 0.6603569}
-  m_AnchoredPosition: {x: 2.0465698, y: -0.20000076}
+  m_AnchoredPosition: {x: 2.0465698, y: -0.19999695}
   m_SizeDelta: {x: -3.248413, y: 0.7515869}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5193212513765021316
@@ -826,7 +826,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6399051089872714301, guid: dfa24cdc6dd272a48b4a968a60f83bc1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.18808174
+      value: -0.18807983
       objectReference: {fileID: 0}
     - target: {fileID: 6399051089872714301, guid: dfa24cdc6dd272a48b4a968a60f83bc1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1017,6 +1017,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIParticle
       objectReference: {fileID: 0}
+    - target: {fileID: 618641366927716671, guid: d2554d902a3b2ad4190923ccbfe85d9a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9034387138271962425, guid: d2554d902a3b2ad4190923ccbfe85d9a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1193,11 +1197,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8231468083580119632, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 4.1999817
+      value: 4.199951
       objectReference: {fileID: 0}
     - target: {fileID: 8231468083580119632, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.7999954
+      value: -0.7999878
       objectReference: {fileID: 0}
     - target: {fileID: 8231468083580119632, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
