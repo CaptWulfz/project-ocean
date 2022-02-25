@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class SkillCheck : MonoBehaviour
 {
-    [Header("Temporary")]
-    [SerializeField] Text playerPrompt;
-
     [Header("Skill Check Properties")]
     [SerializeField] float skillCheckCorrectFieldPercentage = 0.10f; //Out of 100%, 0.10f = 10%
     [SerializeField] float skillCheckMinimumLeftHandValue = 0.30f; //Skill check can start from 0.3f until 1f

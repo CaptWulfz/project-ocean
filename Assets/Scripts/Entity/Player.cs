@@ -489,7 +489,6 @@ public class Player : Entity
         string tag = collision.gameObject.tag;
         if (tag == TagNames.DAMAGE)
         {
-            Debug.Log("Enter");
             Damage damage = collision.GetComponent<Damage>();
             this.panic.ApplyPanicPressure(damage.PanicInfliction);
         }
@@ -509,7 +508,7 @@ public class Player : Entity
             this.panic.RemovePanicPressure(damage.PanicInfliction);
         }
 
-        if (tag == TagNames.INTERACTABLE)
+        if (collision.tag == TagNames.INTERACTABLE)
         {
             this.interactableObj = null;
         }

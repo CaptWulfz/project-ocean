@@ -329,6 +329,8 @@ public class AudioKeys
 public class SFXKeys
 {
     public const string TOM = "tom";
+    public const string SKILLCHECK_SUCCESS = "Skillcheck_Success";
+    public const string SKILLCHECK_FAIL = "Skillcheck_Fail";
     public const string BREATHING_CALM = "breathing_calm";
     public const string BREATHING_DANGER = "breathing_danger";
     public const string BREATHING_DYING = "breathing_dying";
@@ -336,5 +338,5 @@ public class SFXKeys
 
 public class MusicKeys
 {
-    public const string MAIN_THEME = "Viridescent_Main_Theme";
+   
 }
