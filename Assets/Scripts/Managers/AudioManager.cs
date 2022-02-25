@@ -107,14 +107,14 @@ public class AudioManager : Singleton<AudioManager>
     /// <param name="audioGroupKey">Name of the Audio Group</param>
     /// <param name="sourceKey">Name of the Audio Source</param>
     /// <param name="clipName">Name of the Audio Clip to be played</param>
-    public void PlayAudio(string audioGroupKey, string sourceKey, string clipName)
+    public void PlayAudio(string audioGroupKey, string sourceKey, string clipName, float localMaxVolume = 1)
     {
         AudioSource source = GetAudioSource(audioGroupKey, sourceKey);
         Dictionary<string, AudioClip> dict = GetAudioDict(audioGroupKey);
         float volume = GetAudioGroupGlobalVolume(audioGroupKey);
 
         source.clip = dict[clipName];
-        source.volume = volume;
+        source.volume = localMaxVolume * volume;
         source.Play();
     }
 
@@ -338,5 +338,5 @@ public class SFXKeys
 
 public class MusicKeys
 {
-   
+    public const string AMBIANCE = "Ambiance";
 }

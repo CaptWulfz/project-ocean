@@ -19,6 +19,8 @@ public class CameraAudioSource : MonoBehaviour
         AudioManager.Instance.RegisterAudioSource(AudioKeys.SFX, this.sfxSourceName, this.sfxSource);
 
         EventBroadcaster.Instance.AddObserver(EventNames.ON_SKILL_CHECK_FINISHED, OnSkillCheckFinished);
+
+        AudioManager.Instance.PlayAudio(AudioKeys.MUSIC, this.musicSourceName, MusicKeys.AMBIANCE);
     }
 
     #region Event Broacaster
