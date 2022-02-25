@@ -6,8 +6,13 @@ using UnityEngine;
 public class AnimatorController : MonoBehaviour
 {
     [SerializeField] Animator animator;
+    
+    public void EvaluateValues(Dictionary<string, object> paramToValue)
+    {
+        
+    }
 
-    public void EvaluateAnimation(string name, object value)
+    protected void EvaluateAnimation(string name, object value)
     {
         Type type = null;
 

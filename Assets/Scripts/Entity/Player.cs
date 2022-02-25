@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : Entity //
+public class Player : Entity
 {    
     public enum SpeedStates{
         MIN,
@@ -42,11 +42,9 @@ public class Player : Entity //
     [SerializeField] private bool goMax;
 
     [Header("Mouse Settings")]
-    [SerializeField]Vector2 direction = Vector2.zero;
-    [SerializeField]Transform mouseAngle;
+    [SerializeField] Vector2 direction = Vector2.zero;
+    [SerializeField] Transform mouseAngle;
     private float mouseAngleZ;
-
-    private float secondsInMaxSpeedState;
 
     private Coroutine switchStateDelay = null;
 
@@ -92,6 +90,7 @@ public class Player : Entity //
         //    Debug.Log("Decreased Panic by 10 + Good points");
         //    this.panic.DecreasePanicValue(10f); // Panic reduced when looking at source of sounds
         //}
+        EvaluatePanicState();
     }
 
     private void FixedUpdate()
@@ -116,17 +115,14 @@ public class Player : Entity //
 
         if(currentSpeedState == SpeedStates.MIN)
         {
-            secondsInMaxSpeedState = 0f;
             speedMultiplier = minSpeed;
         }
         else if(currentSpeedState == SpeedStates.MID)
         {
-            secondsInMaxSpeedState = 0f;
             speedMultiplier = midSpeed;
         }
         else if(currentSpeedState == SpeedStates.MAX)
         {
-            secondsInMaxSpeedState += Time.deltaTime;       //helo
             speedMultiplier = maxSpeed;
         }
         if(input == Vector2.zero)   //Sets the SpeedState to MIN if there is no input
@@ -350,6 +346,9 @@ public class Player : Entity //
     #region State Listeners
     public void EvaluatePanicState()
     {
+        if (!this.panic.SwitchingPanicState)
+            return;
+
         switch (this.panic.PanicState)
         {
             case PanicState.CALM:
@@ -368,35 +367,31 @@ public class Player : Entity //
                 OnPanicStateDead();
                 break;
         }
+
+        this.audioController.SoundPanicState(this.panic.PanicState);
     }
     #endregion
 
     #region Panic State Evaluators
     private void OnPanicStateCalm()
     {
-        Debug.Log("CHECK STATE: " + this.panic.PanicState);
-        this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(0.5f);
     }
     private void OnPanicStateNormal()
     {
-        this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(0.75f);
     }
     private void OnPanicStateDanger()
     {
-        this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(1f);
     }
     private void OnPanicStateDying()
     {
-        this.audioController.SoundPanicState(this.panic.PanicState);
         this.oxygen.SetOxygenDecreaseMultiplier(1.25f);
     }
     private void OnPanicStateDead()
     {
         // Add Panic Death Animation here
-        this.audioController.SoundPanicState(this.panic.PanicState);
         this.EntityControls.Player.Movement.Disable();
         Debug.Log("Character is Scared to Death");
     }
