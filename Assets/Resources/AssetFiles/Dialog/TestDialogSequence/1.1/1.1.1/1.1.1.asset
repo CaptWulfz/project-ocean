@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SpeakerName>k__BackingField: 0
   <EventDialogText>k__BackingField: nice
-  <SpeakerImage>k__BackingField: {fileID: 21300000, guid: bfd64ce686b86e84bbc8fb285c17984b, type: 3}
+  <SpeakerImage>k__BackingField: {fileID: 21300000, guid: d687db9ece5e11c49a1a045dc10dca85, type: 3}
   <EventDialogPlayerResponses>k__BackingField: []
   <ConfidenceType>k__BackingField: 0
   <EventDialogEffect>k__BackingField: 2
