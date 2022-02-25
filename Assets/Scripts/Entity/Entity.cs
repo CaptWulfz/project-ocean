@@ -6,6 +6,8 @@ public class Entity : MonoBehaviour
 {
     [Header("Player Settings")]
     [SerializeField] protected Rigidbody2D rigidBody;
+    [SerializeField] protected AudioSource audioSource;
+    //protected AudioSource audioSource;
 
     private Controls controls;
     public Controls EntityControls
