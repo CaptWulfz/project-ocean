@@ -25,4 +25,6 @@ MonoBehaviour:
     source: {fileID: 8300000, guid: 34128b3fdf0ef774faca7da9a88d8f72, type: 3}
   - key: breathing_dying
     source: {fileID: 8300000, guid: 560f88d91a35ff44cbb337383ef58f3d, type: 3}
-  Music: []
+  Music:
+  - key: Ambiance
+    source: {fileID: 8300000, guid: d24bffbf920b2d7489c80dc0721b3ebc, type: 3}

@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class SoundSource : Entity
 {
-    [SerializeField] AudioSource audioSource;
     [SerializeField] SoundSourceRange soundRange;
 
     private SoundModel soundModel;
