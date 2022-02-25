@@ -11,6 +11,10 @@ public class Oxygen : MonoBehaviour
     private const float MAX_OXYGEN = 120f;
 
     private float oxygenTimer;
+    public float OxygenTimer
+    {
+        get { return this.oxygenTimer; }
+    }
     private float oxygenDecreaseMultiplier = 0.5f;
 
     public void Initialize()

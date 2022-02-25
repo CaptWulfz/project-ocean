@@ -24,6 +24,16 @@ public class Player : Entity
     [SerializeField] Panic panic;
     [SerializeField] Oxygen oxygen;
 
+    public float PanicValue
+    {
+        get { return this.panic.PanicValueRelativeToMax; }
+    }
+
+    public float OxygenTimer
+    {
+        get { return this.oxygen.OxygenTimer; }
+    }
+
     [Header("Controllers")]
     [SerializeField] AudioController audioController;
     [SerializeField] PlayerAnimatorController animController;
