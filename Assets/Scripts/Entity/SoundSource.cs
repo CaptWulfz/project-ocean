@@ -75,4 +75,13 @@ public class SoundSource : Entity
             Destroy(this.gameObject);
         }
     }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == TagNames.PLAYER_VISION)
+        {
+            Debug.Log("I die");
+            Destroy(this.gameObject);
+        }
+    }
 }

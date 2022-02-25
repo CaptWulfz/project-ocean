@@ -6,9 +6,14 @@ using UnityEngine.InputSystem;
 
 public class GameDirector : Singleton<GameDirector>
 {
-    private const string DIRECTOR_ENTITIES_MAP_PATH = "AssetFiles/DirectorEntitiesMap";
+    private GameDirectorMain gameDirectorMain;
 
-    private DirectorEntitiesMap entitiesMap;
+    private bool gameStart = false;
+    public bool GameStart
+    {
+        get { return this.gameStart; }
+        set { this.gameStart = value; }
+    }
 
     private bool isDone = false;
     public bool IsDone
@@ -19,33 +24,42 @@ public class GameDirector : Singleton<GameDirector>
     #region Initialization
     public void Initialize()
     {
-        this.entitiesMap = Resources.Load<DirectorEntitiesMap>(DIRECTOR_ENTITIES_MAP_PATH);
+        this.gameDirectorMain = new GameDirectorMain();
+        this.gameDirectorMain.InitializeSkillCheck();
+        this.gameDirectorMain.InitializeEntities();
         StartCoroutine(WaitForInitialization());
     }
 
     private IEnumerator WaitForInitialization()
     {
-        yield return new WaitUntil(() => { return this.entitiesMap != null; });
+        yield return new WaitUntil(() => { return this.gameDirectorMain.EntitiesMap != null && this.gameDirectorMain.SpawnPoints != null; });
         this.isDone = true;
     }
     #endregion
 
     private void Update()
     {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            Debug.Log("Spawn Sound Source");
-            GameDirector.Instance.SpawnSoundSourceOutsideOfCamera();
-        }
+        if (!this.gameStart)
+            return;
+
+        this.gameDirectorMain.UpdateEntities();
+        this.gameDirectorMain.UpdateSkillCheck();
     }
 
-    public void SpawnSoundSourceOutsideOfCamera()
+    #region Helpers
+    public void RegisterSkillCheck(SkillCheck check)
     {
-        Vector2 spawnTransform = Camera.main.ViewportToWorldPoint(new Vector2(-0.1f, 0.5f));
-        SoundSource source = this.entitiesMap.SoundSourceReference;
-        GameObject newSpawn = GameObject.Instantiate(source.gameObject);
-        newSpawn.SetActive(true);
-        newSpawn.GetComponent<SoundSource>().Setup(this.entitiesMap.SoundModels[0]);
-        newSpawn.transform.position = spawnTransform;
+        this.gameDirectorMain.RegisterSkillCheck(check);
     }
+
+    public void TrackPlayerSpeedState(Player.SpeedStates speedState)
+    {
+        this.gameDirectorMain.TrackPlayerSpeedState(speedState);
+    }
+
+    public void TrackPlayerLookState(Player.LookStates lookState)
+    {
+        this.gameDirectorMain.TrackPlayerLookState(lookState);
+    }
+    #endregion
 }
