@@ -32,7 +32,7 @@ public class EventDialogManager : Singleton<EventDialogManager>
             foreach (EventDialog playerResponse in eventDialog.EventDialogPlayerResponses)
             {
                 GameObject newObject = GameObjectPool.Instance.GetObject();
-                newObject.transform.SetParent(dialogOptionArea.transform);
+                newObject.transform.SetParent(dialogOptionArea.transform, false);
 
                 newObject.GetComponentInChildren<Text>().text = playerResponse.EventDialogText;
                 newObject.GetComponent<EventDialogBox>().SetDialogBoxProperties(this.gameObject, playerResponse.EventDialogPlayerResponses[0]);
