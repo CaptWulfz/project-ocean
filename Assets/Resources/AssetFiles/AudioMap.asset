@@ -19,4 +19,10 @@ MonoBehaviour:
     source: {fileID: 8300000, guid: f2a962f65aface848a356e0fb85db5d3, type: 3}
   - key: Skillcheck_Fail
     source: {fileID: 8300000, guid: d8febf08cacbed243be825f25fb285ff, type: 3}
+  - key: breathing_calm
+    source: {fileID: 8300000, guid: 97ca0863d85baf743927b0198df20534, type: 3}
+  - key: breathing_danger
+    source: {fileID: 8300000, guid: 34128b3fdf0ef774faca7da9a88d8f72, type: 3}
+  - key: breathing_dying
+    source: {fileID: 8300000, guid: 560f88d91a35ff44cbb337383ef58f3d, type: 3}
   Music: []

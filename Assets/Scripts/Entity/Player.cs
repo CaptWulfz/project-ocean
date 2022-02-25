@@ -99,8 +99,12 @@ public class Player : Entity
         this.currentSpeedState = SpeedStates.MIN; //Init default value
         this.panic.Initialize();
         this.oxygen.Initialize();
-        this.audioController.Initialize();
         this.animController.InitializeAnimator();
+
+        // Audio
+        this.sourceName = string.Format("Entity@{0}", this.GetInstanceID());
+        this.audioController.Initialize(this.audioSource , this.sourceName);
+
     }
 
     private void Update()
@@ -438,7 +442,6 @@ public class Player : Entity
                 OnPanicStateDead();
                 break;
         }
-
         this.audioController.SoundPanicState(this.panic.PanicState);
     }
     #endregion
