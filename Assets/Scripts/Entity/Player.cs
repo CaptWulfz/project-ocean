@@ -53,6 +53,8 @@ public class Player : Entity
 
     private Coroutine switchStateDelay = null;
 
+    private Interactable interactableObj;
+
     #region GETTERS/SETTERS
     public float CurrentSpeed
     {
@@ -109,6 +111,7 @@ public class Player : Entity
         //    this.panic.DecreasePanicValue(10f); // Panic reduced when looking at source of sounds
         //}
         EvaluatePanicState();
+        HandleInteractables();
         this.animController.UpdateAnimator();
     }
 
@@ -121,6 +124,20 @@ public class Player : Entity
         GameDirector.Instance.TrackPlayerSpeedState(this.currentSpeedState);
     }
     #endregion
+
+    #region Interactables
+    private void HandleInteractables()
+    {
+        if (this.interactableObj == null)
+            return;
+
+        if (Keyboard.current.lKey.wasPressedThisFrame)
+        {
+            this.interactableObj.TriggerSkillCheck();
+        }
+    }
+    #endregion
+
     //--------
     #region Movement
     private void MovePlayerWASD()
@@ -456,11 +473,17 @@ public class Player : Entity
     #region Listeners
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == TagNames.DAMAGE)
+        string tag = collision.gameObject.tag;
+        if (tag == TagNames.DAMAGE)
         {
             Debug.Log("Enter");
             Damage damage = collision.GetComponent<Damage>();
             this.panic.ApplyPanicPressure(damage.PanicInfliction);
+        }
+
+        if (tag == TagNames.INTERACTABLE)
+        {
+            this.interactableObj = collision.GetComponent<Interactable>();
         }
     }
 
@@ -471,6 +494,11 @@ public class Player : Entity
             Debug.Log("Exit");
             Damage damage = collision.GetComponent<Damage>();
             this.panic.RemovePanicPressure(damage.PanicInfliction);
+        }
+
+        if (tag == TagNames.INTERACTABLE)
+        {
+            this.interactableObj = null;
         }
     }
 
