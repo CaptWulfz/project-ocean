@@ -103,7 +103,7 @@ public class Player : Entity
 
         // Audio
         this.sourceName = string.Format("Entity@{0}", this.GetInstanceID());
-        this.audioController.Initialize(this.audioSource , this.sourceName); // not yet working
+        this.audioController.Initialize(this.audioSource , this.sourceName);
 
     }
 
