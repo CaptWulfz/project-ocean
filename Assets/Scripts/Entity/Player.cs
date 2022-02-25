@@ -31,16 +31,12 @@ public class Player : Entity
     [Header("Player Settings")]
     //[SerializeField] Rigidbody2D playerRigidbody;
     [SerializeField] private float smoothInputSpeed = 0.1f; //SmoothDamp value
+    [SerializeField] private SpriteRenderer playerSprite;
     private Vector2 currentInputVector;
     private Vector2 smoothInputVelocity;
     
     [Header("Player Speed")]
     [SerializeField] private float currentSpeed = 0f;
-    public float CurrentSpeed
-    {
-        get { return this.currentSpeed; }
-    }
-
     [SerializeField] private float minSpeed = 3f;
     [SerializeField] private float midSpeed = 4f;
     [SerializeField] private float maxSpeed = 5f;
@@ -48,6 +44,7 @@ public class Player : Entity
     [SerializeField] private bool goMin;
     [SerializeField] private bool goMid;
     [SerializeField] private bool goMax;
+    private bool playerIsFloating;
 
     [Header("Mouse Settings")]
     [SerializeField] Vector2 direction = Vector2.zero;
@@ -58,9 +55,21 @@ public class Player : Entity
 
     private Interactable interactableObj;
 
+    #region GETTERS/SETTERS
+    public float CurrentSpeed
+    {
+        get { return this.currentSpeed; }
+    }
+
     public float SpeedMultiplier
     {
         get { return this.speedMultiplier; }
+    }
+    #endregion
+
+    public bool PlayerIsFloating
+    {
+        get { return this.playerIsFloating; }
     }
 
     #region MACHINE RUNTIME
@@ -81,7 +90,6 @@ public class Player : Entity
         this.panic.Initialize();
         this.oxygen.Initialize();
         this.audioController.Initialize();
-
         this.animController.InitializeAnimator();
     }
 
@@ -111,6 +119,7 @@ public class Player : Entity
     {
         MovePlayerWASD();                   //USES WASD
         SwitchLookState();
+        SwitchLookAnimation();
         currentSpeed = rigidBody.velocity.magnitude;   //Just records the current speed
         GameDirector.Instance.TrackPlayerSpeedState(this.currentSpeedState);
     }
@@ -143,6 +152,7 @@ public class Player : Entity
         if(currentSpeedState == SpeedStates.MIN)
         {
             speedMultiplier = minSpeed;
+
         }
         else if(currentSpeedState == SpeedStates.MID)
         {
@@ -212,9 +222,11 @@ public class Player : Entity
 
         mouseAngleZ = mouseAngle.localRotation.eulerAngles.z;
         //N, W, S, E    60deg each
-        if ((mouseAngleZ >= 60.0f) && (mouseAngleZ <= 120.0f))              //NORTH
+        if ((mouseAngleZ >= 45.0f) && (mouseAngleZ <= 135.0f))              //NORTH
         {
             currentLookState = LookStates.N;
+            
+            playerIsFloating = true;
             goMin = true;
             goMid = false;
             goMax = false;
@@ -235,7 +247,7 @@ public class Player : Entity
                 goMax = true;
             }
         }
-        else if ((mouseAngleZ >= 240.0f) && (mouseAngleZ <= 300.0f))        //SOUTH
+        else if ((mouseAngleZ >= 225.0f) && (mouseAngleZ <= 315.0f))        //SOUTH
         {
             currentLookState = LookStates.S;
             direction = Vector2.down;
@@ -260,7 +272,7 @@ public class Player : Entity
             }
         }
         //NW, SW, SE, NE
-        else if ((mouseAngleZ > 120.0) && (mouseAngleZ < 150.0f))           //NORTH WEST
+        else if ((mouseAngleZ > 120.0) && (mouseAngleZ < 135.0f))           //NORTH WEST
         {
             currentLookState = LookStates.NW;
             if (currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
@@ -276,7 +288,7 @@ public class Player : Entity
                 goMax = false;
             }
         }
-        else if ((mouseAngleZ > 210.0) && (mouseAngleZ < 240.0f))           //SOUTH WEST
+        else if ((mouseAngleZ > 210.0) && (mouseAngleZ < 225.0f))           //SOUTH WEST
         {
             currentLookState = LookStates.SW;
             if (currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
@@ -292,7 +304,7 @@ public class Player : Entity
                 goMax = false;
             }
         }
-        else if ((mouseAngleZ > 300.0) && (mouseAngleZ < 330.0f))           //SOUTH EAST
+        else if ((mouseAngleZ > 300.0) && (mouseAngleZ < 315.0f))           //SOUTH EAST
         {
             currentLookState = LookStates.SE;
             if (currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
@@ -308,7 +320,7 @@ public class Player : Entity
                 goMax = false;
             }
         }
-        else if ((mouseAngleZ > 30.0) && (mouseAngleZ < 60.0f))             //NORTH EAST
+        else if ((mouseAngleZ > 30.0) && (mouseAngleZ < 45.0f))             //NORTH EAST
         {
             currentLookState = LookStates.NE;
             if (currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
@@ -325,7 +337,11 @@ public class Player : Entity
             }
         }
         //Debug.Log("QQQ CURRENT LOOK STATE: " + currentLookState);
-        GameDirector.Instance.TrackPlayerLookState(this.currentLookState);
+        //GameDirector.Instance.TrackPlayerLookState(currentLookState);
+        if(goMin && !goMid && !goMax)
+            playerIsFloating = true;
+        else
+            playerIsFloating = false;
     }
 
     private void SwitchMoveState(Vector2 input){
@@ -371,6 +387,24 @@ public class Player : Entity
     #endregion
 
     #region State Listeners
+
+    public void SwitchLookAnimation(){
+        if(currentLookState == LookStates.N || currentLookState == LookStates.S) //Flips player
+        {
+            if((mouseAngleZ > 90.0f && mouseAngleZ < 120.0f)||(mouseAngleZ > 240.0f && mouseAngleZ < 270.0f))
+            {
+                //flip sprite lmao to the left
+                playerSprite.flipX = true;
+            }
+            else if((mouseAngleZ < 90.0f && mouseAngleZ > 60.0f)||(mouseAngleZ < 300.0f && mouseAngleZ > 270.0f))
+            {
+                //flip sprite to the right
+                
+                playerSprite.flipX = false;
+            }
+        }
+    }
+
     public void EvaluatePanicState()
     {
         if (!this.panic.SwitchingPanicState)
