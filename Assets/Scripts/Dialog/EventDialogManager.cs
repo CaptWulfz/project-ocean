@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EventDialogManager : Singleton<EventDialogManager>
+public class EventDialogManager : MonoBehaviour
 {
     [SerializeField] EventDialogGroup eventDialogGroup; //Custom Asset for Dialog Group
     [SerializeField] GameObject eventDialogBox; //Prefab of Dialog Option
@@ -13,6 +13,8 @@ public class EventDialogManager : Singleton<EventDialogManager>
     [SerializeField] Text dialogText; //Text for dialog
     [SerializeField] GameObject dialogOptionArea; //Panel to act as parent of dialog options.
 
+    [SerializeField] GameObject closeButton;
+
     void Awake()
     {
         GameObjectPool.Instance.Initialize(5, eventDialogBox);
@@ -20,22 +22,34 @@ public class EventDialogManager : Singleton<EventDialogManager>
 
     void Start()
     {
-        GenerateDialogSequence(eventDialogGroup.EventDialogs[0]);
+        //GenerateDialogSequence(eventDialogGroup.EventDialogs[0]);
     }
 
     public void GenerateDialogSequence(EventDialog eventDialog)
     {
+        this.gameObject.SetActive(true);
+        closeButton.SetActive(false);
+
         speakerImage.sprite = eventDialog.SpeakerImage;
         speakerName.text = eventDialog.SpeakerName.ToString();
         dialogText.text = eventDialog.EventDialogText;
 
-        if (eventDialog.EventDialogPlayerResponses != null)
+        foreach (Button objectToDequeue in dialogOptionArea.GetComponentsInChildren<Button>())
         {
-            foreach(Button objectToDequeue in dialogOptionArea.GetComponentsInChildren<Button>())
-            {
+            if (objectToDequeue.gameObject.tag != "DialogCloseButton")
                 GameObjectPool.Instance.ReturnObject(objectToDequeue.gameObject);
-            }
+        }
+
+        if (eventDialog.EventDialogPlayerResponses.Length > 0)
+        {
             //This is if there's still a continuation of the dialog/there needs to be a player response
+            if (eventDialog.EventDialogPlayerResponses.Length == 1)
+                dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 1000;
+            else if (eventDialog.EventDialogPlayerResponses.Length == 2)
+                dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 700;
+            else if (eventDialog.EventDialogPlayerResponses.Length == 3)
+                dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 400;
+
             foreach (EventDialog playerResponse in eventDialog.EventDialogPlayerResponses)
             {
                 GameObject newObject = GameObjectPool.Instance.GetObject();
@@ -52,11 +66,17 @@ public class EventDialogManager : Singleton<EventDialogManager>
         }
         else if (eventDialog.EventDialogEffect != DialogEffects.NONE)
         {
-            dialogOptionArea.SetActive(false);
+            closeButton.SetActive(true);
             PerformDialogEffect(eventDialog);
         }
         else
-            dialogOptionArea.SetActive(false);
+            closeButton.SetActive(true);
+    }
+
+    public void OnCloseButtonClick()
+    {
+        this.gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 
     void PerformDialogEffect(EventDialog dialog)

@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 public class GameDirector : Singleton<GameDirector>
 {
     private GameDirectorMain gameDirectorMain;
+    private EventDialogGroup topicList;
+    private EventDialogManager dialogManager;
 
     private bool gameStart = false;
     public bool GameStart
@@ -27,6 +29,7 @@ public class GameDirector : Singleton<GameDirector>
         this.gameDirectorMain = new GameDirectorMain();
         this.gameDirectorMain.InitializeSkillCheck();
         this.gameDirectorMain.InitializeEntities();
+        this.topicList = Resources.Load<EventDialogGroup>("AssetFiles/Dialog/TopicList");
         StartCoroutine(WaitForInitialization());
     }
 
@@ -71,5 +74,24 @@ public class GameDirector : Singleton<GameDirector>
     {
         this.gameDirectorMain.TriggerSkillCheck(target, difficulty);
     }
+
+    public void StartDialogSequence(TopicList topic)
+    {
+        EventDialog dialog = this.topicList.EventDialogs[(int)topic];
+        this.dialogManager.GenerateDialogSequence(dialog);
+        Time.timeScale = 0;
+    }
+
+    public void RegisterEventDialogManager(EventDialogManager dialogManager)
+    {
+        this.dialogManager = dialogManager;
+    }
     #endregion
+}
+
+public enum TopicList
+{
+    INTRO,
+    INTRO_EXIT,
+    RELIC_LANDING
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ea43e4d106ab641a182c5a2f0741d3, type: 3}
+  m_Name: _DialogIntro_1
+  m_EditorClassIdentifier: 
+  <SpeakerName>k__BackingField: 0
+  <EventDialogText>k__BackingField: "There\u2019s no way this place was down here
+    this entire time! How is it still standing?"
+  <SpeakerImage>k__BackingField: {fileID: 21300000, guid: c4053a3a505737d4bb582826b3ddec30, type: 3}
+  <EventDialogPlayerResponses>k__BackingField:
+  - {fileID: 11400000, guid: 2c290656b678b16489cf14797cf6e0a8, type: 2}
+  <ConfidenceType>k__BackingField: 2
+  <EventDialogEffect>k__BackingField: 2
+  <DoubtEffect>k__BackingField: 1
+  <EventDialogPanicDamage>k__BackingField: 0
