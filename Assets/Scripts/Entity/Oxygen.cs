@@ -12,12 +12,19 @@ public class Oxygen : MonoBehaviour
     private const float MAX_OXYGEN = 120f;
 
     private float oxygenTimer;
+    
+    private float oxygenDecreaseMultiplier = 0.5f;
+
     public float OxygenTimer
     {
         get { return this.oxygenTimer; }
+        set { this.oxygenTimer = value; }
     }
-    private float oxygenDecreaseMultiplier = 0.5f;
-
+    public bool NoOxygen
+    {
+        get { return this.noOxygen; }
+        set { this.noOxygen = value;}
+    }
     public void Initialize()
     {
         noOxygen = false;
