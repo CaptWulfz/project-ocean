@@ -44,15 +44,16 @@ public class Player : Entity
     [SerializeField] PlayerAnimatorController animController;
 
     [Header("Player Settings")]
-    //[SerializeField] Rigidbody2D playerRigidbody;
-    [SerializeField] private float smoothInputSpeed = 0.1f; //SmoothDamp value
     [SerializeField] private SpriteRenderer playerSprite;
     [SerializeField] private GameObject visionCone;
 
+    [SerializeField] private CapsuleCollider2D playerCollider;
+    [SerializeField] private float smoothInputSpeed = 0.1f;         //SmoothDamp value for movement
     private Vector2 currentInputVector;
     private Vector2 smoothInputVelocity;
     
     [Header("Player Speed")]
+    [SerializeField] private float accelSpeed = 1.5f;
     [SerializeField] private float currentSpeed = 0f;
     [SerializeField] private float minSpeed = 3f;
     [SerializeField] private float midSpeed = 4f;
@@ -64,7 +65,6 @@ public class Player : Entity
     private bool playerIsFloating;
 
     [Header("Mouse Settings")]
-    [SerializeField] Vector2 direction = Vector2.zero;
     [SerializeField] Transform mouseAngle;
     private float mouseAngleZ;
 
@@ -95,7 +95,7 @@ public class Player : Entity
         Initialize();
     }
 
-    protected override void Initialize() //Move vars to this class rather than Init -TODO
+    protected override void Initialize()
     {
         base.Initialize();
         this.EntityControls.Player.Enable();
@@ -138,10 +138,11 @@ public class Player : Entity
 
     private void FixedUpdate()
     {
-        MovePlayerWASD();                   //USES WASD
+        MovePlayerWASD();
         SwitchLookState();
         SwitchLookAnimation();
-        currentSpeed = rigidBody.velocity.magnitude;   //Just records the current speed
+        AdjustPlayerCollider();
+        currentSpeed = rigidBody.velocity.magnitude;   //Records the current speed of the Player
         GameDirector.Instance.TrackPlayerSpeedState(this.currentSpeedState);
     }
     #endregion
@@ -164,10 +165,10 @@ public class Player : Entity
     private void MovePlayerWASD()
     {
         Vector2 input = this.EntityControls.Player.Movement.ReadValue<Vector2>();
-        SwitchMoveState(input); //Detects direction of move
         currentInputVector = Vector2.SmoothDamp(currentInputVector, input, ref smoothInputVelocity, smoothInputSpeed);
         Vector2 move = new Vector2(currentInputVector.x, currentInputVector.y);
 
+        SwitchMoveState(input); //Detects direction of move
         speedMultiplier = minSpeed;
 
         if(currentSpeedState == SpeedStates.MIN)
@@ -183,7 +184,8 @@ public class Player : Entity
         {
             speedMultiplier = maxSpeed;
         }
-        if(input == Vector2.zero)   //Sets the SpeedState to MIN if there is no input
+
+        if(input == Vector2.zero)   //if there is NO INPUT - Sets the SpeedState to MIN 
         {
             if(switchStateDelay != null)
             {
@@ -199,23 +201,22 @@ public class Player : Entity
                     currentSpeedState = SpeedStates.MID;
                 }
         }
-        if(input != Vector2.zero)
+        if(input != Vector2.zero)   //If there IS INPUT
         {
             if(switchStateDelay == null)
             {
                 switchStateDelay = StartCoroutine(SwitchSpeedState());
-            }
+            }            
         }
-        //Debug.Log("SpeedMultiplier: "+speedMultiplier+" | SpeedState: "+ currentSpeedState);
+
         this.MovePosition(move * speedMultiplier);
     }
     #endregion
     //--------
     #region State Switch
     IEnumerator SwitchSpeedState(){
-        
-        //Debug.Log("SSState");
-        yield return new WaitForSeconds(1.5f);
+
+        yield return new WaitForSeconds(accelSpeed);
             if(currentSpeedState == SpeedStates.MIN)
             {
                 if(goMid)
@@ -247,115 +248,76 @@ public class Player : Entity
         {
             currentLookState = LookStates.N;
             
-            playerIsFloating = true;
-            goMin = true;
-            goMid = false;
-            goMax = false;
+            //playerIsFloating = true;
+
+            SetMidSpeedToCeiling();
         }
         else if ((mouseAngleZ >= 150.0f) && (mouseAngleZ <= 210.0f))        //WEST
         {
             currentLookState = LookStates.W;
-            if (currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
-            {
-                goMin = true;
-                goMid = false;
-                goMax = false;
-            }
+            if (currentMoveState == LookStates.E)
+                SetMinSpeedToCeiling();
+            else if (currentMoveState == LookStates.N || currentMoveState == LookStates.S)
+                SetMidSpeedToCeiling();
             else
-            {
-                goMin = true;
-                goMid = true;
-                goMax = true;
-            }
+                SetMaxSpeedToCeiling();
         }
         else if ((mouseAngleZ >= 225.0f) && (mouseAngleZ <= 315.0f))        //SOUTH
         {
             currentLookState = LookStates.S;
-            direction = Vector2.down;
-            goMin = true;
-            goMid = false;
-            goMax = false;
+
+            //playerIsFloating = true;
+
+            SetMidSpeedToCeiling();
         }
-        else if (((mouseAngleZ >= 0.0f) && (mouseAngleZ <= 30.0f)||(mouseAngleZ >= 330.0f) && (mouseAngleZ <= 360.0f)))  // EAST
+        else if (((mouseAngleZ >= 330.0f) && (mouseAngleZ <= 360.0f))       // EAST
+                || ((mouseAngleZ >= 0.0f) && (mouseAngleZ <= 30.0f)))
         {
             currentLookState = LookStates.E;
-            if (currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
-            {
-                goMin = true;
-                goMid = false;
-                goMax = false;
-            }
+
+            if (currentMoveState == LookStates.W)
+                SetMinSpeedToCeiling();
+            else if (currentMoveState == LookStates.N || currentMoveState == LookStates.S)
+                SetMidSpeedToCeiling();
             else
-            {
-                goMin = true;
-                goMid = true;
-                goMax = true;
-            }
+                SetMaxSpeedToCeiling();
         }
         //NW, SW, SE, NE
-        else if ((mouseAngleZ > 120.0) && (mouseAngleZ < 135.0f))           //NORTH WEST
+        else if ((mouseAngleZ > 135.0) && (mouseAngleZ < 150.0f))           //NORTH WEST
         {
             currentLookState = LookStates.NW;
-            if (currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
-            {
-                goMin = true;
-                goMid = false;
-                goMax = false;
-            }
+
+            if (currentMoveState == LookStates.E)
+                SetMinSpeedToCeiling();
             else
-            {
-                goMin = true;
-                goMid = true;
-                goMax = false;
-            }
+                SetMidSpeedToCeiling();
         }
         else if ((mouseAngleZ > 210.0) && (mouseAngleZ < 225.0f))           //SOUTH WEST
         {
             currentLookState = LookStates.SW;
-            if (currentMoveState == LookStates.E || currentMoveState == LookStates.NE || currentMoveState == LookStates.SE )
-            {
-                goMin = true;
-                goMid = false;
-                goMax = false;
-            }
+
+            if (currentMoveState == LookStates.E)
+                SetMinSpeedToCeiling();
             else
-            {
-                goMin = true;
-                goMid = true;
-                goMax = false;
-            }
+                SetMidSpeedToCeiling();
         }
-        else if ((mouseAngleZ > 300.0) && (mouseAngleZ < 315.0f))           //SOUTH EAST
+        else if ((mouseAngleZ > 315.0) && (mouseAngleZ < 330.0f))           //SOUTH EAST
         {
             currentLookState = LookStates.SE;
-            if (currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
-            {
-                goMin = true;
-                goMid = false;
-                goMax = false;
-            }
+
+            if (currentMoveState == LookStates.W)
+                SetMinSpeedToCeiling();
             else
-            {
-                goMin = true;
-                goMid = true;
-                goMax = false;
-            }
+                SetMidSpeedToCeiling();
         }
         else if ((mouseAngleZ > 30.0) && (mouseAngleZ < 45.0f))             //NORTH EAST
         {
             currentLookState = LookStates.NE;
-            if (currentMoveState == LookStates.W || currentMoveState == LookStates.NW || currentMoveState == LookStates.SW || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
-            {
-                goMin = true;
-                goMid = false;
-                goMax = false;
-            }
+
+            if (currentMoveState == LookStates.W)
+                SetMinSpeedToCeiling();
             else
-            {
-                goMin = true;
-                goMid = true;
-                goMax = false;
-            }
+                SetMidSpeedToCeiling();
         }
         //Debug.Log("QQQ CURRENT LOOK STATE: " + currentLookState);
         //GameDirector.Instance.TrackPlayerLookState(currentLookState);
@@ -367,47 +329,28 @@ public class Player : Entity
 
     private void SwitchMoveState(Vector2 input){
 
-        direction = input;
         //N W S E
-        if(direction == Vector2.up)                                         //NORTH
+        if(input == Vector2.up)                                         //NORTH
         {
             currentMoveState = LookStates.N;
         }
-        else if (direction == Vector2.left)                                 //WEST
+        else if (input == Vector2.left)                                 //WEST
         {
             currentMoveState = LookStates.W;
         }
-        else if (direction == Vector2.down)                                 //SOUTH
+        else if (input == Vector2.down)                                 //SOUTH
         {
             currentMoveState = LookStates.S;
         }
-        else if (direction == Vector2.right)                                //EAST
+        else if (input == Vector2.right)                                //EAST
         {
             currentMoveState = LookStates.E;
         }
-        //NW, SW, SE, NE     DOESNT WORK THO. BUT UNNECESSARY. :)     -Gelo
-        else if (direction == new Vector2(-1,1))                            //NORTH WEST
-        {
-            currentMoveState = LookStates.NW;
-        }
-        else if (direction == new Vector2(-1,-1))                            //SOUTH WEST
-        {
-            currentMoveState = LookStates.SW;
-        }
-        else if (direction == new Vector2(1,-1))                            //SOUTH EAST
-        {
-            currentMoveState = LookStates.SE;
-        }
-        else if (direction == new Vector2(1,1))                            //NORTH EAST
-        {
-            currentMoveState = LookStates.NE;
-        }
-
-        //Debug.Log("Moving: "+currentMoveState);
     }
     #endregion
 
     #region State Listeners
+
 
     public void SwitchLookAnimation(){
         if(currentLookState == LookStates.N || currentLookState == LookStates.S) //Flips player
@@ -423,6 +366,29 @@ public class Player : Entity
                 
                 playerSprite.flipX = false;
             }
+        }
+    }
+
+    public void AdjustPlayerCollider()
+    {
+        if (!playerIsFloating && (currentSpeed > minSpeed))   //Swim Animation
+        {
+            playerCollider.direction = CapsuleDirection2D.Horizontal;
+            playerCollider.size = new Vector2(2.3f, 0.63f);             //x 2.3, y 0.63
+
+            if (playerSprite.flipX == false)                      //Looking Right x -0.9, y 0.1
+                playerCollider.offset = new Vector2(-0.9f, -0.1f);
+            else if (playerSprite.flipX == true)                 //Looking Left  
+                playerCollider.offset = new Vector2(0.9f, -0.1f);
+        }
+        else if (currentSpeed <= minSpeed)                   //Idle/Floating Animation
+        {
+            playerCollider.direction = CapsuleDirection2D.Vertical;
+            playerCollider.size = new Vector2(1f, 2f);                  //x 1, y 2
+            if (playerSprite.flipX == false)
+                playerCollider.offset = new Vector2(-0.18f, -0.88f);        //x -0.18, y-0.88
+            else if (playerSprite.flipX == true)
+                playerCollider.offset = new Vector2(0.18f, -0.88f);
         }
     }
 
@@ -470,39 +436,47 @@ public class Player : Entity
     {
         this.oxygen.SetOxygenDecreaseMultiplier(1.25f);
     }
+    
+    #endregion
+
+    #region Deaths
+    // POSTEVENT = POST VIDEO
+    // ADD OBSERVER = NOTIF TO THE VIDEO
+    // GET PARAM = Get specific parameter
     private void OnPanicStateDead()
     {
         // Add Panic Death Animation here
         this.EntityControls.Player.Movement.Disable();
         this.visionCone.SetActive(false);
 
-        Debug.Log("MOVEMENT IS DISABLED: ");
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Panic", () =>
         {
             DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
             popup.Show();
         }));
     }
-    #endregion
 
-    #region Oxygen Death
-    // POSTEVENT = POST VIDEO
-    // ADD OBSERVER = NOTIF TO THE VIDEO
-    // GET PARAM = Get specific parameter
     public void OnOxygenStageDead()
     {
         this.audioController.SoundOxygenDeath();
         this.EntityControls.Player.Movement.Disable();
         this.visionCone.SetActive(false);
 
-
-        Debug.Log("No more Oxygen, Character is Dead");
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Oxygen", () =>
         {
             Debug.Log("NO MORE OXYGEN death popup: ");
             DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
             popup.Show();
         }));
+    }
+
+    public void OnMineExplosionDead()
+    {
+
+        this.EntityControls.Player.Movement.Disable();
+        Debug.Log("Kaboom, you are ded");
+        DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+        popup.Show();
     }
     #endregion
 
@@ -546,5 +520,28 @@ public class Player : Entity
             this.panic.IncreasePanicValue(source.InflictedPanicValue * 3);
         }
     }
+    #endregion
+
+    #region Bool Manipulation
+
+    public void SetMinSpeedToCeiling()
+    {
+        goMin = true;
+        goMid = false;
+        goMax = false;
+    }
+    public void SetMidSpeedToCeiling()
+    {
+        goMin = true;
+        goMid = true;
+        goMax = false;
+    }
+    public void SetMaxSpeedToCeiling()
+    {
+        goMin = true;
+        goMid = true;
+        goMax = true;
+    }
+
     #endregion
 }
