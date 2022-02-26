@@ -436,7 +436,14 @@ public class Player : Entity
     {
         this.oxygen.SetOxygenDecreaseMultiplier(1.25f);
     }
-    
+
+    #endregion
+
+    #region Oxygen
+    public void AddOxygen(float value)
+    {
+        this.oxygen.AddOxygen(value);
+    }
     #endregion
 
     #region Deaths
