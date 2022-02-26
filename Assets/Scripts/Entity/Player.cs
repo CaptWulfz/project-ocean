@@ -471,7 +471,14 @@ public class Player : Entity
     {
         // Add Panic Death Animation here
         this.EntityControls.Player.Movement.Disable();
+
         Debug.Log("Character is Scared to Death");
+
+        DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+        popup.Show();
+        //Parameters param1 = new Parameters();
+        //param1.AddParameter<string>("deathMenu", "deadPanic");
+        //EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_PANIC, param1);
     }
     #endregion
 
@@ -483,7 +490,11 @@ public class Player : Entity
     {
         this.audioController.SoundOxygenDeath();
         this.EntityControls.Player.Movement.Disable();
+
         Debug.Log("No more Oxygen, Character is Dead");
+        Parameters param1 = new Parameters();
+        param1.AddParameter<string>("deathMenu", "deadOxygen");
+        EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_OXYGEN, param1);
     }
     #endregion
 

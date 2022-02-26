@@ -38,7 +38,7 @@ public class PopupManager : Singleton<PopupManager>
     {
         string path = string.Format(POPUPS_PATH, popupName);
         GameObject popup = Resources.Load<GameObject>(path);
-        popup.SetActive(false);
+        popup.SetActive(true);
         GameObject deploy = GameObject.Instantiate(popup, this.popupCanvas.transform);
 
         return deploy.GetComponent<T>();
