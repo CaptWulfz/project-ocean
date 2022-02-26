@@ -27,8 +27,6 @@ public class AudioController : MonoBehaviour
 
     public void SoundPanicState(PanicState panicState)
     {
-        Debug.Log("SOUND PANIC STATE: " + panicState);
-        Debug.Log("SOUND SOURCE NAME: " + this.sourceName);
         switch (panicState)
         {
             case PanicState.CALM:
