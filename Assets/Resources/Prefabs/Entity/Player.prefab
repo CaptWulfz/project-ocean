@@ -294,6 +294,7 @@ MonoBehaviour:
   animController: {fileID: 6053839845969842730}
   smoothInputSpeed: 0.8
   playerSprite: {fileID: 478807534573499867}
+  playerCollider: {fileID: 478807534573499869}
   currentSpeed: 0
   minSpeed: 3
   midSpeed: 4
