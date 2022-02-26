@@ -59,7 +59,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 3.5
 --- !u!1 &6324780369754342793
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 6324780369754342795}
   - component: {fileID: 6324780369754342796}
   - component: {fileID: 203853032883209769}
-  - component: {fileID: 3497534803756316547}
+  - component: {fileID: 5794696665216554491}
   m_Layer: 10
   m_Name: Whispers
   m_TagString: Hostile
@@ -301,7 +301,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!58 &3497534803756316547
+--- !u!58 &5794696665216554491
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -316,4 +316,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.1
+  m_Radius: 1.4666667

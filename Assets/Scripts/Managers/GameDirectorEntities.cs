@@ -9,6 +9,7 @@ public partial class GameDirectorMain
     private const string SPAWN_POINTS_PATH = "AssetFiles/SpawnPoints";
 
     private const float ENTITY_DELAY = 2f;
+    private const int MAX_ENTITY_COUNT = 8;
 
     private Player.LookStates playerLookState;
 
@@ -28,6 +29,7 @@ public partial class GameDirectorMain
     private int prevIndex;
     private bool isReadyToSpawn = false;
     private float entityDelay;
+    private int entityCount;
 
     public void InitializeEntities()
     {
@@ -38,12 +40,14 @@ public partial class GameDirectorMain
 
     public void UpdateEntities()
     {
+        if (this.entityCount > MAX_ENTITY_COUNT)
+            return;
+
         if (!this.isReadyToSpawn)
             return;
 
         if ((int)this.entityDelay <= 0)
         {
-            this.entityDelay = ENTITY_DELAY;
             SpawnSoundSourceOutsideOfCamera();
         } else
         {
@@ -64,19 +68,28 @@ public partial class GameDirectorMain
     private void LoadNextSoundModel()
     {
         this.preloadedSoundSource = GetRandomizedSoundSource();
+        this.entityDelay = ENTITY_DELAY;
         this.entityDelay += preloadedSoundSource.SoundModel.DelayBeforeSpawn;
         this.isReadyToSpawn = true;
     }
 
     public void SpawnSoundSourceOutsideOfCamera()
     {
-        Vector2 coords = GetRandomizedSpawnLocation();
-        Vector2 spawnTransform = Camera.main.ViewportToWorldPoint(coords);
-        GameObject newSpawn = GameObject.Instantiate(this.preloadedSoundSource.gameObject);
-        Debug.Log("Spawning: " + this.preloadedSoundSource.SoundModel.Name);
-        newSpawn.SetActive(true);
-        newSpawn.GetComponent<SoundSource>().Setup();
-        newSpawn.transform.position = spawnTransform;
+        if (this.entityCount < MAX_ENTITY_COUNT)
+        {
+            Vector2 coords = GetRandomizedSpawnLocation();
+            Vector2 spawnTransform = Camera.main.ViewportToWorldPoint(coords);
+            GameObject newSpawn = GameObject.Instantiate(this.preloadedSoundSource.gameObject);
+            Debug.Log("Spawning: " + this.preloadedSoundSource.SoundModel.Name);
+            newSpawn.SetActive(true);
+            newSpawn.GetComponent<SoundSource>().Setup(() =>
+            {
+                if (this.entityCount > 0)
+                    this.entityCount--;
+            });
+            newSpawn.transform.position = spawnTransform;
+            this.entityCount++;
+        }
         LoadNextSoundModel();
     }
 
