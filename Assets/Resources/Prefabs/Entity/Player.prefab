@@ -292,9 +292,11 @@ MonoBehaviour:
   oxygen: {fileID: 1766810478983958887}
   audioController: {fileID: 6858184113507697984}
   animController: {fileID: 6053839845969842730}
-  smoothInputSpeed: 0.8
   playerSprite: {fileID: 478807534573499867}
+  visionCone: {fileID: 1908302604}
   playerCollider: {fileID: 478807534573499869}
+  smoothInputSpeed: 0.8
+  accelSpeed: 1.5
   currentSpeed: 0
   minSpeed: 3
   midSpeed: 4
@@ -303,7 +305,6 @@ MonoBehaviour:
   goMin: 0
   goMid: 0
   goMax: 0
-  direction: {x: 0, y: 0}
   mouseAngle: {fileID: 1908302607}
 --- !u!114 &6326988648292609609
 MonoBehaviour:

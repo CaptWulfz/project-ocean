@@ -5,20 +5,37 @@ using UnityEngine;
 
 public class AnimatorController: MonoBehaviour
 {
-    [SerializeField] Animator animator;
+    [SerializeField] protected Animator animator;
+    public Animator Animator
+    {
+        get { return this.animator; }
+    }
 
     public virtual void InitializeAnimator()
     { 
     
     }
-
     public virtual void UpdateAnimator()
     {
-        
-        
+
+
     }
 
-    protected void EvaluateAnimation(string name, object value = null)
+    public bool IsAnimationPlaying() // Animation play time
+    {
+        return this.animator.GetCurrentAnimatorStateInfo(0).length >
+                this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+    }
+
+    public IEnumerator WaitForAnimationToFinish(string stateName, Action onComplete = null)
+    {
+        while (!this.animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
+            yield return null;
+        yield return new WaitUntil(() => { return !IsAnimationPlaying(); });
+        onComplete?.Invoke();
+    }
+
+    public void EvaluateAnimation(string name, object value = null)
     {
         Type type = null;
 

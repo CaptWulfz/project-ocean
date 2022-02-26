@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,8 @@ public class Player : Entity
 
     [Header("Player Settings")]
     [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private GameObject visionCone;
+
     [SerializeField] private CapsuleCollider2D playerCollider;
     [SerializeField] private float smoothInputSpeed = 0.1f;         //SmoothDamp value for movement
     private Vector2 currentInputVector;
@@ -113,16 +116,16 @@ public class Player : Entity
 
     private void Update()
     {
-        //if (Keyboard.current.pKey.wasReleasedThisFrame)
-        //{
-        //    Debug.Log("Increased Panic by 10");
-        //    this.panic.IncreasePanicValue(10f); // stimuli (collision)
-        //}
-        //if (Keyboard.current.oKey.wasReleasedThisFrame)
-        //{
-        //    Debug.Log("Decreased Oxygen by 3.5"); // Bump into something
-        //    this.oxygen.DecreaseOxygenTimer(3.5f);
-        //}
+        if (Keyboard.current.pKey.wasReleasedThisFrame)
+        {
+            Debug.Log("Increased Panic by 10");
+            this.panic.IncreasePanicValue(10f); // stimuli (collision)
+        }
+        if (Keyboard.current.oKey.wasReleasedThisFrame)
+        {
+            Debug.Log("Decreased Oxygen by 3.5"); // Bump into something
+            this.oxygen.DecreaseOxygenTimer(3.5f);
+        }
         //if (Keyboard.current.lKey.wasReleasedThisFrame)
         //{
         //    Debug.Log("Decreased Panic by 10 + Good points");
@@ -368,12 +371,12 @@ public class Player : Entity
 
     public void AdjustPlayerCollider()
     {
-        if(!playerIsFloating && (currentSpeed > minSpeed))   //Swim Animation
+        if (!playerIsFloating && (currentSpeed > minSpeed))   //Swim Animation
         {
             playerCollider.direction = CapsuleDirection2D.Horizontal;
             playerCollider.size = new Vector2(2.3f, 0.63f);             //x 2.3, y 0.63
-            
-            if(playerSprite.flipX == false)                      //Looking Right x -0.9, y 0.1
+
+            if (playerSprite.flipX == false)                      //Looking Right x -0.9, y 0.1
                 playerCollider.offset = new Vector2(-0.9f, -0.1f);
             else if (playerSprite.flipX == true)                 //Looking Left  
                 playerCollider.offset = new Vector2(0.9f, -0.1f);
@@ -382,9 +385,9 @@ public class Player : Entity
         {
             playerCollider.direction = CapsuleDirection2D.Vertical;
             playerCollider.size = new Vector2(1f, 2f);                  //x 1, y 2
-            if(playerSprite.flipX == false)     
+            if (playerSprite.flipX == false)
                 playerCollider.offset = new Vector2(-0.18f, -0.88f);        //x -0.18, y-0.88
-            else if (playerSprite.flipX == true)  
+            else if (playerSprite.flipX == true)
                 playerCollider.offset = new Vector2(0.18f, -0.88f);
         }
     }
@@ -444,31 +447,32 @@ public class Player : Entity
     {
         // Add Panic Death Animation here
         this.EntityControls.Player.Movement.Disable();
-        Debug.Log("Character is Scared to Death");
+        this.visionCone.SetActive(false);
 
-        DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
-        popup.Show();
-            //Parameters param1 = new Parameters();
-            //param1.AddParameter<string>("deathMenu", "deadPanic");
-            //EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_PANIC, param1);
-        }
+        StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Panic", () =>
+        {
+            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+            popup.Show();
+        }));
+    }
 
     public void OnOxygenStageDead()
     {
         this.audioController.SoundOxygenDeath();
         this.EntityControls.Player.Movement.Disable();
+        this.visionCone.SetActive(false);
 
-        Debug.Log("No more Oxygen, Character is Dead");
-        DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
-        popup.Show();
-        //Parameters param1 = new Parameters();
-        //param1.AddParameter<string>("deathMenu", "deadOxygen");
-        //EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_OXYGEN, param1);
+        StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Oxygen", () =>
+        {
+            Debug.Log("NO MORE OXYGEN death popup: ");
+            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+            popup.Show();
+        }));
     }
 
     public void OnMineExplosionDead()
     {
-        
+
         this.EntityControls.Player.Movement.Disable();
         Debug.Log("Kaboom, you are ded");
         DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
