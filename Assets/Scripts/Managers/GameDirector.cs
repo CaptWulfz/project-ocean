@@ -39,6 +39,11 @@ public class GameDirector : Singleton<GameDirector>
 
     private void Update()
     {
+        if (Keyboard.current.gKey.wasPressedThisFrame)
+        {
+            this.gameDirectorMain.StartEntities();
+        }
+
         if (!this.gameStart)
             return;
 
