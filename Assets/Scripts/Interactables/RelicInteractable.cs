@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RelicInteractable : Interactable
 {
+    [SerializeField] RelicLandingEvent dialogEvent;
     protected override void Initialize()
     {
         this.difficultyMode = PlayerSkillCheckDifficultyModes.Easy;
@@ -21,6 +22,7 @@ public class RelicInteractable : Interactable
             {
                 Debug.Log("Picked Up Relic!");
                 this.gameObject.SetActive(false);
+                dialogEvent.StartDialogEvent();
             }
             base.OnSkillCheckFinished(param);
         }

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 208876d3325900d4b830c4b9809ef530, type: 3}
+  m_Name: TopicList
+  m_EditorClassIdentifier: 
+  <EventDialogGroupName>k__BackingField: Topic List
+  <EventDialogs>k__BackingField:
+  - {fileID: 11400000, guid: 4713746777da85946abe3cc432c5472a, type: 2}
+  - {fileID: 11400000, guid: ec00fecda740dfc4599abe384524ccff, type: 2}
+  - {fileID: 11400000, guid: b4246c21bf866a846baeccd873f94047, type: 2}
