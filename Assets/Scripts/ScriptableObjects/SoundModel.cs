@@ -15,6 +15,31 @@ public class SoundModel : ScriptableObject
     [field: SerializeField]
     public AudioClip[] AudioClip { get; set; }
 
+    [field: Header("Fade Options")]
+    [field: SerializeField]
+    public FadeType FadeType { get; set; }
+
+    [field: SerializeField]
+    public float FarRange { get; set; }
+
+    [field: SerializeField]
+    public float MidRange { get; set; }
+
+    [field: SerializeField]
+    public float CloseRange { get; set; }
+
+    [field: SerializeField]
+    [field: Range(0, 1)]
+    public float StartOpacityValue { get; set; }
+
+    [field: SerializeField]
+    [field: Range(0, 1)]
+    public float MidOpacityValue { get; set; }
+
+    [field: SerializeField]
+    [field: Range(0, 1)]
+    public float EndOpacityValue { get; set; }
+
     [field: Header("Entity Values")]
     [field: SerializeField]
     public float BaseSpeed { get; set; }
@@ -56,4 +81,10 @@ public enum AudioType
 {
     SINGLE,
     MULTIPLE
+}
+
+public enum FadeType
+{
+    SLOW_FADE,
+    BLINK
 }

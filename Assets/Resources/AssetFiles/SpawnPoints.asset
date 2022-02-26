@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DirectionToCoord:
   - LookState: 0
-    SpawnCoord: {x: 0.5, y: 1.1}
+    SpawnCoord: {x: 0.5, y: 1.5}
   - LookState: 1
-    SpawnCoord: {x: 0.5, y: -0.1}
+    SpawnCoord: {x: 0.5, y: -0.5}
   - LookState: 2
     SpawnCoord: {x: 1.1, y: 0.5}
   - LookState: 3
