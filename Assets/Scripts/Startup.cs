@@ -41,11 +41,14 @@ public class Startup : MonoBehaviour
         yield return new WaitUntil(() => { return GameLoaderManager.Instance.IsDone; });
         this.splashScreen.SetLoadingProgress(1.0f);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2.5f);
 
         this.camAudioSource.Initialize();
         this.splashScreen.Hide();
-        GameLoaderManager.Instance.ToggleMainHud(true);
+        MenuPopup popup = PopupManager.Instance.ShowPopup<MenuPopup>(PopupNames.MENU_POPUP);
+        popup.Setup();
+        popup.Show();
+        //GameLoaderManager.Instance.ToggleMainHud(true);
         //Cursor.visible = false;
     }
 }
