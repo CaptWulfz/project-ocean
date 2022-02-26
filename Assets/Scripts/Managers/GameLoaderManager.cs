@@ -32,7 +32,7 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
 
     private IEnumerator LoadFirstScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneNames.DEMO_SCENE, LoadSceneMode.Single);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneNames.OCEAN_SCENE, LoadSceneMode.Single);
 
         LoadMainHud();
 

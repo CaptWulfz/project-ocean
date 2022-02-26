@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Oxygen : MonoBehaviour
 {
     [SerializeField] Player player;
+    private bool noOxygen;
 
     // In Seconds
     private const float MAX_OXYGEN = 120f;
@@ -19,13 +20,17 @@ public class Oxygen : MonoBehaviour
 
     public void Initialize()
     {
+        noOxygen = false;
         this.oxygenTimer = MAX_OXYGEN;
     }
 
     private void Update()
     {
         //Debug.Log("OXYGEN CONSUMPTION: " + oxygenDecreaseMultiplier);
-
+        if (noOxygen)
+        {
+            return;
+        }
         Parameters param = new Parameters();
         float updatedOxygenValue = this.oxygenTimer / MAX_OXYGEN;
         if (this.oxygenTimer >= 0.01)
@@ -36,6 +41,8 @@ public class Oxygen : MonoBehaviour
             this.oxygenTimer -= this.oxygenDecreaseMultiplier * Time.deltaTime;
         } else
         {
+            Debug.Log("NO MORE OXYGEN: ");
+            noOxygen = true;
             this.player.OnOxygenStageDead();
         }
     }
