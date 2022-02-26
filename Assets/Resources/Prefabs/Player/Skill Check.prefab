@@ -329,7 +329,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36fd7c9a63eab545b8b3258fcedac22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrompt: {fileID: 0}
   skillCheckCorrectFieldPercentage: 0.1
   skillCheckMinimumLeftHandValue: 0.3
   playerSkillCheckPin: 0.05

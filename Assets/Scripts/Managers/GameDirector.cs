@@ -39,11 +39,16 @@ public class GameDirector : Singleton<GameDirector>
 
     private void Update()
     {
+        if (Keyboard.current.gKey.wasPressedThisFrame)
+        {
+            this.gameDirectorMain.StartEntities();
+        }
+
         if (!this.gameStart)
             return;
 
         this.gameDirectorMain.UpdateEntities();
-        this.gameDirectorMain.UpdateSkillCheck();
+        //this.gameDirectorMain.UpdateSkillCheck();
     }
 
     #region Helpers
@@ -60,6 +65,11 @@ public class GameDirector : Singleton<GameDirector>
     public void TrackPlayerLookState(Player.LookStates lookState)
     {
         this.gameDirectorMain.TrackPlayerLookState(lookState);
+    }
+
+    public void TriggerSkillCheck(Transform target, SkillCheck.PlayerSkillCheckDifficulty difficulty)
+    {
+        this.gameDirectorMain.TriggerSkillCheck(target, difficulty);
     }
     #endregion
 }

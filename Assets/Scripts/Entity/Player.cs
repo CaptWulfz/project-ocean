@@ -12,6 +12,10 @@ public class Player : Entity
     }
 
     private SpeedStates currentSpeedState;
+    public SpeedStates CurrentSpeedState
+    {
+        get { return this.currentSpeedState; }
+    }
 
     public enum LookStates{ //COMPASS
         N, S, E, W, NE, NW, SE, SW
@@ -23,6 +27,16 @@ public class Player : Entity
     [Header("Player Values")]
     [SerializeField] Panic panic;
     [SerializeField] Oxygen oxygen;
+
+    public float PanicValue
+    {
+        get { return this.panic.PanicValueRelativeToMax; }
+    }
+
+    public float OxygenTimer
+    {
+        get { return this.oxygen.OxygenTimer; }
+    }
 
     [Header("Controllers")]
     [SerializeField] AudioController audioController;
@@ -52,6 +66,8 @@ public class Player : Entity
     private float mouseAngleZ;
 
     private Coroutine switchStateDelay = null;
+
+    private Interactable interactableObj;
 
     #region GETTERS/SETTERS
     public float CurrentSpeed
@@ -87,8 +103,12 @@ public class Player : Entity
         this.currentSpeedState = SpeedStates.MIN; //Init default value
         this.panic.Initialize();
         this.oxygen.Initialize();
-        this.audioController.Initialize();
         this.animController.InitializeAnimator();
+
+        // Audio
+        this.sourceName = string.Format("Entity@{0}", this.GetInstanceID());
+        this.audioController.Initialize(this.audioSource , this.sourceName);
+
     }
 
     private void Update()
@@ -109,6 +129,7 @@ public class Player : Entity
         //    this.panic.DecreasePanicValue(10f); // Panic reduced when looking at source of sounds
         //}
         EvaluatePanicState();
+        HandleInteractables();
         this.animController.UpdateAnimator();
     }
 
@@ -122,6 +143,20 @@ public class Player : Entity
         GameDirector.Instance.TrackPlayerSpeedState(this.currentSpeedState);
     }
     #endregion
+
+    #region Interactables
+    private void HandleInteractables()
+    {
+        if (this.interactableObj == null)
+            return;
+
+        if (Keyboard.current.lKey.wasPressedThisFrame)
+        {
+            this.interactableObj.TriggerSkillCheck();
+        }
+    }
+    #endregion
+
     //--------
     #region Movement
     private void MovePlayerWASD()
@@ -373,7 +408,6 @@ public class Player : Entity
                 OnPanicStateDead();
                 break;
         }
-
         this.audioController.SoundPanicState(this.panic.PanicState);
     }
     #endregion
@@ -399,7 +433,14 @@ public class Player : Entity
     {
         // Add Panic Death Animation here
         this.EntityControls.Player.Movement.Disable();
+
         Debug.Log("Character is Scared to Death");
+
+        DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+        popup.Show();
+        //Parameters param1 = new Parameters();
+        //param1.AddParameter<string>("deathMenu", "deadPanic");
+        //EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_PANIC, param1);
     }
     #endregion
 
@@ -411,18 +452,27 @@ public class Player : Entity
     {
         this.audioController.SoundOxygenDeath();
         this.EntityControls.Player.Movement.Disable();
+
         Debug.Log("No more Oxygen, Character is Dead");
+        Parameters param1 = new Parameters();
+        param1.AddParameter<string>("deathMenu", "deadOxygen");
+        EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_OXYGEN, param1);
     }
     #endregion
 
     #region Listeners
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == TagNames.DAMAGE)
+        string tag = collision.gameObject.tag;
+        if (tag == TagNames.DAMAGE)
         {
-            Debug.Log("Enter");
             Damage damage = collision.GetComponent<Damage>();
             this.panic.ApplyPanicPressure(damage.PanicInfliction);
+        }
+
+        if (tag == TagNames.INTERACTABLE)
+        {
+            this.interactableObj = collision.GetComponent<Interactable>();
         }
     }
 
@@ -433,6 +483,11 @@ public class Player : Entity
             Debug.Log("Exit");
             Damage damage = collision.GetComponent<Damage>();
             this.panic.RemovePanicPressure(damage.PanicInfliction);
+        }
+
+        if (collision.tag == TagNames.INTERACTABLE)
+        {
+            this.interactableObj = null;
         }
     }
 

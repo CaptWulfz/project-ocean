@@ -31,6 +31,10 @@ public class Panic : MonoBehaviour
     }
 
     private float panicValue = 0f;
+    public float PanicValueRelativeToMax
+    {
+        get { return this.panicValue / MAX_THRESHOLD; }
+    }
 
     private float panicMultiplier = 0f;
 

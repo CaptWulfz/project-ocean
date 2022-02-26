@@ -27,7 +27,7 @@ public partial class GameDirectorMain
     public void InitializeSkillCheck()
     {
         InitializeSkillCheckSettings();
-        EventBroadcaster.Instance.AddObserver(EventNames.ON_SKILL_CHECK_FINISHED, OnSkillCheckFinished);
+        //EventBroadcaster.Instance.AddObserver(EventNames.ON_SKILL_CHECK_FINISHED, OnSkillCheckFinished);
     }
 
     private void InitializeSkillCheckSettings()
@@ -45,25 +45,25 @@ public partial class GameDirectorMain
         if (this.skillCheck == null)
             return;
 
-        if (this.playerSpeedState == Player.SpeedStates.MAX)
-        {
-            if (this.isSkillCheckActive)
-                return;
+        //if (this.playerSpeedState == Player.SpeedStates.MAX)
+        //{
+        //    if (this.isSkillCheckActive)
+        //        return;
 
-            this.skillCheckDelay -= Time.deltaTime;
-            Debug.Log("DELAY: " + (int) this.skillCheckDelay);
-            if ((int) this.skillCheckDelay <= 0)
-            {
-                this.skillCheck.TriggerSkillCheck(this.skillCheckDifficulty, TagNames.PLAYER);
-                this.isSkillCheckActive = true;
-            }
-        } else
-        {
-            if (this.isSkillCheckActive)
-            {
-                // Force Terminate Skill Check
-            }
-        }
+        //    this.skillCheckDelay -= Time.deltaTime;
+        //    Debug.Log("DELAY: " + (int) this.skillCheckDelay);
+        //    if ((int) this.skillCheckDelay <= 0)
+        //    {
+        //        this.skillCheck.TriggerSkillCheck(this.skillCheckDifficulty, TagNames.PLAYER);
+        //        this.isSkillCheckActive = true;
+        //    }
+        //} else
+        //{
+        //    if (this.isSkillCheckActive)
+        //    {
+        //        // Force Terminate Skill Check
+        //    }
+        //}
     }
 
     private void DetermineSkillCheckDifficulty(PlayerSkillCheckDifficultyModes mode, float skillSpeed, bool rotateRandom)
@@ -132,6 +132,11 @@ public partial class GameDirectorMain
 
     }
 
+    public void TriggerSkillCheck(Transform target, SkillCheck.PlayerSkillCheckDifficulty difficulty)
+    {
+        this.skillCheck.TriggerSkillCheck(difficulty, target);
+    }
+
     public void RegisterSkillCheck(SkillCheck check)
     {
         this.skillCheck = check;
@@ -146,26 +151,26 @@ public partial class GameDirectorMain
         if (param != null)
         {
             bool success = param.GetParameter<bool>(ParameterNames.SKILLCHECK_RESULT, false);
-            if (success)
-            {
-                this.successfulSkillChecks += 1;
-                EvaluateSuccessfulSkillChecks();
-            } else
-            {
-                if (this.currentSkillCheckMode == PlayerSkillCheckDifficultyModes.Easy)
-                    this.currentSkillCheckMode = PlayerSkillCheckDifficultyModes.Medium;
-                else if (this.currentSkillCheckMode == PlayerSkillCheckDifficultyModes.Medium)
-                {
-                    this.currentSkillCheckMode = PlayerSkillCheckDifficultyModes.Hard;
-                    this.currentSkillCheckSpeed = HARD_SKILL_CHECK_SPEED;
-                }
+            //if (success)
+            //{
+            //    this.successfulSkillChecks += 1;
+            //    EvaluateSuccessfulSkillChecks();
+            //} else
+            //{
+            //    if (this.currentSkillCheckMode == PlayerSkillCheckDifficultyModes.Easy)
+            //        this.currentSkillCheckMode = PlayerSkillCheckDifficultyModes.Medium;
+            //    else if (this.currentSkillCheckMode == PlayerSkillCheckDifficultyModes.Medium)
+            //    {
+            //        this.currentSkillCheckMode = PlayerSkillCheckDifficultyModes.Hard;
+            //        this.currentSkillCheckSpeed = HARD_SKILL_CHECK_SPEED;
+            //    }
 
 
-                EvaluateSkillCheckDifficulty(true);
-            }
+            //    EvaluateSkillCheckDifficulty(true);
+            //}
 
-            this.skillCheckDelay = SKILL_CHECK_DELAY;
-            this.isSkillCheckActive = false;
+            //this.skillCheckDelay = SKILL_CHECK_DELAY;
+            //this.isSkillCheckActive = false;
         }
     }
     #endregion

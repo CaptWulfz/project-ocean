@@ -7,6 +7,7 @@ using UnityEngine.InputSystem.EnhancedTouch;
 public class Startup : MonoBehaviour
 {
     [SerializeField] SplashScreen splashScreen;
+    [SerializeField] CameraAudioSource camAudioSource;
 
     private void Start()
     {
@@ -42,6 +43,7 @@ public class Startup : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        this.camAudioSource.Initialize();
         this.splashScreen.Hide();
         GameLoaderManager.Instance.ToggleMainHud(true);
         GameDirector.Instance.GameStart = true;

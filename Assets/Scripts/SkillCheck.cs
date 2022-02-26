@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class SkillCheck : MonoBehaviour
 {
-    [Header("Temporary")]
-    [SerializeField] Text playerPrompt;
-
     [Header("Skill Check Properties")]
     [SerializeField] float skillCheckCorrectFieldPercentage = 0.10f; //Out of 100%, 0.10f = 10%
     [SerializeField] float skillCheckMinimumLeftHandValue = 0.30f; //Skill check can start from 0.3f until 1f
@@ -100,12 +97,12 @@ public class SkillCheck : MonoBehaviour
     }
 
     #region Follow Player
-    private void AssignTarget(string tagName)
+    private void AssignTarget(Transform targetObj)
     {
-        GameObject targetObj = GameObject.FindGameObjectWithTag(tagName);
+        //GameObject targetObj = GameObject.FindGameObjectWithTag(tagName);
         if (targetObj != null)
         {
-            this.target = targetObj.transform;
+            this.target = targetObj;
             this.spriteOffset.x = this.target.GetComponent<SpriteRenderer>().bounds.size.x;
             this.spriteOffset.y = this.target.GetComponent<SpriteRenderer>().bounds.size.y;
         }
@@ -125,9 +122,9 @@ public class SkillCheck : MonoBehaviour
     /// Call this function to Enable the SkillCheck object and it will perform one skill check. Please supply a difficulty object that will define the complexity of the skill check.
     /// </summary>
     /// <param name="difficulty"></param>
-    public void TriggerSkillCheck(PlayerSkillCheckDifficulty difficulty, string tagName)
+    public void TriggerSkillCheck(PlayerSkillCheckDifficulty difficulty, Transform target)
     {
-        AssignTarget(tagName);
+        AssignTarget(target);
         this.gameObject.SetActive(true);
 
         if (difficulty.rotateSkillCheckRandom)
