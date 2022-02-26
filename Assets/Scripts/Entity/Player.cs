@@ -245,15 +245,17 @@ public class Player : Entity
         {
             currentLookState = LookStates.N;
             
-            playerIsFloating = true;
+            //playerIsFloating = true;
 
-            SetMinSpeedToCeiling();
+            SetMidSpeedToCeiling();
         }
         else if ((mouseAngleZ >= 150.0f) && (mouseAngleZ <= 210.0f))        //WEST
         {
             currentLookState = LookStates.W;
-            if (currentMoveState == LookStates.E || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
+            if (currentMoveState == LookStates.E)
                 SetMinSpeedToCeiling();
+            else if (currentMoveState == LookStates.N || currentMoveState == LookStates.S)
+                SetMidSpeedToCeiling();
             else
                 SetMaxSpeedToCeiling();
         }
@@ -261,17 +263,19 @@ public class Player : Entity
         {
             currentLookState = LookStates.S;
 
-            playerIsFloating = true;
+            //playerIsFloating = true;
 
-            SetMinSpeedToCeiling();
+            SetMidSpeedToCeiling();
         }
         else if (((mouseAngleZ >= 330.0f) && (mouseAngleZ <= 360.0f))       // EAST
                 || ((mouseAngleZ >= 0.0f) && (mouseAngleZ <= 30.0f)))
         {
             currentLookState = LookStates.E;
 
-            if (currentMoveState == LookStates.W || currentMoveState == LookStates.S || currentMoveState == LookStates.N)
+            if (currentMoveState == LookStates.W)
                 SetMinSpeedToCeiling();
+            else if (currentMoveState == LookStates.N || currentMoveState == LookStates.S)
+                SetMidSpeedToCeiling();
             else
                 SetMaxSpeedToCeiling();
         }
@@ -429,34 +433,46 @@ public class Player : Entity
     {
         this.oxygen.SetOxygenDecreaseMultiplier(1.25f);
     }
+    
+    #endregion
+
+    #region Deaths
+    // POSTEVENT = POST VIDEO
+    // ADD OBSERVER = NOTIF TO THE VIDEO
+    // GET PARAM = Get specific parameter
     private void OnPanicStateDead()
     {
         // Add Panic Death Animation here
         this.EntityControls.Player.Movement.Disable();
-
         Debug.Log("Character is Scared to Death");
 
         DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
         popup.Show();
-        //Parameters param1 = new Parameters();
-        //param1.AddParameter<string>("deathMenu", "deadPanic");
-        //EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_PANIC, param1);
-    }
-    #endregion
+            //Parameters param1 = new Parameters();
+            //param1.AddParameter<string>("deathMenu", "deadPanic");
+            //EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_PANIC, param1);
+        }
 
-    #region Oxygen Death
-    // POSTEVENT = POST VIDEO
-    // ADD OBSERVER = NOTIF TO THE VIDEO
-    // GET PARAM = Get specific parameter
     public void OnOxygenStageDead()
     {
         this.audioController.SoundOxygenDeath();
         this.EntityControls.Player.Movement.Disable();
 
         Debug.Log("No more Oxygen, Character is Dead");
-        Parameters param1 = new Parameters();
-        param1.AddParameter<string>("deathMenu", "deadOxygen");
-        EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_OXYGEN, param1);
+        DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+        popup.Show();
+        //Parameters param1 = new Parameters();
+        //param1.AddParameter<string>("deathMenu", "deadOxygen");
+        //EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_OXYGEN, param1);
+    }
+
+    public void OnMineExplosionDead()
+    {
+        
+        this.EntityControls.Player.Movement.Disable();
+        Debug.Log("Kaboom, you are ded");
+        DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+        popup.Show();
     }
     #endregion
 
