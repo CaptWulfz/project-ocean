@@ -12,6 +12,10 @@ public class Player : Entity
     }
 
     private SpeedStates currentSpeedState;
+    public SpeedStates CurrentSpeedState
+    {
+        get { return this.currentSpeedState; }
+    }
 
     public enum LookStates{ //COMPASS
         N, S, E, W, NE, NW, SE, SW

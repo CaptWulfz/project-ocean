@@ -25,6 +25,9 @@ public class SoundModel : ScriptableObject
     [field: SerializeField]
     public float InflictedOxygenValue { get; set; }
 
+    [field: SerializeField]
+    public float DelayBeforeSpawn { get; set; }
+
     [field: Header("Audio Source Settings")]
     [field: SerializeField]
     public bool Loop { get; set; }
