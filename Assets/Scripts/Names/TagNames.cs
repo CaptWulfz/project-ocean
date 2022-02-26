@@ -17,4 +17,7 @@ public class TagNames
 
     // INTERACTABLE
     public const string INTERACTABLE = "Interactable";
+
+    // TRIGGERS
+    public const string ENTITY_SPAWNING_TRIGGER = "EntitySpawningTrigger";
 }

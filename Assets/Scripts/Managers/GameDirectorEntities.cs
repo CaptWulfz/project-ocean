@@ -24,7 +24,7 @@ public partial class GameDirectorMain
         get { return this.spawnPoints; }
     }
 
-    private SoundModel preloadedSoundModel;
+    private SoundSource preloadedSoundSource;
     private int prevIndex;
     private bool isReadyToSpawn = false;
     private float entityDelay;
@@ -45,7 +45,6 @@ public partial class GameDirectorMain
         {
             this.entityDelay = ENTITY_DELAY;
             SpawnSoundSourceOutsideOfCamera();
-            //this.isReadyToSpawn = false;
         } else
         {
             this.entityDelay -= Time.deltaTime;
@@ -64,9 +63,8 @@ public partial class GameDirectorMain
 
     private void LoadNextSoundModel()
     {
-        this.preloadedSoundModel = GetRandomizedSoundModel();
-        Debug.Log("Preloaded Model is: " + this.preloadedSoundModel.Name);
-        this.entityDelay += preloadedSoundModel.DelayBeforeSpawn;
+        this.preloadedSoundSource = GetRandomizedSoundSource();
+        this.entityDelay += preloadedSoundSource.SoundModel.DelayBeforeSpawn;
         this.isReadyToSpawn = true;
     }
 
@@ -74,19 +72,39 @@ public partial class GameDirectorMain
     {
         Vector2 coords = GetRandomizedSpawnLocation();
         Vector2 spawnTransform = Camera.main.ViewportToWorldPoint(coords);
-        SoundSource source = this.entitiesMap.SoundSourceReference;
-        GameObject newSpawn = GameObject.Instantiate(source.gameObject);
-        Debug.Log("Spawning: " + this.preloadedSoundModel.Name);
+        GameObject newSpawn = GameObject.Instantiate(this.preloadedSoundSource.gameObject);
+        Debug.Log("Spawning: " + this.preloadedSoundSource.SoundModel.Name);
         newSpawn.SetActive(true);
-        newSpawn.GetComponent<SoundSource>().Setup(this.preloadedSoundModel);
+        newSpawn.GetComponent<SoundSource>().Setup();
         newSpawn.transform.position = spawnTransform;
         LoadNextSoundModel();
     }
 
-    private SoundModel GetRandomizedSoundModel()
+    //private SoundModel GetRandomizedSoundModel()
+    //{
+    //    SoundModel model = null;
+    //    bool done = false;
+
+    //    //int index = 0;
+    //    //while (!done)
+    //    //{
+    //    //    index = Random.Range(0, this.entitiesMap.SoundModels.Length);
+    //    //    if (index != this.prevIndex)
+    //    //        done = true;
+    //    //}
+
+    //    int index = Random.Range(0, this.entitiesMap.SoundModels.Length);
+
+    //    this.prevIndex = index;
+    //    model = this.entitiesMap.SoundModels[index];
+
+    //    return model;
+    //}
+
+    private SoundSource GetRandomizedSoundSource()
     {
-        SoundModel model = null;
-        bool done = false;
+        SoundSource source = null;
+        //bool done = false;
 
         //int index = 0;
         //while (!done)
@@ -96,13 +114,14 @@ public partial class GameDirectorMain
         //        done = true;
         //}
 
-        int index = Random.Range(0, this.entitiesMap.SoundModels.Length);
+        int index = Random.Range(0, this.entitiesMap.Entities.Length);
 
         this.prevIndex = index;
-        model = this.entitiesMap.SoundModels[index];
+        source = this.entitiesMap.Entities[index];
 
-        return model;
+        return source;
     }
+
 
     private Vector2 GetRandomizedSpawnLocation()
     {

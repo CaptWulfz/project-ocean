@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Whispers
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Whispers
-  <AudioClip>k__BackingField: {fileID: 8300000, guid: 1ecac42504f61d34cbba3b15cfb054a8, type: 3}
-  <BaseSpeed>k__BackingField: 4
-  <PlayerSpeedOffset>k__BackingField: 7
-  <InflictedPanicValue>k__BackingField: 4
+  <AudioType>k__BackingField: 0
+  <AudioClip>k__BackingField:
+  - {fileID: 8300000, guid: 1ecac42504f61d34cbba3b15cfb054a8, type: 3}
+  <BaseSpeed>k__BackingField: 2
+  <PlayerSpeedOffset>k__BackingField: 2
+  <InflictedPanicValue>k__BackingField: 3
   <InflictedOxygenValue>k__BackingField: 0.25
   <DelayBeforeSpawn>k__BackingField: 10
   <Loop>k__BackingField: 1

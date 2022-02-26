@@ -10,7 +10,10 @@ public class SoundModel : ScriptableObject
     public string Name { get; set; }
 
     [field: SerializeField]
-    public AudioClip AudioClip { get; set; }
+    public AudioType AudioType { get; set; }
+
+    [field: SerializeField]
+    public AudioClip[] AudioClip { get; set; }
 
     [field: Header("Entity Values")]
     [field: SerializeField]
@@ -47,4 +50,10 @@ public class SoundModel : ScriptableObject
     [field: SerializeField]
     [field: Range(0, 100)]
     public float MaxDistance { get; set; }
+}
+
+public enum AudioType
+{
+    SINGLE,
+    MULTIPLE
 }

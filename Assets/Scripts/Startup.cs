@@ -46,7 +46,6 @@ public class Startup : MonoBehaviour
         this.camAudioSource.Initialize();
         this.splashScreen.Hide();
         GameLoaderManager.Instance.ToggleMainHud(true);
-        GameDirector.Instance.GameStart = true;
         //Cursor.visible = false;
     }
 }
