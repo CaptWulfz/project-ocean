@@ -16,8 +16,15 @@ MonoBehaviour:
   <AudioType>k__BackingField: 0
   <AudioClip>k__BackingField:
   - {fileID: 8300000, guid: 1ecac42504f61d34cbba3b15cfb054a8, type: 3}
+  <FadeType>k__BackingField: 1
+  <FarRange>k__BackingField: 11
+  <MidRange>k__BackingField: 4
+  <CloseRange>k__BackingField: 1
+  <StartOpacityValue>k__BackingField: 0
+  <MidOpacityValue>k__BackingField: 0.15
+  <EndOpacityValue>k__BackingField: 1
   <BaseSpeed>k__BackingField: 2
-  <PlayerSpeedOffset>k__BackingField: 2
+  <PlayerSpeedOffset>k__BackingField: 4
   <InflictedPanicValue>k__BackingField: 3
   <InflictedOxygenValue>k__BackingField: 0.25
   <DelayBeforeSpawn>k__BackingField: 10

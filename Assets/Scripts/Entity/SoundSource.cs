@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class SoundSource : Entity
         get { return this.soundModel; }
     }
 
+    private const float CLOSE_DISTANCE_FROM_TARGET = 2.5f;
+    private const float FAR_DISTANCE_FROM_TARGET = 10f;
     private const float DISTANCE_FROM_TARGET = 0f;
 
     private float inflictedPanicValue;
@@ -28,12 +31,19 @@ public class SoundSource : Entity
     }
 
     private Player target;
+    private Action onDespawn;
+    private Color srColor;
 
-    public void Setup()
+    private bool reachedMidOpacity = false;
+
+    public void Setup(Action onDespawn = null)
     {
+        this.onDespawn = onDespawn;
         this.sourceName = string.Format("Sound-Source@{0}", this.GetInstanceID());
         this.target = GameObject.FindGameObjectWithTag(TagNames.PLAYER).GetComponent<Player>();
         this.Speed = this.soundModel.BaseSpeed;
+        this.srColor = this.spriteRenderer.color;
+        this.reachedMidOpacity = false;
         InitializeInflictionValues();
         InitializeAudioSource();
         AudioManager.Instance.RegisterAudioSource(AudioKeys.SFX, sourceName, this.audioSource);
@@ -47,7 +57,7 @@ public class SoundSource : Entity
 
         if (this.soundModel.AudioType == AudioType.MULTIPLE)
         {
-            int index = Random.Range(0, this.soundModel.AudioClip.Length);
+            int index = UnityEngine.Random.Range(0, this.soundModel.AudioClip.Length);
             clip = this.soundModel.AudioClip[index];
         }
 
@@ -58,6 +68,7 @@ public class SoundSource : Entity
     public void Despawn()
     {
         AudioManager.Instance.UnregisterAudioSource(AudioKeys.SFX, sourceName);
+        this.onDespawn?.Invoke();
         Destroy(this.gameObject);
     }
 
@@ -82,7 +93,11 @@ public class SoundSource : Entity
         float dir = (this.target.transform.position.x - this.transform.position.x);
         this.spriteRenderer.flipX = (dir > 0f) ? true : false;
 
-        if (Vector2.Distance(this.transform.position, this.target.transform.position) > DISTANCE_FROM_TARGET)
+        float distance = Vector2.Distance(this.transform.position, this.target.transform.position);
+        Debug.Log("Distance: " + distance);
+
+        HandleOpacityBehavior(distance);
+        if (distance > DISTANCE_FROM_TARGET)
         {
             this.FollowTarget(this.target.transform, this.Speed);
         }
@@ -92,12 +107,72 @@ public class SoundSource : Entity
         }
     }
 
+    private void HandleOpacityBehavior(float distance)
+    {
+        float opacity = 0f;
+        if (this.soundModel.FadeType == FadeType.SLOW_FADE)
+        {
+            if (distance > this.soundModel.FarRange)
+                opacity = 0;
+            else
+            {
+                float multiplier = Mathf.Abs(this.soundModel.FarRange - distance);
+                if (multiplier > 1)
+                {
+                    multiplier = 1;
+                }
+                opacity = this.soundModel.CloseRange / distance * multiplier;
+            }
+
+            Color newColor = new Color(this.srColor.r, this.srColor.g, this.srColor.b, opacity);
+            this.spriteRenderer.color = newColor;
+        } else if (this.soundModel.FadeType == FadeType.BLINK)
+        {
+            opacity = this.spriteRenderer.color.a;
+            if (distance > this.soundModel.FarRange)
+            {
+                opacity = 0f;
+                this.reachedMidOpacity = false;
+            } else
+            {
+                if (distance < this.soundModel.FarRange && distance > this.soundModel.MidRange)
+                {
+                    if (opacity >= 1)
+                        opacity = 0.38f;
+
+                    if (!this.reachedMidOpacity)
+                    {
+                        opacity += Time.deltaTime * 0.15f;
+                        if (opacity >= this.soundModel.MidOpacityValue)
+                            this.reachedMidOpacity = true;
+                    } else if (this.reachedMidOpacity)
+                    {
+                        opacity -= Time.deltaTime * 0.15f;
+                        if (opacity <= 0)
+                            this.reachedMidOpacity = false;
+                    }
+                } else if (distance < this.soundModel.MidRange)
+                {
+                    float multiplier = Mathf.Abs(this.soundModel.MidRange - distance);
+                    if (multiplier > 1)
+                    {
+                        multiplier = 1;
+                    }
+                    opacity += this.soundModel.CloseRange / distance * multiplier;
+                    this.reachedMidOpacity = false;
+                }
+            }
+
+            Color newColor = new Color(this.srColor.r, this.srColor.g, this.srColor.b, opacity);
+            this.spriteRenderer.color = newColor;
+        }
+    }
+
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == TagNames.PLAYER)
         {
-            Debug.Log("Player Collide");
-            Destroy(this.gameObject);
+            Despawn();
         }
     }
 
