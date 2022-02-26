@@ -27,6 +27,20 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
     {
         this.mainCanvas = GameObject.FindGameObjectWithTag(TagNames.HUD_CANVAS).GetComponent<Canvas>();
         this.mainCamera = GameObject.FindGameObjectWithTag(TagNames.MAIN_CAMERA).GetComponent<CameraFollow>();
+        StartCoroutine(WaitForInitialization());
+    }
+
+    private IEnumerator WaitForInitialization()
+    {
+        LoadMainHud();
+
+        yield return new WaitUntil(() => { return this.isMainHudLoaded; });
+
+        this.isDone = true;
+    }
+
+    public void LoadGameScene()
+    {
         StartCoroutine(LoadFirstScene());
     }
 
@@ -34,14 +48,11 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneNames.OCEAN_SCENE, LoadSceneMode.Single);
 
-        LoadMainHud();
+        yield return new WaitUntil(() => { return asyncLoad.isDone; });
 
-        yield return new WaitUntil(() => { return asyncLoad.isDone && this.isMainHudLoaded; });
-
+        ToggleMainHud(true);
         MoveObjectToScene(this.mainCamera.gameObject, SceneManager.GetActiveScene());
         this.mainCamera.FindPlayer();
-
-        this.isDone = true;
     }
 
     private void LoadMainHud()
