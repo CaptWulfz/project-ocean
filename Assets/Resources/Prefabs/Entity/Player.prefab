@@ -294,6 +294,7 @@ MonoBehaviour:
   animController: {fileID: 6053839845969842730}
   smoothInputSpeed: 0.8
   playerSprite: {fileID: 478807534573499867}
+  visionCone: {fileID: 1908302604}
   currentSpeed: 0
   minSpeed: 3
   midSpeed: 4

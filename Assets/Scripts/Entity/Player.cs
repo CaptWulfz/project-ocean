@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,6 +47,8 @@ public class Player : Entity
     //[SerializeField] Rigidbody2D playerRigidbody;
     [SerializeField] private float smoothInputSpeed = 0.1f; //SmoothDamp value
     [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private GameObject visionCone;
+
     private Vector2 currentInputVector;
     private Vector2 smoothInputVelocity;
     
@@ -113,16 +116,16 @@ public class Player : Entity
 
     private void Update()
     {
-        //if (Keyboard.current.pKey.wasReleasedThisFrame)
-        //{
-        //    Debug.Log("Increased Panic by 10");
-        //    this.panic.IncreasePanicValue(10f); // stimuli (collision)
-        //}
-        //if (Keyboard.current.oKey.wasReleasedThisFrame)
-        //{
-        //    Debug.Log("Decreased Oxygen by 3.5"); // Bump into something
-        //    this.oxygen.DecreaseOxygenTimer(3.5f);
-        //}
+        if (Keyboard.current.pKey.wasReleasedThisFrame)
+        {
+            Debug.Log("Increased Panic by 10");
+            this.panic.IncreasePanicValue(10f); // stimuli (collision)
+        }
+        if (Keyboard.current.oKey.wasReleasedThisFrame)
+        {
+            Debug.Log("Decreased Oxygen by 3.5"); // Bump into something
+            this.oxygen.DecreaseOxygenTimer(3.5f);
+        }
         //if (Keyboard.current.lKey.wasReleasedThisFrame)
         //{
         //    Debug.Log("Decreased Panic by 10 + Good points");
@@ -471,14 +474,14 @@ public class Player : Entity
     {
         // Add Panic Death Animation here
         this.EntityControls.Player.Movement.Disable();
+        this.visionCone.SetActive(false);
 
-        Debug.Log("Character is Scared to Death");
-
-        DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
-        popup.Show();
-        //Parameters param1 = new Parameters();
-        //param1.AddParameter<string>("deathMenu", "deadPanic");
-        //EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_PANIC, param1);
+        Debug.Log("MOVEMENT IS DISABLED: ");
+        StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Panic", () =>
+        {
+            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+            popup.Show();
+        }));
     }
     #endregion
 
@@ -490,11 +493,16 @@ public class Player : Entity
     {
         this.audioController.SoundOxygenDeath();
         this.EntityControls.Player.Movement.Disable();
+        this.visionCone.SetActive(false);
+
 
         Debug.Log("No more Oxygen, Character is Dead");
-        Parameters param1 = new Parameters();
-        param1.AddParameter<string>("deathMenu", "deadOxygen");
-        EventBroadcaster.Instance.PostEvent(EventNames.ON_PLAYER_DIED_OXYGEN, param1);
+        StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Oxygen", () =>
+        {
+            Debug.Log("NO MORE OXYGEN death popup: ");
+            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+            popup.Show();
+        }));
     }
     #endregion
 
