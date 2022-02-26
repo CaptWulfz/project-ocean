@@ -5,9 +5,13 @@ using UnityEngine.InputSystem;
 
 public class SoundSource : Entity
 {
+    [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] SoundSourceRange soundRange;
-
-    private SoundModel soundModel;
+    [SerializeField] SoundModel soundModel;
+    public SoundModel SoundModel
+    {
+        get { return this.soundModel; }
+    }
 
     private const float DISTANCE_FROM_TARGET = 0f;
 
@@ -25,21 +29,36 @@ public class SoundSource : Entity
 
     private Player target;
 
-    public void Setup(SoundModel model)
+    public void Setup()
     {
-        this.soundModel = model;
         this.sourceName = string.Format("Sound-Source@{0}", this.GetInstanceID());
         this.target = GameObject.FindGameObjectWithTag(TagNames.PLAYER).GetComponent<Player>();
         this.Speed = this.soundModel.BaseSpeed;
         InitializeInflictionValues();
         InitializeAudioSource();
         AudioManager.Instance.RegisterAudioSource(AudioKeys.SFX, sourceName, this.audioSource);
-        AudioManager.Instance.PlayAudioWithClip(AudioKeys.SFX, this.sourceName, this.soundModel.AudioClip, this.soundModel.MaxVolume);
+        AudioClip clipToPlay = GetAudioClip();
+        AudioManager.Instance.PlayAudioWithClip(AudioKeys.SFX, this.sourceName, clipToPlay, this.soundModel.MaxVolume);
+    }
+
+    private AudioClip GetAudioClip()
+    {
+        AudioClip clip = this.soundModel.AudioClip[0];
+
+        if (this.soundModel.AudioType == AudioType.MULTIPLE)
+        {
+            int index = Random.Range(0, this.soundModel.AudioClip.Length);
+            clip = this.soundModel.AudioClip[index];
+        }
+
+        Debug.Log("QQQ Loaded Clip " + clip.name);
+        return clip;
     }
 
     public void Despawn()
     {
         AudioManager.Instance.UnregisterAudioSource(AudioKeys.SFX, sourceName);
+        Destroy(this.gameObject);
     }
 
     private void InitializeInflictionValues()
@@ -60,17 +79,16 @@ public class SoundSource : Entity
 
     private void Update()
     {
+        float dir = (this.target.transform.position.x - this.transform.position.x);
+        this.spriteRenderer.flipX = (dir > 0f) ? true : false;
+
         if (Vector2.Distance(this.transform.position, this.target.transform.position) > DISTANCE_FROM_TARGET)
         {
-            Debug.Log("Source - This Speed: " + this.Speed);
             this.FollowTarget(this.target.transform, this.Speed);
         }
-
-        Debug.Log("Source - Player Speed State: " + this.target.CurrentSpeedState);
         if (this.target.CurrentSpeedState != Player.SpeedStates.MIN)
         {
             this.Speed = this.target.CurrentSpeed + this.soundModel.PlayerSpeedOffset;
-            Debug.Log("Source - My Speed: " + this.Speed + " | Player Speed: " + this.target.CurrentSpeed);
         }
     }
 
@@ -87,8 +105,7 @@ public class SoundSource : Entity
     {
         if (collision.gameObject.tag == TagNames.PLAYER_VISION)
         {
-            Debug.Log("I die");
-            Destroy(this.gameObject);
+            Despawn();
         }
     }
 }

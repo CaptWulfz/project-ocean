@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2cde5d813aad4d4eb1e260f195171a4, type: 3}
   m_Name: DirectorEntitiesMap
   m_EditorClassIdentifier: 
-  <SoundSourceReference>k__BackingField: {fileID: 6324780369754342792, guid: 1f9152544b6a4b1439d06d55b6d91c05, type: 3}
-  <SoundModels>k__BackingField:
-  - {fileID: 11400000, guid: 347157250fbc48647bbf590a72508e18, type: 2}
-  - {fileID: 11400000, guid: 7ec1fb1f714a4a242ab40ce10b9acf30, type: 2}
+  <Entities>k__BackingField:
+  - {fileID: 6324780369754342792, guid: 24e468a175bd3dd4bb712dc4d2dc98d0, type: 3}
+  - {fileID: 6324780369754342792, guid: b12fb42baa4a06b438c91a9fe76a208e, type: 3}
