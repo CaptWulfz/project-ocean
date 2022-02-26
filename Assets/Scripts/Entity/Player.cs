@@ -46,6 +46,7 @@ public class Player : Entity
     [Header("Player Settings")]
     [SerializeField] private SpriteRenderer playerSprite;
     [SerializeField] private GameObject visionCone;
+    [SerializeField] private GameObject smartWatchHud;
 
     [SerializeField] private CapsuleCollider2D playerCollider;
     [SerializeField] private float smoothInputSpeed = 0.1f;         //SmoothDamp value for movement
@@ -53,15 +54,15 @@ public class Player : Entity
     private Vector2 smoothInputVelocity;
     
     [Header("Player Speed")]
-    [SerializeField] private float accelSpeed = 1.5f;
-    [SerializeField] private float currentSpeed = 0f;
     [SerializeField] private float minSpeed = 3f;
     [SerializeField] private float midSpeed = 4f;
     [SerializeField] private float maxSpeed = 5f;
-    [SerializeField] private float speedMultiplier;
-    [SerializeField] private bool goMin;
-    [SerializeField] private bool goMid;
-    [SerializeField] private bool goMax;
+    private float accelSpeed = 1.5f;
+    private float currentSpeed = 0f;
+    private float speedMultiplier;
+    private bool goMin;
+    private bool goMid;
+    private bool goMax;
     private bool playerIsFloating;
 
     [Header("Mouse Settings")]
@@ -111,7 +112,7 @@ public class Player : Entity
         // Audio
         this.sourceName = string.Format("Entity@{0}", this.GetInstanceID());
         this.audioController.Initialize(this.audioSource , this.sourceName);
-
+  //      this.heartBeatScript = GameObject.FindGameObjectWithTag("HeartHUD").GetComponent<HeartBeat>();
     }
 
     private void Update()
@@ -448,10 +449,12 @@ public class Player : Entity
         // Add Panic Death Animation here
         this.EntityControls.Player.Movement.Disable();
         this.visionCone.SetActive(false);
-
+        smartWatchHud = GameObject.FindGameObjectWithTag("SmartWatch");
+        smartWatchHud.SetActive(false);
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Panic", () =>
         {
             DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+            this.gameObject.GetComponent<AudioSource>().volume = 0;
             popup.Show();
         }));
     }
@@ -461,10 +464,13 @@ public class Player : Entity
         this.audioController.SoundOxygenDeath();
         this.EntityControls.Player.Movement.Disable();
         this.visionCone.SetActive(false);
-
+        smartWatchHud = GameObject.FindGameObjectWithTag("SmartWatch");
+        smartWatchHud.SetActive(false);
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Oxygen", () =>
         {
             Debug.Log("NO MORE OXYGEN death popup: ");
+            this.gameObject.GetComponent<AudioSource>().volume = 0;
+            
             DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
             popup.Show();
         }));
@@ -472,11 +478,20 @@ public class Player : Entity
 
     public void OnMineExplosionDead()
     {
-
         this.EntityControls.Player.Movement.Disable();
-        Debug.Log("Kaboom, you are ded");
-        DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
-        popup.Show();
+        this.visionCone.SetActive(false);
+        this.gameObject.GetComponent<AudioSource>().volume = 0;
+        smartWatchHud = GameObject.FindGameObjectWithTag("SmartWatch");
+        smartWatchHud.SetActive(false);
+        StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Oxygen", () =>
+        {
+            Debug.Log("Kaboom, you are ded");
+            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+            popup.Show();
+        }));
+
+
+        
     }
     #endregion
 

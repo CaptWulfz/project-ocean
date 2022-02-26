@@ -16,4 +16,11 @@ public class HeartBeat : MonoBehaviour
         //Debug.Log("HEART BEAT: " + param.GetParameter<float>("currPanicValue", 0f));
         this.animator.SetFloat("Heart_Beat_Value", param.GetParameter<float>("currPanicValue", 0f));
     }
+
+    public void HeartStop()
+    {
+        //im dead lmao -gelo
+        this.animator.SetBool("Heart_Beat_Dead", true);
+        
+    }
 }

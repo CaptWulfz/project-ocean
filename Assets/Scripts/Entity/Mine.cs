@@ -5,6 +5,7 @@ using UnityEngine;
 public class Mine : MonoBehaviour
 {
     [SerializeField] MineAnimation mineAnim;
+    [SerializeField] Oxygen playerOxygen;
     private bool mineExplode = false;
     private Player player;
     public bool MineExplode
@@ -27,17 +28,19 @@ public class Mine : MonoBehaviour
     {
         if (collision.gameObject.tag == TagNames.PLAYER)
         {
+            player = collision.gameObject.GetComponent<Player>();
+            playerOxygen = collision.gameObject.GetComponent<Oxygen>(); 
             Debug.Log("If u see this u are ded");
             mineExplode = true;
-            StartCoroutine(WaitForExplosion(collision.gameObject.GetComponent<Player>()));
+            
+            StartCoroutine(mineAnim.WaitForAnimationToFinish("Mine_Explosion", () =>
+            {
+                playerOxygen.NoOxygen = true;
+                playerOxygen.OxygenTimer = 0f;
+                Destroy(this.gameObject);
+                player.OnMineExplosionDead();
+            }));
         }
     }
 
-    IEnumerator WaitForExplosion(Player player){
-        Debug.Log("Helo");
-        yield return new WaitForSeconds(1.5f);
-        player.OnMineExplosionDead();
-        yield return new WaitForSeconds(0.5f);
-        Destroy(this.gameObject);
-    }
 }
