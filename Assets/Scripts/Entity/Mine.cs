@@ -10,6 +10,7 @@ public class Mine : MonoBehaviour
     public bool MineExplode
     {
         get { return this.mineExplode; }
+        set { this.mineExplode= value; }
     }
 
     private void Start()
