@@ -12,6 +12,8 @@ TagManager:
   - Hostile
   - PlayerVision
   - Interactable
+  - InvisibleTrigger
+  - EntitySpawningTrigger
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Player
   - Apparition
   - Interactable
-  - 
+  - InvisibleTrigger
   - 
   - 
   - 

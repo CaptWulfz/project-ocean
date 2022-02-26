@@ -39,11 +39,6 @@ public class GameDirector : Singleton<GameDirector>
 
     private void Update()
     {
-        if (Keyboard.current.gKey.wasPressedThisFrame)
-        {
-            this.gameDirectorMain.StartEntities();
-        }
-
         if (!this.gameStart)
             return;
 
@@ -52,6 +47,11 @@ public class GameDirector : Singleton<GameDirector>
     }
 
     #region Helpers
+    public void StartGame()
+    {
+        this.gameStart = true;
+        this.gameDirectorMain.StartEntities();
+    }
     public void RegisterSkillCheck(SkillCheck check)
     {
         this.gameDirectorMain.RegisterSkillCheck(check);
