@@ -20,4 +20,8 @@ public class TagNames
 
     // TRIGGERS
     public const string ENTITY_SPAWNING_TRIGGER = "EntitySpawningTrigger";
+
+    //MINES
+    public const string MINE = "Mine";
+    public const string FAKE_MINE = "Fake Mine";
 }

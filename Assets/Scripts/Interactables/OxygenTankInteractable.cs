@@ -5,7 +5,7 @@ using UnityEngine;
 public class OxygenTankInteractable : Interactable
 {
     Player player;
-
+    bool isFirstOxygenTank = true;
     protected override void Initialize()
     {
         this.difficultyMode = PlayerSkillCheckDifficultyModes.Medium;
@@ -34,6 +34,12 @@ public class OxygenTankInteractable : Interactable
         if (collision.gameObject.tag == TagNames.PLAYER)
         {
             this.player = collision.GetComponent<Player>();
+
+            if (isFirstOxygenTank)
+            {
+                GameDirector.Instance.StartDialogSequence(TopicList.ABYSS_FIRST_USE_OXYGEN);
+                isFirstOxygenTank = false;
+            }
         }
     }
 }
