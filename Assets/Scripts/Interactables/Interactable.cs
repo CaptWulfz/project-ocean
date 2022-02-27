@@ -37,8 +37,13 @@ public class Interactable : MonoBehaviour
         EventBroadcaster.Instance.RemoveObserverAtAction(EventNames.ON_SKILL_CHECK_FINISHED, OnSkillCheckFinished);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected virtual void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Interactable - Trigger Tag: " + collision.tag);
+        //Debug.Log("Interactable - Trigger Tag: " + collision.tag);
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        
     }
 }

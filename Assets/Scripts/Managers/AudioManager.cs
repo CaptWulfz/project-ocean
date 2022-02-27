@@ -338,5 +338,6 @@ public class SFXKeys
 
 public class MusicKeys
 {
+    public const string MAIN_THEME = "Main_Theme";
     public const string AMBIANCE = "Ambiance";
 }

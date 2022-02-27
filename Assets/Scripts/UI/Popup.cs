@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,19 @@ public class Popup : MonoBehaviour
     [Header("Overlay")]
     [SerializeField] GameObject overlay;
 
-    protected const string POPUP_OPEN = "PopupOpen";
-    protected const string POPUP_CLOSE = "PopupClose";
+    protected string popupOpen = "PopupOpen";
+    protected string PopupOpen
+    {
+        set { this.popupOpen = value; }
+    }
+
+    protected string popupClose = "PopupClose";
+    protected string PopupClose
+    {
+        set { this.popupClose = value; }
+    }
+
+    protected Action onClose;
 
     /// <summary>
     /// Shows the Popup. Enables both the game object and the Overlay.
@@ -30,10 +42,11 @@ public class Popup : MonoBehaviour
     /// </summary>
     protected virtual void Hide()
     {
-        this.anim.Play(POPUP_CLOSE);
+        this.anim.Play(this.popupClose);
         StartCoroutine(AnimationHandler.WaitForAnimation(this.anim, () =>
         {
             PopupManager.Instance.HidePopup(this.gameObject);
+            this.onClose();
         }));
     }
 

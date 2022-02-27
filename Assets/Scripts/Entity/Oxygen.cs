@@ -67,4 +67,9 @@ public class Oxygen : MonoBehaviour
         this.oxygenTimer -= value;
     }
 
+    public void AddOxygen(float value)
+    {
+        this.oxygenTimer += value;
+    }
+
 }

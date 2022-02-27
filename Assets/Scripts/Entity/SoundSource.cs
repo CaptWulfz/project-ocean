@@ -34,11 +34,14 @@ public class SoundSource : Entity
     private Action onDespawn;
     private Color srColor;
 
+    private bool isFrenzy;
+
     private bool reachedMidOpacity = false;
 
-    public void Setup(Action onDespawn = null)
+    public void Setup(Action onDespawn = null, bool isFrenzy = false)
     {
         this.onDespawn = onDespawn;
+        this.isFrenzy = isFrenzy;
         this.sourceName = string.Format("Sound-Source@{0}", this.GetInstanceID());
         this.target = GameObject.FindGameObjectWithTag(TagNames.PLAYER).GetComponent<Player>();
         this.Speed = this.soundModel.BaseSpeed;
@@ -61,7 +64,7 @@ public class SoundSource : Entity
             clip = this.soundModel.AudioClip[index];
         }
 
-        Debug.Log("QQQ Loaded Clip " + clip.name);
+        //Debug.Log("QQQ Loaded Clip " + clip.name);
         return clip;
     }
 
@@ -94,17 +97,26 @@ public class SoundSource : Entity
         this.spriteRenderer.flipX = (dir > 0f) ? true : false;
 
         float distance = Vector2.Distance(this.transform.position, this.target.transform.position);
-        Debug.Log("Distance: " + distance);
+        //Debug.Log("Distance: " + distance);
 
         HandleOpacityBehavior(distance);
-        if (distance > DISTANCE_FROM_TARGET)
+        if (distance > this.SoundModel.FarRange)
         {
-            this.FollowTarget(this.target.transform, this.Speed);
+            this.Speed = this.SoundModel.ChaseSpeed;
+        } else if (this.isFrenzy)
+        {
+            this.Speed = this.soundModel.FrenzySpeed;
+        } else
+        {
+            this.Speed = this.soundModel.BaseSpeed;
         }
+
         if (this.target.CurrentSpeedState != Player.SpeedStates.MIN)
         {
-            this.Speed = this.target.CurrentSpeed + this.soundModel.PlayerSpeedOffset;
+            this.Speed = this.target.CurrentSpeed + this.soundModel.PlayerSpeedOffset + (this.Speed / 2);
         }
+
+        this.FollowTarget(this.target.transform, this.Speed);
     }
 
     private void HandleOpacityBehavior(float distance)

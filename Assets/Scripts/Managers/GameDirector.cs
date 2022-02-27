@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 public class GameDirector : Singleton<GameDirector>
 {
     private GameDirectorMain gameDirectorMain;
+    private EventDialogGroup topicList;
+    private EventDialogManager dialogManager;
+    private CameraAudioSource camSource;
 
     private bool gameStart = false;
     public bool GameStart
@@ -27,6 +30,7 @@ public class GameDirector : Singleton<GameDirector>
         this.gameDirectorMain = new GameDirectorMain();
         this.gameDirectorMain.InitializeSkillCheck();
         this.gameDirectorMain.InitializeEntities();
+        this.topicList = Resources.Load<EventDialogGroup>("AssetFiles/Dialog/TopicList");
         StartCoroutine(WaitForInitialization());
     }
 
@@ -43,7 +47,7 @@ public class GameDirector : Singleton<GameDirector>
             return;
 
         this.gameDirectorMain.UpdateEntities();
-        //this.gameDirectorMain.UpdateSkillCheck();
+        
     }
 
     #region Helpers
@@ -52,6 +56,17 @@ public class GameDirector : Singleton<GameDirector>
         this.gameStart = true;
         this.gameDirectorMain.StartEntities();
     }
+
+    public void RegisterRelic(RelicType relicType)
+    {
+        this.gameDirectorMain.RegisterRelic(relicType);
+    }
+
+    public void RegisterCamAudioSource(CameraAudioSource camSource)
+    {
+        this.camSource = camSource;
+    }
+
     public void RegisterSkillCheck(SkillCheck check)
     {
         this.gameDirectorMain.RegisterSkillCheck(check);
@@ -71,5 +86,38 @@ public class GameDirector : Singleton<GameDirector>
     {
         this.gameDirectorMain.TriggerSkillCheck(target, difficulty);
     }
+
+    public void StartDialogSequence(TopicList topic)
+    {
+        EventDialog dialog = this.topicList.EventDialogs[(int)topic];
+        this.dialogManager.GenerateDialogSequence(dialog);
+        Time.timeScale = 0;
+    }
+
+    public void RegisterEventDialogManager(EventDialogManager dialogManager)
+    {
+        this.dialogManager = dialogManager;
+    }
     #endregion
+}
+
+public enum TopicList
+{
+    //https://docs.google.com/document/d/1nhuJ1ToxMY_Xo6KdJGspUvjosH8EbcQUx89hB3ad4b0/edit
+    //page 7 onwards
+
+    INTRO, //Dialog Intro
+    INTRO_EXIT, //Dialog Level 1
+    RELIC_LANDING, //Dialog Level 1 prologue
+    ABYSS_FIRST_MINE, 
+    ABYSS_REVEALS_FIRST_MIRAGE_MINE,
+    ABYSS_PASS_THROUGH_FIRST_MIRAGE_MINE,
+    ABYSS_FIRST_USE_OXYGEN,
+    ABYSS_FIRST_MONSTER_ENCOUNTER,
+    ABYSS_SECOND_RELIC, //done -- to attach
+    ABYSS_ENCOUNTER_FEW_MORE_ENTITIES, //5th entity
+    PLAYER_REACHES_50_PANIC, //done
+    PLAYER_REACHES_90_PANIC, //done
+    ABYSS_THIRD_RELIC, //done -- to attach
+    ABYSS_FOURTH_RELIC //done -- to attach
 }

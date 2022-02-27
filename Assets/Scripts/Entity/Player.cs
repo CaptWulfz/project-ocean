@@ -437,7 +437,14 @@ public class Player : Entity
     {
         this.oxygen.SetOxygenDecreaseMultiplier(1.25f);
     }
-    
+
+    #endregion
+
+    #region Oxygen
+    public void AddOxygen(float value)
+    {
+        this.oxygen.AddOxygen(value);
+    }
     #endregion
 
     #region Deaths
@@ -453,8 +460,9 @@ public class Player : Entity
         smartWatchHud.SetActive(false);
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Panic", () =>
         {
-            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>(PopupNames.DEATH_POPUP);
             this.gameObject.GetComponent<AudioSource>().volume = 0;
+            popup.Setup();
             popup.Show();
         }));
     }
@@ -471,7 +479,8 @@ public class Player : Entity
             Debug.Log("NO MORE OXYGEN death popup: ");
             this.gameObject.GetComponent<AudioSource>().volume = 0;
             
-            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>(PopupNames.DEATH_POPUP);
+            popup.Setup();
             popup.Show();
         }));
     }
@@ -486,7 +495,8 @@ public class Player : Entity
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Oxygen", () =>
         {
             Debug.Log("Kaboom, you are ded");
-            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>("DeathPopup");
+            DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>(PopupNames.DEATH_POPUP);
+            popup.Setup();
             popup.Show();
         }));
 

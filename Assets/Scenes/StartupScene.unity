@@ -378,6 +378,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadingOverlay
       objectReference: {fileID: 0}
+    - target: {fileID: 5851185279675352358, guid: ec75f1f7a876ef74ea68f57b31043c0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec75f1f7a876ef74ea68f57b31043c0c, type: 3}
 --- !u!224 &385526779 stripped
@@ -471,6 +475,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SplashScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 549517533417153680, guid: de6e24a86828a1a43b4b5b720c0ba256, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 549517533417153687, guid: de6e24a86828a1a43b4b5b720c0ba256, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -559,6 +567,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8927185297957013126, guid: de6e24a86828a1a43b4b5b720c0ba256, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8927185297957013126, guid: de6e24a86828a1a43b4b5b720c0ba256, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -89.00001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de6e24a86828a1a43b4b5b720c0ba256, type: 3}
 --- !u!224 &1023739494 stripped
@@ -583,7 +599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 867559646295737775, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 867559646295738961, guid: e3c83ee3a3e23964eb6cb0d11302eaf2, type: 3}
       propertyPath: m_RootOrder

@@ -6,10 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class DeathPopup : Popup
 {
+    public void Setup()
+    {
+        this.popupOpen = "PopupFadeOpen_Pixel";
+        this.popupClose = "PopupFadeClose_Pixel";
+        this.onClose = () =>
+        {
+            SceneManager.LoadScene("StartupScene", LoadSceneMode.Single);
+        };
+    }
+
     public void OnButtonClickRestart()
     {
         this.Hide();
-        SceneManager.LoadScene("StartupScene", LoadSceneMode.Single);
-        // Show Main Menu
     }
 }
