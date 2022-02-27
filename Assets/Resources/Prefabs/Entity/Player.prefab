@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8622cf80a464d5346b5578f6ed5b5a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseLookSpeed: 0.0015
+  mouseLookSpeed: 0.003
 --- !u!1 &478807534573499871
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,13 +522,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3971895283031123678}
   - component: {fileID: 3842622035983158196}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Fog
-  m_TagString: Untagged
+  m_TagString: PlayerVision
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3971895283031123678
 Transform:
   m_ObjectHideFlags: 0
