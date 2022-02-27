@@ -11,6 +11,12 @@ public class HeartBeat : MonoBehaviour
         animator = this.GetComponent<Animator>();
         EventBroadcaster.Instance.AddObserver(EventNames.ON_PANIC_MODIFIED, HeartBeatSpeed);
     }
+
+    private void OnDestroy()
+    {
+        EventBroadcaster.Instance.RemoveObserverAtAction(EventNames.ON_PANIC_MODIFIED, HeartBeatSpeed);
+    }
+
     public void HeartBeatSpeed(Parameters param = null)
     {
         //Debug.Log("HEART BEAT: " + param.GetParameter<float>("currPanicValue", 0f));

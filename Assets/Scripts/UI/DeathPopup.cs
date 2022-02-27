@@ -12,9 +12,10 @@ public class DeathPopup : Popup
         this.popupClose = "PopupFadeClose_Pixel";
         this.onClose = () =>
         {
-            SceneManager.LoadScene("StartupScene", LoadSceneMode.Single);
+            GameLoaderManager.Instance.ReloadGame();
         };
     }
+
 
     public void OnButtonClickRestart()
     {
