@@ -119,5 +119,7 @@ public enum TopicList
     PLAYER_REACHES_50_PANIC, //done
     PLAYER_REACHES_90_PANIC, //done
     ABYSS_THIRD_RELIC, //done -- to attach
-    ABYSS_FOURTH_RELIC //done -- to attach
+    ABYSS_FOURTH_RELIC, //done -- to attach
+    END_ENTER_ALTAR,
+    END_EXIT_ALTAR
 }
