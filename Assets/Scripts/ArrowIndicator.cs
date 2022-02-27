@@ -74,6 +74,9 @@ public class ArrowIndicator : MonoBehaviour
         float tempDist = 0f;
         foreach (GameObject relic in relics)
         {
+            if (!relic.activeSelf)
+                continue;
+
             tempDist = Vector2.Distance(playerTransform.position, relic.transform.position);
             if (lowestDistance > tempDist || lowestDistance == -1f)
             {

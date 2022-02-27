@@ -21,6 +21,8 @@ public class CameraFollow : MonoBehaviour
     public void FindPlayer()
     {
         target = GameObject.FindGameObjectWithTag(TagNames.PLAYER).transform;
+        CameraAudioSource camSource = this.GetComponent<CameraAudioSource>();
+        camSource.PlayMusic(MusicKeys.AMBIANCE);
     }
 
     private void FixedUpdate() {

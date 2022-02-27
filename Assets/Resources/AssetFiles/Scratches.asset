@@ -29,6 +29,8 @@ MonoBehaviour:
   <EndOpacityValue>k__BackingField: 1
   <BaseSpeed>k__BackingField: 5
   <PlayerSpeedOffset>k__BackingField: 15
+  <FrenzySpeed>k__BackingField: 8
+  <ChaseSpeed>k__BackingField: 18
   <InflictedPanicValue>k__BackingField: 2
   <InflictedOxygenValue>k__BackingField: 0.75
   <DelayBeforeSpawn>k__BackingField: 3
