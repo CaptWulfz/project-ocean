@@ -9,6 +9,7 @@ public class GameDirector : Singleton<GameDirector>
     private GameDirectorMain gameDirectorMain;
     private EventDialogGroup topicList;
     private EventDialogManager dialogManager;
+    private CameraAudioSource camSource;
 
     private bool gameStart = false;
     public bool GameStart
@@ -46,7 +47,7 @@ public class GameDirector : Singleton<GameDirector>
             return;
 
         this.gameDirectorMain.UpdateEntities();
-        //this.gameDirectorMain.UpdateSkillCheck();
+        
     }
 
     #region Helpers
@@ -55,6 +56,17 @@ public class GameDirector : Singleton<GameDirector>
         this.gameStart = true;
         this.gameDirectorMain.StartEntities();
     }
+
+    public void RegisterRelic(RelicType relicType)
+    {
+        this.gameDirectorMain.RegisterRelic(relicType);
+    }
+
+    public void RegisterCamAudioSource(CameraAudioSource camSource)
+    {
+        this.camSource = camSource;
+    }
+
     public void RegisterSkillCheck(SkillCheck check)
     {
         this.gameDirectorMain.RegisterSkillCheck(check);

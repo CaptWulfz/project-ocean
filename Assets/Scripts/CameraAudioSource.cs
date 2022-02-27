@@ -20,7 +20,21 @@ public class CameraAudioSource : MonoBehaviour
 
         EventBroadcaster.Instance.AddObserver(EventNames.ON_SKILL_CHECK_FINISHED, OnSkillCheckFinished);
 
-        AudioManager.Instance.PlayAudio(AudioKeys.MUSIC, this.musicSourceName, MusicKeys.AMBIANCE);
+        PlayMusic(MusicKeys.MAIN_THEME);
+
+        GameDirector.Instance.RegisterCamAudioSource(this);
+    }
+
+    public void PlayMusic(string musicKey, float volume = 1)
+    {
+        AudioManager.Instance.PlayAudio(AudioKeys.MUSIC, this.musicSourceName, musicKey);
+        AudioManager.Instance.SetAudioSourceVolume(AudioKeys.MUSIC, this.musicSourceName, volume);
+        AudioManager.Instance.ToggleAudioGroupLoop(AudioKeys.MUSIC, true);
+    }
+
+    public void AdjustVolume(float volume)
+    {
+        AudioManager.Instance.SetAudioSourceVolume(AudioKeys.MUSIC, this.musicSourceName, volume);
     }
 
     #region Event Broacaster

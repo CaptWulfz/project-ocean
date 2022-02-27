@@ -52,6 +52,8 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
 
         ToggleMainHud(true);
         MoveObjectToScene(this.mainCamera.gameObject, SceneManager.GetActiveScene());
+        this.mainCamera.GetComponent<AudioListener>().enabled = false;
+        this.mainCamera.GetComponent<CameraAudioSource>().PlayMusic(MusicKeys.AMBIANCE);
         this.mainCamera.FindPlayer();
     }
 
@@ -65,6 +67,16 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
         this.isMainHudLoaded = true;
     }
     #endregion
+
+    /// <summary>
+    /// Plays the Main Theme of the Game
+    /// </summary>
+    public void PlayMainTheme()
+    {
+        AudioManager.Instance.PlayAudio(AudioKeys.MUSIC, MAIN_SOURCE, MusicKeys.MAIN_THEME);
+        AudioManager.Instance.SetAudioGroupVolume(AudioKeys.MUSIC, 1f);
+        AudioManager.Instance.ToggleAudioGroupLoop(AudioKeys.MUSIC, true);
+    }
 
     private void MoveObjectToScene(GameObject obj, Scene scene)
     {

@@ -8,8 +8,9 @@ public partial class GameDirectorMain
     private const string DIRECTOR_ENTITIES_MAP_PATH = "AssetFiles/DirectorEntitiesMap";
     private const string SPAWN_POINTS_PATH = "AssetFiles/SpawnPoints";
 
-    private const float ENTITY_DELAY = 2f;
     private const int MAX_ENTITY_COUNT = 8;
+
+    private List<string> spawnableEntities;
 
     private Player.LookStates playerLookState;
 
@@ -25,6 +26,9 @@ public partial class GameDirectorMain
         get { return this.spawnPoints; }
     }
 
+    private float resetEntityDelay = 4f;
+    private int collectedRelics = 0;
+
     private SoundSource preloadedSoundSource;
     private int prevIndex;
     private bool isReadyToSpawn = false;
@@ -35,7 +39,8 @@ public partial class GameDirectorMain
     {
         this.entitiesMap = Resources.Load<DirectorEntitiesMap>(DIRECTOR_ENTITIES_MAP_PATH);
         this.spawnPoints = Resources.Load<SpawnPoints>(SPAWN_POINTS_PATH);
-        this.entityDelay = ENTITY_DELAY;
+        this.spawnableEntities = new List<string>();
+        this.entityDelay = this.resetEntityDelay;
     }
 
     public void UpdateEntities()
@@ -68,7 +73,7 @@ public partial class GameDirectorMain
     private void LoadNextSoundModel()
     {
         this.preloadedSoundSource = GetRandomizedSoundSource();
-        this.entityDelay = ENTITY_DELAY;
+        this.entityDelay = this.resetEntityDelay;
         this.entityDelay += preloadedSoundSource.SoundModel.DelayBeforeSpawn;
         this.isReadyToSpawn = true;
     }
@@ -93,46 +98,17 @@ public partial class GameDirectorMain
         LoadNextSoundModel();
     }
 
-    //private SoundModel GetRandomizedSoundModel()
-    //{
-    //    SoundModel model = null;
-    //    bool done = false;
-
-    //    //int index = 0;
-    //    //while (!done)
-    //    //{
-    //    //    index = Random.Range(0, this.entitiesMap.SoundModels.Length);
-    //    //    if (index != this.prevIndex)
-    //    //        done = true;
-    //    //}
-
-    //    int index = Random.Range(0, this.entitiesMap.SoundModels.Length);
-
-    //    this.prevIndex = index;
-    //    model = this.entitiesMap.SoundModels[index];
-
-    //    return model;
-    //}
-
     private SoundSource GetRandomizedSoundSource()
     {
         SoundSource source = null;
-        //bool done = false;
-
-        //int index = 0;
-        //while (!done)
-        //{
-        //    index = Random.Range(0, this.entitiesMap.SoundModels.Length);
-        //    if (index != this.prevIndex)
-        //        done = true;
-        //}
 
         int index = Random.Range(0, this.entitiesMap.Entities.Length);
-
-        this.prevIndex = index;
         source = this.entitiesMap.Entities[index];
 
-        return source;
+        if (CheckIfSpawnable(source.SoundModel.Name))
+            return source;
+        else
+            return GetRandomizedSoundSource();
     }
 
 
@@ -148,7 +124,6 @@ public partial class GameDirectorMain
             SpawnPoints.LookStateToVector2 group = this.spawnPoints.DirectionToCoord[index];
             if (group.LookState != this.playerLookState)
             {
-                //Debug.Log("QQQ SPAWNING AT: " + group.LookState);
                 coords = group.SpawnCoord;
                 done = true;
             }
@@ -156,4 +131,45 @@ public partial class GameDirectorMain
 
         return coords;
     }
+
+    private bool CheckIfSpawnable(string name)
+    {
+
+        bool spawnable = false;
+
+        if (this.spawnableEntities.Count > 0)
+        {
+            spawnable = this.spawnableEntities.Exists((x) => { return x == name; });
+        }
+
+        return spawnable;
+    }
+
+    #region Injectors
+    public void RegisterRelic(RelicType type)
+    {
+        switch (type)
+        {
+            case RelicType.SUMMON_WHALE:
+                this.spawnableEntities.Add("Whale");
+                break;
+            case RelicType.SUMMON_WHISPERS:
+                this.spawnableEntities.Add("Whispers");
+                break;
+            case RelicType.SUMMON_SCRATCHES:
+                this.spawnableEntities.Add("Scratches");
+                break;
+            case RelicType.FRENZY:
+                this.resetEntityDelay = 2f;
+                break;
+        }
+
+        this.collectedRelics++;
+
+        if (this.collectedRelics >= 3)
+        {
+            EventBroadcaster.Instance.PostEvent(EventNames.ON_THREE_RELICS_COLLECTED);
+        }
+    }
+    #endregion
 }
