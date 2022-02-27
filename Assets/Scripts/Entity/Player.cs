@@ -503,9 +503,10 @@ public class Player : Entity
         this.gameObject.GetComponent<AudioSource>().volume = 0;
         smartWatchHud = GameObject.FindGameObjectWithTag("SmartWatch");
         smartWatchHud.SetActive(false);
+        playerExplode = 1;
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Explode", () =>
         {
-            Debug.Log("Kaboom, you are ded");
+            Debug.Log("Kaboom, animation dead");
             DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>(PopupNames.DEATH_POPUP);
             popup.Setup();
             popup.Show();
