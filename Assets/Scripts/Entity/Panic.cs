@@ -18,6 +18,9 @@ public class Panic : MonoBehaviour
     private const float DANGER_THRESHOLD = 60f;
     private const float NORMAL_THRESHOLD = 30f;
 
+    bool firstTimeReaching50Percent = false;
+    bool firstTimeReaching90Percent = false;
+
     private PanicState panicState;
     public PanicState PanicState
     {
@@ -59,6 +62,21 @@ public class Panic : MonoBehaviour
         this.panicValue += this.panicMultiplier * Time.deltaTime;
 
         DeterminePanicState();
+        TriggerEventDialog();
+    }
+
+    void TriggerEventDialog()
+    {
+        if (this.panicValue > 50 && !firstTimeReaching50Percent)
+        {
+            firstTimeReaching50Percent = true;
+            GameDirector.Instance.StartDialogSequence(TopicList.PLAYER_REACHES_50_PANIC);
+        }
+        else if (this.panicValue > 90 && !firstTimeReaching90Percent)
+        {
+            firstTimeReaching90Percent = true;
+            GameDirector.Instance.StartDialogSequence(TopicList.PLAYER_REACHES_90_PANIC);
+        }
     }
 
     public void IncreasePanicValue(float val)
