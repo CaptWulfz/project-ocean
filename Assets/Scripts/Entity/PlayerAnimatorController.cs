@@ -17,5 +17,6 @@ public class PlayerAnimatorController : AnimatorController
         EvaluateAnimation("playerIsFloating", this.player.PlayerIsFloating);
         EvaluateAnimation("Oxygen", this.player.OxygenTimer);
         EvaluateAnimation("Panic", this.player.PanicValue);
+        EvaluateAnimation("playerExplode", this.player.PlayerExplode);
     }
 }

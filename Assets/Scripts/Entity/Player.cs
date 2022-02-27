@@ -66,6 +66,7 @@ public class Player : Entity
     private bool goMid;
     private bool goMax;
     private bool playerIsFloating;
+    private float playerExplode = 0;
 
     [Header("Mouse Settings")]
     [SerializeField] Transform mouseAngle;
@@ -92,6 +93,15 @@ public class Player : Entity
         get { return this.playerIsFloating; }
     }
 
+    public float PlayerExplode
+    {
+        get { return this.playerExplode; }
+        set {this.playerExplode = value;}
+    }
+    public bool VisionCone
+    {
+        set {this.visionCone.SetActive(value);}
+    }
     #region MACHINE RUNTIME
     private void Start()
     {
@@ -490,11 +500,10 @@ public class Player : Entity
     public void OnMineExplosionDead()
     {
         this.EntityControls.Player.Movement.Disable();
-        this.visionCone.SetActive(false);
         this.gameObject.GetComponent<AudioSource>().volume = 0;
         smartWatchHud = GameObject.FindGameObjectWithTag("SmartWatch");
         smartWatchHud.SetActive(false);
-        StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Oxygen", () =>
+        StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Explode", () =>
         {
             Debug.Log("Kaboom, you are ded");
             DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>(PopupNames.DEATH_POPUP);

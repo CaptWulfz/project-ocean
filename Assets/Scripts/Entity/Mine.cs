@@ -6,6 +6,7 @@ public class Mine : MonoBehaviour
 {
     [SerializeField] MineAnimation mineAnim;
     [SerializeField] Oxygen playerOxygen;
+    [SerializeField] Player playerDie;
     private bool mineExplode = false;
     private Player player;
     public bool MineExplode
@@ -33,10 +34,11 @@ public class Mine : MonoBehaviour
             Debug.Log("If u see this u are ded");
             mineExplode = true;
             
+            player.VisionCone = false;
             StartCoroutine(mineAnim.WaitForAnimationToFinish("Mine_Explosion", () =>
             {
-                playerOxygen.NoOxygen = true;
-                playerOxygen.OxygenTimer = 0f;
+                player.PlayerExplode = 1;
+                //playerOxygen.OxygenTimer = 0f;
                 Destroy(this.gameObject);
                 player.OnMineExplosionDead();
             }));
