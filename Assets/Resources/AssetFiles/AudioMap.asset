@@ -28,3 +28,5 @@ MonoBehaviour:
   Music:
   - key: Ambiance
     source: {fileID: 8300000, guid: 2acfb747c4b0ac44ba9b9d8aed48ec11, type: 3}
+  - key: Main_Theme
+    source: {fileID: 8300000, guid: f3e98a8577af1524a8f330f24c1ca794, type: 3}

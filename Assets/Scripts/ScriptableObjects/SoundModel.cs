@@ -48,6 +48,12 @@ public class SoundModel : ScriptableObject
     public float PlayerSpeedOffset { get; set; }
 
     [field: SerializeField]
+    public float FrenzySpeed { get; set; }
+
+    [field: SerializeField]
+    public float ChaseSpeed { get; set; }
+
+    [field: SerializeField]
     public float InflictedPanicValue { get; set; }
 
     [field: SerializeField]
