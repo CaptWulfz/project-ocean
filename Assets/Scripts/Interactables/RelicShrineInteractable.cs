@@ -24,6 +24,7 @@ public class RelicShrineInteractable : Interactable
             if (success)
             {
                 Debug.Log("Relic Shrine Activated!");
+                EventBroadcaster.Instance.PostEvent(EventNames.RELIC_SHRINE_FINISHED);
                 ToggleShrines(true);
                 
             }

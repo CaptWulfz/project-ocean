@@ -15,6 +15,8 @@ public class Oxygen : MonoBehaviour
     
     private float oxygenDecreaseMultiplier = 0.5f;
 
+    private bool stop = false;
+
     public float OxygenTimer
     {
         get { return this.oxygenTimer; }
@@ -29,10 +31,19 @@ public class Oxygen : MonoBehaviour
     {
         noOxygen = false;
         this.oxygenTimer = MAX_OXYGEN;
+        EventBroadcaster.Instance.AddObserver(EventNames.ENTITY_KILL_YOURSELF, OnEntityKillYourself);
+    }
+
+    private void OnEntityKillYourself(Parameters param = null)
+    {
+        this.stop = true;
     }
 
     private void Update()
     {
+        if (stop)
+            return;
+
         //Debug.Log("OXYGEN CONSUMPTION: " + oxygenDecreaseMultiplier);
         if (noOxygen)
         {

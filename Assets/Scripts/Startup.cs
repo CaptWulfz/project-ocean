@@ -48,6 +48,10 @@ public class Startup : MonoBehaviour
         MenuPopup popup = PopupManager.Instance.ShowPopup<MenuPopup>(PopupNames.MENU_POPUP);
         popup.Setup();
         popup.Show();
+
+        //EndingPopup popup = PopupManager.Instance.ShowPopup<EndingPopup>(PopupNames.ENDING_POPUP);
+        //popup.Setup();
+        //popup.Show();
         //GameLoaderManager.Instance.ToggleMainHud(true);
         //Cursor.visible = false;
     }
