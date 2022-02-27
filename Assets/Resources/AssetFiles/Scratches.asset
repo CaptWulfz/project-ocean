@@ -28,7 +28,7 @@ MonoBehaviour:
   <MidOpacityValue>k__BackingField: 0
   <EndOpacityValue>k__BackingField: 1
   <BaseSpeed>k__BackingField: 5
-  <PlayerSpeedOffset>k__BackingField: 15
+  <PlayerSpeedOffset>k__BackingField: 8
   <FrenzySpeed>k__BackingField: 8
   <ChaseSpeed>k__BackingField: 18
   <InflictedPanicValue>k__BackingField: 2
