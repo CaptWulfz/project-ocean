@@ -45,6 +45,33 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
         Destroy(GameObject.Find("Root"));
     }
 
+    public void UnloadGame()
+    {
+        //AsyncOperation async = SceneManager.UnloadSceneAsync(SceneNames.OCEAN_SCENE);
+
+        //StartCoroutine(WaitForAsync(async));
+
+        GameDirector.Instance.StopAllProcess();
+
+        this.mainCamera.GetComponent<AudioListener>().enabled = true;
+        this.mainCamera.GetComponent<CameraAudioSource>().PlayMusic(MusicKeys.MAIN_THEME);
+
+        EndingPopup popup = PopupManager.Instance.ShowPopup<EndingPopup>(PopupNames.ENDING_POPUP);
+        popup.Setup();
+        popup.Show();
+    }
+
+    private IEnumerator WaitForAsync(AsyncOperation async)
+    {
+        yield return new WaitUntil(() => { return async.isDone; });
+        this.mainCamera.GetComponent<AudioListener>().enabled = true;
+        this.mainCamera.GetComponent<CameraAudioSource>().PlayMusic(MusicKeys.MAIN_THEME);
+
+        EndingPopup popup = PopupManager.Instance.ShowPopup<EndingPopup>(PopupNames.ENDING_POPUP);
+        popup.Setup();
+        popup.Show();
+    }
+
     public void LoadGameScene()
     {
         StartCoroutine(LoadFirstScene());

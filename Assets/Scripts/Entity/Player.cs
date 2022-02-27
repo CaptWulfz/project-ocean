@@ -119,16 +119,16 @@ public class Player : Entity
 
     private void Update()
     {
-        if (Keyboard.current.pKey.wasReleasedThisFrame)
-        {
-            Debug.Log("Increased Panic by 10");
-            this.panic.IncreasePanicValue(10f); // stimuli (collision)
-        }
-        if (Keyboard.current.oKey.wasReleasedThisFrame)
-        {
-            Debug.Log("Decreased Oxygen by 3.5"); // Bump into something
-            this.oxygen.DecreaseOxygenTimer(3.5f);
-        }
+        //if (Keyboard.current.pKey.wasReleasedThisFrame)
+        //{
+        //    Debug.Log("Increased Panic by 10");
+        //    this.panic.IncreasePanicValue(10f); // stimuli (collision)
+        //}
+        //if (Keyboard.current.oKey.wasReleasedThisFrame)
+        //{
+        //    Debug.Log("Decreased Oxygen by 3.5"); // Bump into something
+        //    this.oxygen.DecreaseOxygenTimer(3.5f);
+        //}
         //if (Keyboard.current.lKey.wasReleasedThisFrame)
         //{
         //    Debug.Log("Decreased Panic by 10 + Good points");
@@ -156,7 +156,7 @@ public class Player : Entity
         if (this.interactableObj == null)
             return;
 
-        if (Keyboard.current.lKey.wasPressedThisFrame)
+        if (Keyboard.current.eKey.wasPressedThisFrame)
         {
             this.interactableObj.TriggerSkillCheck();
         }

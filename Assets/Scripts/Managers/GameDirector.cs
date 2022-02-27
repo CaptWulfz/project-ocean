@@ -98,6 +98,11 @@ public class GameDirector : Singleton<GameDirector>
     {
         this.dialogManager = dialogManager;
     }
+
+    public void StopAllProcess()
+    {
+        this.gameDirectorMain.StopAllProcess();
+    }
     #endregion
 }
 

@@ -26,6 +26,7 @@ public partial class GameDirectorMain
         get { return this.spawnPoints; }
     }
 
+    private bool stop = false;
     private bool isFrenzy = false;
     private float resetEntityDelay = 6f;
     private int collectedRelics = 0;
@@ -46,6 +47,9 @@ public partial class GameDirectorMain
 
     public void UpdateEntities()
     {
+        if (stop)
+            return;
+
         if (this.entityCount > MAX_ENTITY_COUNT)
             return;
 
@@ -177,6 +181,12 @@ public partial class GameDirectorMain
         {
             EventBroadcaster.Instance.PostEvent(EventNames.ON_ALL_RELICS_COLLECTED);
         }
+    }
+
+    public void StopAllProcess()
+    {
+        this.stop = true;
+        EventBroadcaster.Instance.PostEvent(EventNames.ENTITY_KILL_YOURSELF);
     }
     #endregion
 }
