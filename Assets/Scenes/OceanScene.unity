@@ -5560,10 +5560,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fake Mine
       objectReference: {fileID: 0}
-    - target: {fileID: 5187485675528964345, guid: 92fee708a82ea0742b3491781b1d2212, type: 3}
-      propertyPath: m_MaskInteraction
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5187485675528964346, guid: 92fee708a82ea0742b3491781b1d2212, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -6305,10 +6301,6 @@ PrefabInstance:
     - target: {fileID: 5187485675528964327, guid: 7c3e3300fec3faa4dbb42d15619020cb, type: 3}
       propertyPath: m_Name
       value: Mine
-      objectReference: {fileID: 0}
-    - target: {fileID: 5187485675528964327, guid: 7c3e3300fec3faa4dbb42d15619020cb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5187485675528964346, guid: 7c3e3300fec3faa4dbb42d15619020cb, type: 3}
       propertyPath: m_RootOrder
