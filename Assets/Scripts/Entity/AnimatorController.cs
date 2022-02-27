@@ -23,15 +23,16 @@ public class AnimatorController: MonoBehaviour
 
     public bool IsAnimationPlaying() // Animation play time
     {
-        return this.animator.GetCurrentAnimatorStateInfo(0).length >
-                this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        return 1 > this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 
     public IEnumerator WaitForAnimationToFinish(string stateName, Action onComplete = null)
     {
         while (!this.animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
             yield return null;
+        Debug.Log("ANIMATION ONGOING");
         yield return new WaitUntil(() => { return !IsAnimationPlaying(); });
+        Debug.Log("ANIMATION DONE");
         onComplete?.Invoke();
     }
 
