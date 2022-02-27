@@ -31,13 +31,15 @@ public class Mine : MonoBehaviour
         {
             player = collision.gameObject.GetComponent<Player>();
             playerOxygen = collision.gameObject.GetComponent<Oxygen>(); 
-            Debug.Log("If u see this u are ded");
+            Debug.Log("Triggered Mine");
             mineExplode = true;
             
             player.VisionCone = false;
+            
+            player.PlayerExplode = 1;
             StartCoroutine(mineAnim.WaitForAnimationToFinish("Mine_Explosion", () =>
             {
-                player.PlayerExplode = 1;
+                Debug.Log("Waited for Mine Explosion");
                 //playerOxygen.OxygenTimer = 0f;
                 Destroy(this.gameObject);
                 player.OnMineExplosionDead();
