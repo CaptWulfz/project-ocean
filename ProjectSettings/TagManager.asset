@@ -16,6 +16,8 @@ TagManager:
   - EntitySpawningTrigger
   - SmartWatch
   - DialogCloseButton
+  - Mine
+  - Fake Mine
   layers:
   - Default
   - TransparentFX

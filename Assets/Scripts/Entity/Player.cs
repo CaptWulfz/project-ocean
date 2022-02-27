@@ -5,7 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : Entity
-{    
+{
+    public bool isFirstFakeMinePassed = false;
+
     public enum SpeedStates{
         MIN,
         MID,
