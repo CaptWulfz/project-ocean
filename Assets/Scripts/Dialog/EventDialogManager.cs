@@ -43,12 +43,12 @@ public class EventDialogManager : MonoBehaviour
         if (eventDialog.EventDialogPlayerResponses.Length > 0)
         {
             //This is if there's still a continuation of the dialog/there needs to be a player response
-            if (eventDialog.EventDialogPlayerResponses.Length == 1)
-                dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 1000;
-            else if (eventDialog.EventDialogPlayerResponses.Length == 2)
-                dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 700;
-            else if (eventDialog.EventDialogPlayerResponses.Length == 3)
-                dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 400;
+            //if (eventDialog.EventDialogPlayerResponses.Length == 1)
+            //    dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 1000;
+            //else if (eventDialog.EventDialogPlayerResponses.Length == 2)
+            //    dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 700;
+            //else if (eventDialog.EventDialogPlayerResponses.Length == 3)
+            //    dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 400;
 
             foreach (EventDialog playerResponse in eventDialog.EventDialogPlayerResponses)
             {
