@@ -8,6 +8,7 @@ public class EventNames
     public const string ON_SKILL_CHECK_FINISHED = "ON_SKILL_CHECK_FINISHED";
     public const string ON_RELIC_PICK_UP = "ON_RELIC_PICK_UP";
     public const string ON_THREE_RELICS_COLLECTED = "ON_THREE_RELICS_COLLECTED";
+    public const string ON_ALL_RELICS_COLLECTED = "ON_ALL_RELICS_COLLECTED";
 }
 
 public class ParameterNames

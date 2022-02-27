@@ -12,6 +12,11 @@ public class OxygenMeter : MonoBehaviour
         EventBroadcaster.Instance.AddObserver(EventNames.ON_OXYGEN_MODIFIED, onOxygenModified);
     }
 
+    private void OnDestroy()
+    {
+        EventBroadcaster.Instance.RemoveObserverAtAction(EventNames.ON_OXYGEN_MODIFIED, onOxygenModified);
+    }
+
     private void onOxygenModified(Parameters param = null)
     {
         if (param != null)

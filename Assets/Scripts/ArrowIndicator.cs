@@ -19,6 +19,11 @@ public class ArrowIndicator : MonoBehaviour
         EventBroadcaster.Instance.AddObserver(EventNames.ON_RELIC_PICK_UP, OnRelicPickup);
     }
 
+    private void OnDestroy()
+    {
+        EventBroadcaster.Instance.RemoveObserverAtAction(EventNames.ON_RELIC_PICK_UP, OnRelicPickup);
+    }
+
     void Update()
     {
         if (relics.Count > 0)

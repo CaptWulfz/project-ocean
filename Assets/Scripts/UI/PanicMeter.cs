@@ -12,6 +12,11 @@ public class PanicMeter : MonoBehaviour
         EventBroadcaster.Instance.AddObserver(EventNames.ON_PANIC_MODIFIED, OnPanicModified);
     }
 
+    private void OnDestroy()
+    {
+        EventBroadcaster.Instance.RemoveObserverAtAction(EventNames.ON_PANIC_MODIFIED, OnPanicModified);
+    }
+
     private void OnPanicModified(Parameters param = null)
     {
         if (param != null)

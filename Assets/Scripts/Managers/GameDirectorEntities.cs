@@ -26,7 +26,8 @@ public partial class GameDirectorMain
         get { return this.spawnPoints; }
     }
 
-    private float resetEntityDelay = 4f;
+    private bool isFrenzy = false;
+    private float resetEntityDelay = 6f;
     private int collectedRelics = 0;
 
     private SoundSource preloadedSoundSource;
@@ -91,7 +92,7 @@ public partial class GameDirectorMain
             {
                 if (this.entityCount > 0)
                     this.entityCount--;
-            });
+            }, this.isFrenzy);
             newSpawn.transform.position = spawnTransform;
             this.entityCount++;
         }
@@ -148,6 +149,7 @@ public partial class GameDirectorMain
     #region Injectors
     public void RegisterRelic(RelicType type)
     {
+        this.collectedRelics++;
         switch (type)
         {
             case RelicType.SUMMON_WHALE:
@@ -161,14 +163,19 @@ public partial class GameDirectorMain
                 break;
             case RelicType.FRENZY:
                 this.resetEntityDelay = 2f;
+                this.isFrenzy = true;
                 break;
         }
 
-        this.collectedRelics++;
+        if (!this.isFrenzy)
+            this.entityDelay = 6 - this.collectedRelics;
 
-        if (this.collectedRelics >= 3)
+        if (this.collectedRelics == 3)
         {
             EventBroadcaster.Instance.PostEvent(EventNames.ON_THREE_RELICS_COLLECTED);
+        } else if (this.collectedRelics >= 4)
+        {
+            EventBroadcaster.Instance.PostEvent(EventNames.ON_ALL_RELICS_COLLECTED);
         }
     }
     #endregion

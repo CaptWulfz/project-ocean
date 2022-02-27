@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1908302604}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 2, y: 1.25, z: 1}
   m_Children: []
   m_Father: {fileID: 478807534573499866}
   m_RootOrder: 0
@@ -74,7 +74,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cb54e4f6596ce2742b4343d4e4b138ab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62fa781ae1ca7bc4c97a512dee1aa91f, type: 3}
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 0
   m_BackSortingLayerID: 0
@@ -124,7 +124,7 @@ SpriteRenderer:
   m_SortingLayerID: 1027684307
   m_SortingLayer: 2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: cb54e4f6596ce2742b4343d4e4b138ab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62fa781ae1ca7bc4c97a512dee1aa91f, type: 3}
   m_Color: {r: 0.9315481, g: 0.9433962, b: 0.5642577, a: 0.09803922}
   m_FlipX: 0
   m_FlipY: 0
@@ -151,8 +151,8 @@ PolygonCollider2D:
   m_Offset: {x: 1.8, y: 0.007}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0.5}
-    oldSize: {x: 3.69, y: 2.9}
+    pivot: {x: 0.1, y: 0.5}
+    oldSize: {x: 2.29, y: 2.03}
     newSize: {x: 3.69, y: 2.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -160,13 +160,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.6334827, y: -0.8875582}
-      - {x: 1.7159455, y: -0.2674161}
-      - {x: 1.6987331, y: 0.3106049}
-      - {x: 1.6280167, y: 0.95780385}
-      - {x: 1.4925249, y: 1.2691964}
+    - - {x: -0.15008116, y: -0.5843642}
+      - {x: -0.08022487, y: -0.3359361}
+      - {x: -0.054913163, y: -0.04750207}
+      - {x: -0.06307113, y: 0.23648486}
+      - {x: -0.14993966, y: 0.5333917}
       - {x: -1.7976125, y: -0.008482475}
-      - {x: 1.4928243, y: -1.2731115}
 --- !u!114 &3874242870630440294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8622cf80a464d5346b5578f6ed5b5a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseLookSpeed: 0.013
+  mouseLookSpeed: 0.0015
 --- !u!1 &478807534573499871
 GameObject:
   m_ObjectHideFlags: 0
