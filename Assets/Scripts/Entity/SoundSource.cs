@@ -52,6 +52,7 @@ public class SoundSource : Entity
         AudioManager.Instance.RegisterAudioSource(AudioKeys.SFX, sourceName, this.audioSource);
         AudioClip clipToPlay = GetAudioClip();
         AudioManager.Instance.PlayAudioWithClip(AudioKeys.SFX, this.sourceName, clipToPlay, this.soundModel.MaxVolume);
+        EventBroadcaster.Instance.AddObserver(EventNames.ENTITY_KILL_YOURSELF, OnKillYourself);
     }
 
     private AudioClip GetAudioClip()
@@ -66,6 +67,11 @@ public class SoundSource : Entity
 
         //Debug.Log("QQQ Loaded Clip " + clip.name);
         return clip;
+    }
+
+    private void OnKillYourself(Parameters param = null)
+    {
+        Despawn();
     }
 
     public void Despawn()
@@ -105,6 +111,7 @@ public class SoundSource : Entity
             this.Speed = this.SoundModel.ChaseSpeed;
         } else if (this.isFrenzy)
         {
+            Debug.Log("Is Frenzy");
             this.Speed = this.soundModel.FrenzySpeed;
         } else
         {

@@ -73,6 +73,7 @@ public class ArrowIndicator : MonoBehaviour
     private void OnRelicShrineFinished(Parameters param = null)
     {
         this.isDone = true;
+        this.arrowType[0].SetActive(false);
         this.arrowType[1].SetActive(false);
     }
 
@@ -87,12 +88,12 @@ public class ArrowIndicator : MonoBehaviour
 
     void UpdateSignalStrength()
     {
-        if (ComputeDistanceToNearestRelic() > 60)
-        {
-            foreach (GameObject freq in frequencies)
-                freq.SetActive(false);
-        }
-        else if (ComputeDistanceToNearestRelic() > 30 && ComputeDistanceToNearestRelic() < 50)
+        //if (ComputeDistanceToNearestRelic() > 80)
+        //{
+        //    foreach (GameObject freq in frequencies)
+        //        freq.SetActive(false);
+        //}
+        if (ComputeDistanceToNearestRelic() > 30)
         {
             frequencies[0].SetActive(true);
             frequencies[1].SetActive(false);

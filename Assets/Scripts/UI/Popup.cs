@@ -6,7 +6,7 @@ using UnityEngine;
 public class Popup : MonoBehaviour
 {
     [Header("Popup Animation")]
-    [SerializeField] Animation anim;
+    [SerializeField] protected Animation anim;
 
     /// <summary>
     /// Overlay object in the popup. Serves to make sure that anything behind the Popup is not clickable
@@ -46,7 +46,7 @@ public class Popup : MonoBehaviour
         StartCoroutine(AnimationHandler.WaitForAnimation(this.anim, () =>
         {
             PopupManager.Instance.HidePopup(this.gameObject);
-            this.onClose();
+            this.onClose?.Invoke();
         }));
     }
 

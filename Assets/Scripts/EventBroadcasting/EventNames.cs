@@ -12,6 +12,7 @@ public class EventNames
     public const string HIDE_LANDING = "HIDE_LANDING";
     public const string REVEAL_ENDING = "REVEAL_ENDING";
     public const string RELIC_SHRINE_FINISHED = "RELIC_SHRINE_FINISHED";
+    public const string ENTITY_KILL_YOURSELF = "ENTITY_KILL_YOURSELF";
 }
 
 public class ParameterNames

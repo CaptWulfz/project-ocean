@@ -56,7 +56,7 @@ public class PopupManager : Singleton<PopupManager>
 
 public class PopupNames
 {
+    public const string ENDING_POPUP = "EndingPopup";
     public const string MENU_POPUP = "MenuPopup";
     public const string DEATH_POPUP = "DeathPopup";
-
 }
