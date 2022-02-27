@@ -39,6 +39,12 @@ public class GameLoaderManager : Singleton<GameLoaderManager>
         this.isDone = true;
     }
 
+    public void ReloadGame()
+    {
+        SceneManager.LoadScene(SceneNames.STARTUP_SCENE, LoadSceneMode.Single);
+        Destroy(GameObject.Find("Root"));
+    }
+
     public void LoadGameScene()
     {
         StartCoroutine(LoadFirstScene());

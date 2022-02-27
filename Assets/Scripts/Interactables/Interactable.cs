@@ -28,6 +28,11 @@ public class Interactable : MonoBehaviour
         EventBroadcaster.Instance.AddObserver(EventNames.ON_SKILL_CHECK_FINISHED, OnSkillCheckFinished);
     }
 
+    private void OnDestroy()
+    {
+        EventBroadcaster.Instance.RemoveObserverAtAction(EventNames.ON_SKILL_CHECK_FINISHED, OnSkillCheckFinished);
+    }
+
     protected virtual void OnSkillCheckFinished(Parameters param = null)
     {
         if (param != null)
@@ -44,6 +49,6 @@ public class Interactable : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        
+
     }
 }

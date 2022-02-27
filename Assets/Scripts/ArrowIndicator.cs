@@ -4,23 +4,47 @@ using UnityEngine;
 
 public class ArrowIndicator : MonoBehaviour
 {
+    [SerializeField] GameObject[] arrowType;
+
     [SerializeField] Transform playerTransform;
     [SerializeField] List<GameObject> relics;
     [SerializeField] List<GameObject> frequencies;
 
+    [SerializeField] Transform relicShrine;
+
+    private bool trackRelicShrine = false;
+    private bool isDone = false;
     Vector2 nearestRelic;
+
     private void Start()
     {
         nearestRelic = Vector2.zero;
         foreach (GameObject freq in frequencies)
             freq.SetActive(false);
 
-
+        this.arrowType[0].SetActive(true);
+        this.isDone = false;
         EventBroadcaster.Instance.AddObserver(EventNames.ON_RELIC_PICK_UP, OnRelicPickup);
+        EventBroadcaster.Instance.AddObserver(EventNames.ON_ALL_RELICS_COLLECTED, OnAllRelicsCollected);
+        EventBroadcaster.Instance.AddObserver(EventNames.RELIC_SHRINE_FINISHED, OnRelicShrineFinished);
+    }
+
+    private void OnDestroy()
+    {
+        EventBroadcaster.Instance.RemoveObserverAtAction(EventNames.ON_RELIC_PICK_UP, OnRelicPickup);
     }
 
     void Update()
     {
+        if (isDone)
+            return;
+
+        if (this.trackRelicShrine)
+        {
+            TrackRelicShrine();
+            return;
+        }
+
         if (relics.Count > 0)
         {
             RotateToNearestRelic();
@@ -31,6 +55,25 @@ public class ArrowIndicator : MonoBehaviour
             foreach (GameObject freq in frequencies)
                 freq.SetActive(false);
         }
+    }
+
+    private void TrackRelicShrine()
+    {
+        float znewVal = Mathf.Atan2(this.relicShrine.position.y - playerTransform.position.y, this.relicShrine.position.x - playerTransform.position.x) * Mathf.Rad2Deg;
+        this.transform.rotation = Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, znewVal);
+    }
+
+    private void OnAllRelicsCollected(Parameters param = null)
+    {
+        this.trackRelicShrine = true;
+        this.arrowType[0].SetActive(false);
+        this.arrowType[1].SetActive(true);
+    }
+
+    private void OnRelicShrineFinished(Parameters param = null)
+    {
+        this.isDone = true;
+        this.arrowType[1].SetActive(false);
     }
 
     void OnRelicPickup(Parameters param = null)
