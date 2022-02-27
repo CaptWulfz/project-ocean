@@ -468,6 +468,7 @@ GameObject:
   - component: {fileID: 61770817}
   - component: {fileID: 61770818}
   - component: {fileID: 61770819}
+  - component: {fileID: 61770821}
   m_Layer: 11
   m_Name: RelicShrine
   m_TagString: Interactable
@@ -598,6 +599,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &61770821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61770815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a9019f549622e48aa0f5105c0db96c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &73658412
 GameObject:
   m_ObjectHideFlags: 0
@@ -5167,6 +5180,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
+--- !u!1 &1375964861 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1908302604, guid: 6581989cfe66bd04baf36bda0e77e58f, type: 3}
+  m_PrefabInstance: {fileID: 1375964860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1375964862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375964861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc2da3afe3279f4ebb6142669be8862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1378538996
 GameObject:
   m_ObjectHideFlags: 0
