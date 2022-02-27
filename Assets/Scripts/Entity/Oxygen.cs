@@ -36,6 +36,7 @@ public class Oxygen : MonoBehaviour
         //Debug.Log("OXYGEN CONSUMPTION: " + oxygenDecreaseMultiplier);
         if (noOxygen)
         {
+            Debug.Log("NO MORE OXYGEN");
             return;
         }
         Parameters param = new Parameters();
@@ -48,7 +49,6 @@ public class Oxygen : MonoBehaviour
             this.oxygenTimer -= this.oxygenDecreaseMultiplier * Time.deltaTime;
         } else
         {
-            Debug.Log("NO MORE OXYGEN: ");
             noOxygen = true;
             this.player.OnOxygenStageDead();
         }
