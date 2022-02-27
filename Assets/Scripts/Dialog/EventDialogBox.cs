@@ -16,4 +16,6 @@ public class EventDialogBox : MonoBehaviour
     {
         dialogManagerReference.GetComponent<EventDialogManager>().GenerateDialogSequence(nextSequenceOfDialog);
     }
+
+
 }

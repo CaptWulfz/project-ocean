@@ -14,6 +14,8 @@ TagManager:
   - Interactable
   - InvisibleTrigger
   - EntitySpawningTrigger
+  - SmartWatch
+  - DialogCloseButton
   layers:
   - Default
   - TransparentFX
@@ -28,7 +30,7 @@ TagManager:
   - Apparition
   - Interactable
   - InvisibleTrigger
-  - 
+  - Walls
   - 
   - 
   - 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RelicInteractable : Interactable
 {
+    [SerializeField] RelicLandingEvent dialogEvent;
     protected override void Initialize()
     {
         this.difficultyMode = PlayerSkillCheckDifficultyModes.Easy;
@@ -20,9 +21,20 @@ public class RelicInteractable : Interactable
             if (success)
             {
                 Debug.Log("Picked Up Relic!");
-                this.gameObject.SetActive(false);
+                Parameters param2 = new Parameters();
+                param2.AddParameter<int>("relicID", this.gameObject.GetInstanceID());
+                EventBroadcaster.Instance.PostEvent(EventNames.ON_RELIC_PICK_UP, param2);
+                dialogEvent.StartDialogEvent();
+                Destroy(this.gameObject);
+                //WaitForRelicPickupEventBeforeDestroying();
             }
             base.OnSkillCheckFinished(param);
         }
     }
+
+    //IEnumerator WaitForRelicPickupEventBeforeDestroying()
+    //{
+    //    yield return new WaitUntil()
+    //    Destroy(this.gameObject);
+    //}    
 }
