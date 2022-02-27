@@ -14,12 +14,32 @@ public class ArrowIndicator : MonoBehaviour
         nearestRelic = Vector2.zero;
         foreach (GameObject freq in frequencies)
             freq.SetActive(false);
+
+
+        EventBroadcaster.Instance.AddObserver(EventNames.ON_RELIC_PICK_UP, OnRelicPickup);
     }
 
     void Update()
     {
-        RotateToNearestRelic();
-        UpdateSignalStrength();
+        if (relics.Count > 0)
+        {
+            RotateToNearestRelic();
+            UpdateSignalStrength();
+        }
+        else
+        {
+            foreach (GameObject freq in frequencies)
+                freq.SetActive(false);
+        }
+    }
+
+    void OnRelicPickup(Parameters param = null)
+    {
+        int temp = param.GetParameter<int>("relicID", 0);
+        GameObject relic = this.relics.Find((x) => { return x.GetInstanceID() == temp; });
+        
+        if (relic != null)
+            this.relics.Remove(relic);
     }
 
     void UpdateSignalStrength()
