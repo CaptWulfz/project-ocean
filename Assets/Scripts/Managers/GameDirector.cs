@@ -103,7 +103,21 @@ public class GameDirector : Singleton<GameDirector>
 
 public enum TopicList
 {
-    INTRO,
-    INTRO_EXIT,
-    RELIC_LANDING
+    //https://docs.google.com/document/d/1nhuJ1ToxMY_Xo6KdJGspUvjosH8EbcQUx89hB3ad4b0/edit
+    //page 7 onwards
+
+    INTRO, //Dialog Intro
+    INTRO_EXIT, //Dialog Level 1
+    RELIC_LANDING, //Dialog Level 1 prologue
+    ABYSS_FIRST_MINE, 
+    ABYSS_REVEALS_FIRST_MIRAGE_MINE,
+    ABYSS_PASS_THROUGH_FIRST_MIRAGE_MINE,
+    ABYSS_FIRST_USE_OXYGEN,
+    ABYSS_FIRST_MONSTER_ENCOUNTER,
+    ABYSS_SECOND_RELIC, //done -- to attach
+    ABYSS_ENCOUNTER_FEW_MORE_ENTITIES, //5th entity
+    PLAYER_REACHES_50_PANIC, //done
+    PLAYER_REACHES_90_PANIC, //done
+    ABYSS_THIRD_RELIC, //done -- to attach
+    ABYSS_FOURTH_RELIC //done -- to attach
 }

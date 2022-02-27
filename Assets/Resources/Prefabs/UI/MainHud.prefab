@@ -1263,6 +1263,18 @@ PrefabInstance:
       propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2758834840713465470, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
+      propertyPath: m_Color.b
+      value: 0.85422003
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758834840713465470, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9150943
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758834840713465470, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
+      propertyPath: m_Color.r
+      value: 0.59912777
+      objectReference: {fileID: 0}
     - target: {fileID: 3352038081362507501, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
       propertyPath: m_Name
       value: SmartWatch
