@@ -9,6 +9,7 @@ public class AbyssEvents : MonoBehaviour
         if (collision.tag == TagNames.PLAYER)
         {
             GameDirector.Instance.StartGame();
+            EventBroadcaster.Instance.PostEvent(EventNames.HIDE_LANDING);
         }
     }
 }
