@@ -105,6 +105,7 @@ public class SoundSource : Entity
             this.Speed = this.SoundModel.ChaseSpeed;
         } else if (this.isFrenzy)
         {
+            Debug.Log("Is Frenzy");
             this.Speed = this.soundModel.FrenzySpeed;
         } else
         {
