@@ -21,7 +21,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c7cebd81555fbdc449231e5359406afb, type: 3}
   - {fileID: 8300000, guid: 349968dd7cf333943abb1fa4f4317cc1, type: 3}
   - {fileID: 8300000, guid: 7a69cca718bcf9f4e9fee0c54641d903, type: 3}
-  - {fileID: 8300000, guid: 96a8ee822d1e837428c261285508f7f9, type: 3}
   - {fileID: 8300000, guid: f6fddc30e7406ab40bd7ea415b227360, type: 3}
   <FadeType>k__BackingField: 0
   <FarRange>k__BackingField: 5.5
@@ -31,7 +30,7 @@ MonoBehaviour:
   <MidOpacityValue>k__BackingField: 0
   <EndOpacityValue>k__BackingField: 1
   <BaseSpeed>k__BackingField: 1
-  <PlayerSpeedOffset>k__BackingField: 2
+  <PlayerSpeedOffset>k__BackingField: 5
   <FrenzySpeed>k__BackingField: 2
   <ChaseSpeed>k__BackingField: 14
   <InflictedPanicValue>k__BackingField: 2
