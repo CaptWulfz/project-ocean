@@ -2728,10 +2728,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Today, I\u2019m back at the beach that haunted me for ten years. \n\nGear
-    packed to figure out what\u2019s really down there. \n\nI hear a faint whisper
-    coming through static on my radio. \n\nNo need for voices now. \n\nI need to
-    be present. \n\nI need to be here and now.\n\nI turn it off. "
+  m_Text: "Today, I\u2019m back at the beach that haunted me for ten years. \n\n\nGear
+    packed to figure out what\u2019s really down there. \n\n\nI hear a faint whisper
+    coming through static on my radio. \n\n\nNo need for voices now. \n\n\nI need
+    to be present. \n\n\nI need to be here and now.\n\n\nI turn it off. "
 --- !u!1 &5493202241257017300
 GameObject:
   m_ObjectHideFlags: 0
@@ -3151,10 +3151,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Today, I\u2019m back at the beach that haunted me for ten years. \n\nGear
-    packed to figure out what\u2019s really down there. \n\nI hear a faint whisper
-    coming through static on my radio. \n\nNo need for voices now. \n\nI need to
-    be present. \n\nI need to be here and now.\n\nI turn it off. "
+  m_Text: "Today, I\u2019m back at the beach that haunted me for ten years. \n\n\nGear
+    packed to figure out what\u2019s really down there. \n\n\nI hear a faint whisper
+    coming through static on my radio. \n\n\nNo need for voices now. \n\n\nI need
+    to be present. \n\n\nI need to be here and now.\n\n\nI turn it off. "
 --- !u!1 &6226543703754920233
 GameObject:
   m_ObjectHideFlags: 0
