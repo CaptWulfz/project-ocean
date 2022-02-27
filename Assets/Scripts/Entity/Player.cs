@@ -503,7 +503,6 @@ public class Player : Entity
         this.gameObject.GetComponent<AudioSource>().volume = 0;
         smartWatchHud = GameObject.FindGameObjectWithTag("SmartWatch");
         smartWatchHud.SetActive(false);
-        //this.playerExplode = 1;
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Explode", () =>
         {
             Debug.Log("Kaboom, you are ded");
