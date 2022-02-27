@@ -43,6 +43,11 @@ public class Panic : MonoBehaviour
         EventBroadcaster.Instance.AddObserver(EventNames.ON_SKILL_CHECK_FINISHED, SkillCheckResult);
     }
 
+    private void OnDestroy()
+    {
+        EventBroadcaster.Instance.RemoveObserverAtAction(EventNames.ON_SKILL_CHECK_FINISHED, SkillCheckResult);
+    }
+
     public void Initialize()
     {
         this.panicValue = 0f;
