@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 public class MouseLook : MonoBehaviour
 {
 
-    [Header("Mouse Settings")]  
-    [SerializeField] private float mouseLookSpeed = 0.013f; //Speed of Player look towards Mouse Pointer
+    [Header("Mouse Settings")] [Range(0.01f, 1f)]
+    [SerializeField] private float mouseLookSpeed = 0.02f; //Speed of Player look towards Mouse Pointer
 
-    private void Update(){
+    private void FixedUpdate(){
         LookAtMouse();
     }
 

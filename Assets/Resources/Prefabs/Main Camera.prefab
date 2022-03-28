@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  smoothCameraSpeed: 0.125
+  smoothCameraSpeed: 0.01
   offset: {x: 0, y: 0, z: -10}
 --- !u!114 &6618202448413724762
 MonoBehaviour:

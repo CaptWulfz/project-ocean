@@ -8,7 +8,7 @@ public class SpawnPoints : ScriptableObject
     [System.Serializable]
     public class LookStateToVector2
     {
-        public Player.LookStates LookState;
+        public Player.DirectionStates LookState;
         public Vector2 SpawnCoord;
     }
 

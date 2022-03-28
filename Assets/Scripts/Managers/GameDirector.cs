@@ -77,7 +77,7 @@ public class GameDirector : Singleton<GameDirector>
 //        this.gameDirectorMain.TrackPlayerSpeedState(speedState);
     }
 
-    public void TrackPlayerLookState(Player.LookStates lookState)
+    public void TrackPlayerLookState(Player.DirectionStates lookState)
     {
         this.gameDirectorMain.TrackPlayerLookState(lookState);
     }
