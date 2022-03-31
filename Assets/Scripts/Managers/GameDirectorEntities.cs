@@ -12,7 +12,7 @@ public partial class GameDirectorMain
 
     private List<string> spawnableEntities;
 
-    private Player.LookStates playerLookState;
+    private Player.DirectionStates playerLookState;
 
     private DirectorEntitiesMap entitiesMap;
     public DirectorEntitiesMap EntitiesMap
@@ -70,7 +70,7 @@ public partial class GameDirectorMain
         LoadNextSoundModel();
     }
 
-    public void TrackPlayerLookState(Player.LookStates lookState)
+    public void TrackPlayerLookState(Player.DirectionStates lookState)
     {
         this.playerLookState = lookState;
     }

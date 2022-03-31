@@ -8,38 +8,22 @@ public class Player : Entity
 {
     public bool isFirstFakeMinePassed = false;
 
+    #region STATES
     public enum SpeedStates{
-        MIN,
-        MID,
-        MAX
+        MIN,MID,MAX
     }
-
-    private SpeedStates currentSpeedState;
-    public SpeedStates CurrentSpeedState
-    {
-        get { return this.currentSpeedState; }
-    }
-
-    public enum LookStates{ //COMPASS
+    public enum DirectionStates{ //COMPASS
         N, S, E, W, NE, NW, SE, SW
     }
+    private SpeedStates currentSpeedState;
+    private DirectionStates currentLookState;
+    private DirectionStates currentMoveState;
 
-    private LookStates currentLookState;
-    private LookStates currentMoveState;
-    
+    #endregion
+
     [Header("Player Values")]
     [SerializeField] Panic panic;
     [SerializeField] Oxygen oxygen;
-
-    public float PanicValue
-    {
-        get { return this.panic.PanicValueRelativeToMax; }
-    }
-
-    public float OxygenTimer
-    {
-        get { return this.oxygen.OxygenTimer; }
-    }
 
     [Header("Controllers")]
     [SerializeField] AudioController audioController;
@@ -56,10 +40,10 @@ public class Player : Entity
     private Vector2 smoothInputVelocity;
     
     [Header("Player Speed")]
-    [SerializeField] private float minSpeed = 3f;
-    [SerializeField] private float midSpeed = 4f;
-    [SerializeField] private float maxSpeed = 5f;
-    private float accelSpeed = 1.5f;
+    [SerializeField] private float minSpeed = 1.5f;
+    [SerializeField] private float midSpeed = 2f;
+    [SerializeField] private float maxSpeed = 3.35f;
+    private float accelSpeed = 0.3f;
     private float currentSpeed = 0f;
     private float speedMultiplier;
     private bool goMin;
@@ -77,6 +61,22 @@ public class Player : Entity
     private Interactable interactableObj;
 
     #region GETTERS/SETTERS
+
+    public SpeedStates CurrentSpeedState
+    {
+        get { return this.currentSpeedState; }
+    }
+
+    public float PanicValue
+    {
+        get { return this.panic.PanicValueRelativeToMax; }
+    }
+
+    public float OxygenTimer
+    {
+        get { return this.oxygen.OxygenTimer; }
+    }
+
     public float CurrentSpeed
     {
         get { return this.currentSpeed; }
@@ -86,7 +86,6 @@ public class Player : Entity
     {
         get { return this.speedMultiplier; }
     }
-    #endregion
 
     public bool PlayerIsFloating
     {
@@ -102,6 +101,8 @@ public class Player : Entity
     {
         set {this.visionCone.SetActive(value);}
     }
+    #endregion
+
     #region MACHINE RUNTIME
     private void Start()
     {
@@ -113,9 +114,9 @@ public class Player : Entity
         base.Initialize();
         this.EntityControls.Player.Enable();
         this.currentSpeed = 0f;
-        this.minSpeed = 0.5f;
-        this.midSpeed = 1f;
-        this.maxSpeed = 2f;
+        this.minSpeed = 1.5f;
+        this.midSpeed = 2f;
+        this.maxSpeed = 3.35f;
         this.currentSpeedState = SpeedStates.MIN; //Init default value
         this.panic.Initialize();
         this.oxygen.Initialize();
@@ -177,13 +178,16 @@ public class Player : Entity
     #region Movement
     private void MovePlayerWASD()
     {
+        //SmoothDamp
         Vector2 input = this.EntityControls.Player.Movement.ReadValue<Vector2>();
         currentInputVector = Vector2.SmoothDamp(currentInputVector, input, ref smoothInputVelocity, smoothInputSpeed);
         Vector2 move = new Vector2(currentInputVector.x, currentInputVector.y);
 
-        SwitchMoveState(input); //Detects direction of move
+        //Detects direction of move
+        SwitchMoveState(input); 
         speedMultiplier = minSpeed;
 
+        //Speed States
         if(currentSpeedState == SpeedStates.MIN)
         {
             speedMultiplier = minSpeed;
@@ -221,7 +225,9 @@ public class Player : Entity
                 switchStateDelay = StartCoroutine(SwitchSpeedState());
             }            
         }
-
+        
+        //Move the player
+        //this.MovePosition(move * maxSpeed);
         this.MovePosition(move * speedMultiplier);
     }
     #endregion
@@ -259,82 +265,79 @@ public class Player : Entity
         //N, W, S, E    60deg each
         if ((mouseAngleZ >= 45.0f) && (mouseAngleZ <= 135.0f))              //NORTH
         {
-            currentLookState = LookStates.N;
-            
-            //playerIsFloating = true;
-
-            SetMidSpeedToCeiling();
+            currentLookState = DirectionStates.N;
+            SetMinSpeedToCeiling();
         }
         else if ((mouseAngleZ >= 150.0f) && (mouseAngleZ <= 210.0f))        //WEST
         {
-            currentLookState = LookStates.W;
-            if (currentMoveState == LookStates.E)
+            currentLookState = DirectionStates.W;
+            if (currentMoveState == DirectionStates.E)
                 SetMinSpeedToCeiling();
-            else if (currentMoveState == LookStates.N || currentMoveState == LookStates.S)
-                SetMidSpeedToCeiling();
+            else if (currentMoveState == DirectionStates.N || currentMoveState == DirectionStates.S)
+                SetMinSpeedToCeiling();//Mid
             else
                 SetMaxSpeedToCeiling();
         }
         else if ((mouseAngleZ >= 225.0f) && (mouseAngleZ <= 315.0f))        //SOUTH
         {
-            currentLookState = LookStates.S;
+            currentLookState = DirectionStates.S;
 
             //playerIsFloating = true;
 
-            SetMidSpeedToCeiling();
+            SetMinSpeedToCeiling();
         }
         else if (((mouseAngleZ >= 330.0f) && (mouseAngleZ <= 360.0f))       // EAST
                 || ((mouseAngleZ >= 0.0f) && (mouseAngleZ <= 30.0f)))
         {
-            currentLookState = LookStates.E;
+            currentLookState = DirectionStates.E;
 
-            if (currentMoveState == LookStates.W)
+            if (currentMoveState == DirectionStates.W)
                 SetMinSpeedToCeiling();
-            else if (currentMoveState == LookStates.N || currentMoveState == LookStates.S)
-                SetMidSpeedToCeiling();
+            else if (currentMoveState == DirectionStates.N || currentMoveState == DirectionStates.S)
+                SetMinSpeedToCeiling();//Mid
             else
                 SetMaxSpeedToCeiling();
         }
         //NW, SW, SE, NE
         else if ((mouseAngleZ > 135.0) && (mouseAngleZ < 150.0f))           //NORTH WEST
         {
-            currentLookState = LookStates.NW;
+            currentLookState = DirectionStates.NW;
 
-            if (currentMoveState == LookStates.E)
+            if (currentMoveState == DirectionStates.E || currentMoveState == DirectionStates.S) 
                 SetMinSpeedToCeiling();
             else
-                SetMidSpeedToCeiling();
+                SetMaxSpeedToCeiling();//Mid
         }
         else if ((mouseAngleZ > 210.0) && (mouseAngleZ < 225.0f))           //SOUTH WEST
         {
-            currentLookState = LookStates.SW;
+            currentLookState = DirectionStates.SW;
 
-            if (currentMoveState == LookStates.E)
+            if (currentMoveState == DirectionStates.E|| currentMoveState == DirectionStates.N)
                 SetMinSpeedToCeiling();
             else
-                SetMidSpeedToCeiling();
+                SetMaxSpeedToCeiling();//Mid
         }
         else if ((mouseAngleZ > 315.0) && (mouseAngleZ < 330.0f))           //SOUTH EAST
         {
-            currentLookState = LookStates.SE;
+            currentLookState = DirectionStates.SE;
 
-            if (currentMoveState == LookStates.W)
+            if (currentMoveState == DirectionStates.W || currentMoveState == DirectionStates.N)
                 SetMinSpeedToCeiling();
             else
-                SetMidSpeedToCeiling();
+                SetMaxSpeedToCeiling();//Mid
         }
         else if ((mouseAngleZ > 30.0) && (mouseAngleZ < 45.0f))             //NORTH EAST
         {
-            currentLookState = LookStates.NE;
+            currentLookState = DirectionStates.NE;
 
-            if (currentMoveState == LookStates.W)
+            if (currentMoveState == DirectionStates.W || currentMoveState == DirectionStates.S)
                 SetMinSpeedToCeiling();
             else
-                SetMidSpeedToCeiling();
+                SetMaxSpeedToCeiling();//Mid
         }
         //Debug.Log("QQQ CURRENT LOOK STATE: " + currentLookState);
         //GameDirector.Instance.TrackPlayerLookState(currentLookState);
-        if(goMin && !goMid && !goMax)
+        if((goMin && !goMid && !goMax) || currentSpeed <= minSpeed)
             playerIsFloating = true;
         else
             playerIsFloating = false;
@@ -345,19 +348,19 @@ public class Player : Entity
         //N W S E
         if(input == Vector2.up)                                         //NORTH
         {
-            currentMoveState = LookStates.N;
+            currentMoveState = DirectionStates.N;
         }
         else if (input == Vector2.left)                                 //WEST
         {
-            currentMoveState = LookStates.W;
+            currentMoveState = DirectionStates.W;
         }
         else if (input == Vector2.down)                                 //SOUTH
         {
-            currentMoveState = LookStates.S;
+            currentMoveState = DirectionStates.S;
         }
         else if (input == Vector2.right)                                //EAST
         {
-            currentMoveState = LookStates.E;
+            currentMoveState = DirectionStates.E;
         }
     }
     #endregion
@@ -366,11 +369,11 @@ public class Player : Entity
 
 
     public void SwitchLookAnimation(){
-        if(currentLookState == LookStates.N || currentLookState == LookStates.S) //Flips player
+        if(currentLookState == DirectionStates.N || currentLookState == DirectionStates.S) //Flips player
         {
             if((mouseAngleZ > 90.0f && mouseAngleZ < 120.0f)||(mouseAngleZ > 240.0f && mouseAngleZ < 270.0f))
             {
-                //flip sprite lmao to the left
+                //flip sprite to the left
                 playerSprite.flipX = true;
             }
             else if((mouseAngleZ < 90.0f && mouseAngleZ > 60.0f)||(mouseAngleZ < 300.0f && mouseAngleZ > 270.0f))
@@ -394,7 +397,7 @@ public class Player : Entity
             else if (playerSprite.flipX == true)                 //Looking Left  
                 playerCollider.offset = new Vector2(0.9f, -0.1f);
         }
-        else if (currentSpeed <= minSpeed)                   //Idle/Floating Animation
+        else if (playerIsFloating || currentSpeed <= minSpeed)                   //Idle/Floating Animation
         {
             playerCollider.direction = CapsuleDirection2D.Vertical;
             playerCollider.size = new Vector2(1f, 2f);                  //x 1, y 2
