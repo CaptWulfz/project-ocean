@@ -9,12 +9,12 @@ public class RelicLandingEvent : MonoBehaviour
     public void StartDialogEvent()
     {
         if (this.gameObject.name == "RELIC_LANDING")
-            GameDirector.Instance.StartDialogSequence(TopicList.RELIC_LANDING);
+            GameDirector.Instance.PerformDialogSequence(TopicList.RELIC_LANDING);
         if (this.gameObject.name == "RELIC_ABYSS_LEFT_BOTTOM")
-            GameDirector.Instance.StartDialogSequence(TopicList.ABYSS_SECOND_RELIC);
+            GameDirector.Instance.PerformDialogSequence(TopicList.ABYSS_SECOND_RELIC);
         if (this.gameObject.name == "RELIC_ABYSS_MIDDLE")
-            GameDirector.Instance.StartDialogSequence(TopicList.ABYSS_FOURTH_RELIC);
+            GameDirector.Instance.PerformDialogSequence(TopicList.ABYSS_FOURTH_RELIC);
         if (this.gameObject.name == "RELIC_ABYSS_RIGHT_TOP")
-            GameDirector.Instance.StartDialogSequence(TopicList.ABYSS_THIRD_RELIC);
+            GameDirector.Instance.PerformDialogSequence(TopicList.ABYSS_THIRD_RELIC);
     }
 }

@@ -8,7 +8,7 @@ public class DocksExitEvent : MonoBehaviour
     {
         if (collision.tag == TagNames.PLAYER)
         {
-            GameDirector.Instance.StartDialogSequence(TopicList.INTRO_EXIT);
+            GameDirector.Instance.PerformDialogSequence(TopicList.INTRO_EXIT);
         }
     }
 }

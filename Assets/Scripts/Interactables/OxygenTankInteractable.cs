@@ -37,7 +37,7 @@ public class OxygenTankInteractable : Interactable
 
             if (isFirstOxygenTank)
             {
-                GameDirector.Instance.StartDialogSequence(TopicList.ABYSS_FIRST_USE_OXYGEN);
+                GameDirector.Instance.PerformDialogSequence(TopicList.ABYSS_FIRST_USE_OXYGEN);
                 isFirstOxygenTank = false;
             }
         }

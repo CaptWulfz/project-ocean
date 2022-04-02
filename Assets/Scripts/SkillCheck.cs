@@ -17,15 +17,6 @@ public class SkillCheck : MonoBehaviour
     [SerializeField] Slider skillCheckOfPlayer_LeftCorrectSide;
     [SerializeField] Slider skillCheckOfPlayer_LeftWrongSide;
 
-    private Transform target;
-    private SpriteOffset spriteOffset;
-
-    struct SpriteOffset
-    {
-        public float x;
-        public float y;
-    }
-
     /// <summary>
     /// This struct holds the definition of the skill check properties.
     /// PlayerSkillCheckDifficultyModes can either be Easy, Medium, or Hard
@@ -38,19 +29,33 @@ public class SkillCheck : MonoBehaviour
         public bool rotateSkillCheckRandom;
     }
 
+    /// <summary>
+    /// Position offset for the skill check to the target entity's transform to display to.
+    /// </summary>
+    struct SpriteOffset
+    {
+        public float x;
+        public float y;
+    }
+
+    /// <summary>
+    /// Position/Value of the left and right value of the correct field range for the skill check.
+    /// </summary>
     struct CorrectFieldRangeValues
     {
         public float leftValue;
         public float rightValue;
     }
 
+    bool isSkillCheckHappening = false;
+
+    Transform target;
     Controls controls;
     EventBroadcaster eventBroadcaster;
-    
+
+    SpriteOffset spriteOffset;
     CorrectFieldRangeValues correctSkillCheckField;
     PlayerSkillCheckDifficulty currentSkillCheckDifficulty;
-
-    bool isSkillCheckHappening = false;
 
     void OnEnable()
     {
@@ -73,8 +78,9 @@ public class SkillCheck : MonoBehaviour
 
     void Update()
     {
-        FollowTarget();
+        FollowTarget(); //Follows player and presents skill check with offset
 
+        #region Skill Check Presentation
         if (isSkillCheckHappening && skillCheckOfPlayer_RightSide.value < correctSkillCheckField.rightValue + playerSkillCheckPin)
             skillCheckOfPlayer_RightSide.value += 0.01f * currentSkillCheckDifficulty.skillCheckSpeed * Time.deltaTime;
         else
@@ -85,7 +91,9 @@ public class SkillCheck : MonoBehaviour
             eventBroadcaster.PostEvent(EventNames.ON_SKILL_CHECK_FINISHED, param);
             this.gameObject.SetActive(false);
         }
+        #endregion
 
+        #region Player Input for Skill Check
         if (controls.Player.Interact.WasPressedThisFrame() && (skillCheckOfPlayer_RightSide.value < correctSkillCheckField.rightValue && skillCheckOfPlayer_RightSide.value > correctSkillCheckField.leftValue))
         {
             //playerPrompt.text = (Random.Range(5.0f, 5000.0f).ToString() + ": Successful Skill Check"); //temporary
@@ -93,7 +101,15 @@ public class SkillCheck : MonoBehaviour
             param.AddParameter<bool>(ParameterNames.SKILLCHECK_RESULT, true);
             eventBroadcaster.PostEvent(EventNames.ON_SKILL_CHECK_FINISHED, param);
             this.gameObject.SetActive(false);
+        } 
+        else if (controls.Player.Interact.WasPressedThisFrame())
+        {
+            Parameters param = new Parameters();
+            param.AddParameter<bool>(ParameterNames.SKILLCHECK_RESULT, false);
+            eventBroadcaster.PostEvent(EventNames.ON_SKILL_CHECK_FINISHED, param);
+            this.gameObject.SetActive(false);
         }
+        #endregion
     }
 
     #region Follow Player
@@ -118,6 +134,7 @@ public class SkillCheck : MonoBehaviour
     }
     #endregion
 
+    #region Skill Check
     /// <summary>
     /// Call this function to Enable the SkillCheck object and it will perform one skill check. Please supply a difficulty object that will define the complexity of the skill check.
     /// </summary>
@@ -174,6 +191,7 @@ public class SkillCheck : MonoBehaviour
         correctFieldRangeValues.rightValue = correctFieldRangeValues.leftValue + skillCheckCorrectFieldPercentage;
         return correctFieldRangeValues;
     }
+    #endregion
 }
 
 public enum PlayerSkillCheckDifficultyModes

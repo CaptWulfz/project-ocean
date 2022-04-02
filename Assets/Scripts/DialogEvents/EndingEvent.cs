@@ -12,7 +12,7 @@ public class EndingEvent : MonoBehaviour
         if (collision.gameObject.tag == TagNames.PLAYER)
         {
             hasEnteredOnce = true;
-            GameDirector.Instance.StartDialogSequence(TopicList.END_ENTER_ALTAR);
+            GameDirector.Instance.PerformDialogSequence(TopicList.END_ENTER_ALTAR);
         }
     }
 
@@ -21,7 +21,7 @@ public class EndingEvent : MonoBehaviour
         if (collision.gameObject.tag == TagNames.PLAYER)
         {
             hasExitedOnce = true;
-            GameDirector.Instance.StartDialogSequence(TopicList.END_EXIT_ALTAR);
+            GameDirector.Instance.PerformDialogSequence(TopicList.END_EXIT_ALTAR);
         }
     }
 }
