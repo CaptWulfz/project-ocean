@@ -20,11 +20,6 @@ public class EventDialogManager : MonoBehaviour
         GameObjectPool.Instance.Initialize(5, eventDialogBox);
     }
 
-    void Start()
-    {
-        //GenerateDialogSequence(eventDialogGroup.EventDialogs[0]);
-    }
-
     public void GenerateDialogSequence(EventDialog eventDialog)
     {
         this.gameObject.SetActive(true);
@@ -33,6 +28,8 @@ public class EventDialogManager : MonoBehaviour
         speakerImage.sprite = eventDialog.SpeakerImage;
         speakerName.text = eventDialog.SpeakerName.ToString();
         dialogText.text = eventDialog.EventDialogText;
+
+        eventDialog.isDialogTriggered = true;
 
         foreach (Button objectToDequeue in dialogOptionArea.GetComponentsInChildren<Button>())
         {
@@ -43,12 +40,6 @@ public class EventDialogManager : MonoBehaviour
         if (eventDialog.EventDialogPlayerResponses.Length > 0)
         {
             //This is if there's still a continuation of the dialog/there needs to be a player response
-            //if (eventDialog.EventDialogPlayerResponses.Length == 1)
-            //    dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 1000;
-            //else if (eventDialog.EventDialogPlayerResponses.Length == 2)
-            //    dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 700;
-            //else if (eventDialog.EventDialogPlayerResponses.Length == 3)
-            //    dialogOptionArea.GetComponent<HorizontalLayoutGroup>().padding.left = 400;
 
             foreach (EventDialog playerResponse in eventDialog.EventDialogPlayerResponses)
             {

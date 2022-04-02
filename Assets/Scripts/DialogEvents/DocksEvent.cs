@@ -8,7 +8,7 @@ public class DocksEvent : MonoBehaviour
     {
         if (collision.tag == TagNames.PLAYER)
         {
-            GameDirector.Instance.StartDialogSequence(TopicList.INTRO);
+            GameDirector.Instance.PerformDialogSequence(TopicList.INTRO);
         }
     }
 }

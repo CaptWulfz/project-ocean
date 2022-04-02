@@ -67,11 +67,6 @@ public class GameDirector : Singleton<GameDirector>
         this.camSource = camSource;
     }
 
-    public void RegisterSkillCheck(SkillCheck check)
-    {
-        this.gameDirectorMain.RegisterSkillCheck(check);
-    }
-
     public void TrackPlayerSpeedState(Player.SpeedStates speedState)
     {
 //        this.gameDirectorMain.TrackPlayerSpeedState(speedState);
@@ -82,22 +77,34 @@ public class GameDirector : Singleton<GameDirector>
         this.gameDirectorMain.TrackPlayerLookState(lookState);
     }
 
+    #region Skill Check Helpers
+    public void RegisterSkillCheck(SkillCheck check)
+    {
+        this.gameDirectorMain.RegisterSkillCheck(check);
+    }
+
     public void TriggerSkillCheck(Transform target, SkillCheck.PlayerSkillCheckDifficulty difficulty)
     {
         this.gameDirectorMain.TriggerSkillCheck(target, difficulty);
     }
+    #endregion
 
-    public void StartDialogSequence(TopicList topic)
-    {
-        EventDialog dialog = this.topicList.EventDialogs[(int)topic];
-        this.dialogManager.GenerateDialogSequence(dialog);
-        Time.timeScale = 0;
-    }
-
+    #region Dialog Helpers
     public void RegisterEventDialogManager(EventDialogManager dialogManager)
     {
-        this.dialogManager = dialogManager;
+        this.gameDirectorMain.RegisterDialogManager(dialogManager);
     }
+
+    public void PerformDialogSequence(TopicList topic) //previously called as PerformDialogSequence
+    {
+        EventDialog dialog = this.topicList.EventDialogs[(int)topic];
+        if (dialog.isDialogTriggered)
+            return;
+        else
+            this.gameDirectorMain.StartDialogSequence(dialog);
+        //Time.timeScale = 0; -- pauses everything else except for the dialog.
+    }
+    #endregion
 
     public void StopAllProcess()
     {

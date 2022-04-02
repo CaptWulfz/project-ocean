@@ -70,12 +70,12 @@ public class Panic : MonoBehaviour
         if (this.panicValue > 50 && !firstTimeReaching50Percent)
         {
             firstTimeReaching50Percent = true;
-            GameDirector.Instance.StartDialogSequence(TopicList.PLAYER_REACHES_50_PANIC);
+            GameDirector.Instance.PerformDialogSequence(TopicList.PLAYER_REACHES_50_PANIC);
         }
         else if (this.panicValue > 90 && !firstTimeReaching90Percent)
         {
             firstTimeReaching90Percent = true;
-            GameDirector.Instance.StartDialogSequence(TopicList.PLAYER_REACHES_90_PANIC);
+            GameDirector.Instance.PerformDialogSequence(TopicList.PLAYER_REACHES_90_PANIC);
         }
     }
 

@@ -33,6 +33,8 @@ public class EventDialog : ScriptableObject
 
     [field: SerializeField]
     public float EventDialogPanicDamage { get; set; }
+
+    public bool isDialogTriggered = false;
 }
 
 public enum SpeakerNames

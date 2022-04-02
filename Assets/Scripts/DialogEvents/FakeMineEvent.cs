@@ -12,7 +12,7 @@ public class FakeMineEvent : MonoBehaviour
             if (player != null && player.isFirstFakeMinePassed)
             {
                 player.isFirstFakeMinePassed = true;
-                GameDirector.Instance.StartDialogSequence(TopicList.ABYSS_PASS_THROUGH_FIRST_MIRAGE_MINE);
+                GameDirector.Instance.PerformDialogSequence(TopicList.ABYSS_PASS_THROUGH_FIRST_MIRAGE_MINE);
             }
         }
     }

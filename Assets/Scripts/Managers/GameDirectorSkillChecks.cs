@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public partial class GameDirectorMain
 {
-    private const float SKILL_CHECK_DELAY = 4f;
+    //private const float SKILL_CHECK_DELAY = 4f;
     private const int EASY_SKILL_CHECK_LIMIT = 2;
     private const int MEDIUM_SKILL_CHECK_LIMIT = 4;
 
@@ -14,15 +14,15 @@ public partial class GameDirectorMain
     private const float HARD_SKILL_CHECK_SPEED = 60f;
 
     // Skill Checks
-    private Player.SpeedStates playerSpeedState;
+    //private Player.SpeedStates playerSpeedState;
     private SkillCheck skillCheck;
     private SkillCheck.PlayerSkillCheckDifficulty skillCheckDifficulty;
     private PlayerSkillCheckDifficultyModes currentSkillCheckMode;
     private float currentSkillCheckSpeed;
     private bool currentRotateRandom;
-    private bool isSkillCheckActive;
-    private float skillCheckDelay;
     private int successfulSkillChecks;
+    //private bool isSkillCheckActive;
+    //private float skillCheckDelay;
 
     public void InitializeSkillCheck()
     {
@@ -33,8 +33,8 @@ public partial class GameDirectorMain
     private void InitializeSkillCheckSettings()
     {
         this.successfulSkillChecks = 0;
-        this.skillCheckDelay = SKILL_CHECK_DELAY;
-        this.isSkillCheckActive = false;
+        //this.skillCheckDelay = SKILL_CHECK_DELAY;
+        //this.isSkillCheckActive = false;
         this.currentSkillCheckMode = PlayerSkillCheckDifficultyModes.Easy;
 
         EvaluateSuccessfulSkillChecks();
@@ -118,19 +118,19 @@ public partial class GameDirectorMain
     }
 
     #region Injector Methods
-    public void TrackPlayerSpeedState(Player.SpeedStates state)
-    {
-        this.playerSpeedState = state; ;
-        if (state != Player.SpeedStates.MAX)
-        {
-            InitializeSkillCheckSettings();
-            //Debug.Log("QQQ NO SPEED");
-        } else
-        {
-            //Debug.Log("QQQ MAX SPEED");
-        }
+    //public void TrackPlayerSpeedState(Player.SpeedStates state)
+    //{
+    //    this.playerSpeedState = state; ;
+    //    if (state != Player.SpeedStates.MAX)
+    //    {
+    //        InitializeSkillCheckSettings();
+    //        //Debug.Log("QQQ NO SPEED");
+    //    } else
+    //    {
+    //        //Debug.Log("QQQ MAX SPEED");
+    //    }
 
-    }
+    //}
 
     public void TriggerSkillCheck(Transform target, SkillCheck.PlayerSkillCheckDifficulty difficulty)
     {
