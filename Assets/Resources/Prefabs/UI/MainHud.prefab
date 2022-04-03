@@ -133,6 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillCheck: {fileID: 5312473181366588921}
   dialogManager: {fileID: 4158203319174533266}
+  dialogGroup: {fileID: 11400000, guid: 50051570a50a6904ebae7347cde46abb, type: 2}
 --- !u!1 &1761643836994901750
 GameObject:
   m_ObjectHideFlags: 0

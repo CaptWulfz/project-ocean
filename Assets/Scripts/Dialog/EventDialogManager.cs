@@ -17,7 +17,7 @@ public class EventDialogManager : MonoBehaviour
 
     void Awake()
     {
-        GameObjectPool.Instance.Initialize(5, eventDialogBox);
+        GameObjectPool.Instance.Initialize(5, eventDialogBox); //Initializes number of objects for the object pooling for the dialogbox prefabs.
     }
 
     public void GenerateDialogSequence(EventDialog eventDialog)
@@ -29,7 +29,7 @@ public class EventDialogManager : MonoBehaviour
         speakerName.text = eventDialog.SpeakerName.ToString();
         dialogText.text = eventDialog.EventDialogText;
 
-        eventDialog.isDialogTriggered = true;
+        GameDirector.Instance.UpdateEventDialogList(eventDialog, true); //Updates list that this is already presented
 
         foreach (Button objectToDequeue in dialogOptionArea.GetComponentsInChildren<Button>())
         {
@@ -48,6 +48,7 @@ public class EventDialogManager : MonoBehaviour
 
                 newObject.GetComponentInChildren<Text>().text = playerResponse.EventDialogText;
 
+                //Recursion until the event dialog sequence is completed/finished
                 if (playerResponse.EventDialogPlayerResponses.Length > 0)
                     newObject.GetComponent<EventDialogBox>().SetDialogBoxProperties(this.gameObject, playerResponse.EventDialogPlayerResponses[0]);
 
@@ -96,6 +97,7 @@ public class EventDialogManager : MonoBehaviour
     }
 }
 
+//Red will go back to this and implement a separate object pooling script.
 public class EventDialogBoxPool : GameObjectPool
 {
 

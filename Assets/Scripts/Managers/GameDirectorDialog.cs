@@ -4,8 +4,18 @@ using UnityEngine;
 
 public partial class GameDirectorMain
 {
+    bool isDialogInSequence = false;
+
+    public Dictionary<EventDialog, bool> eventDialogs;
     public EventDialogManager eventDialogManager;
-    private bool isDialogInSequence = false;
+
+    public void InitializeDialogList(EventDialog[] eventDialogs)
+    {
+        this.eventDialogs = new Dictionary<EventDialog, bool>();
+        foreach (EventDialog dialog in eventDialogs)
+            this.eventDialogs.Add(dialog, false);
+    }
+
     public void RegisterDialogManager(EventDialogManager eventDialogManager)
     {
         this.eventDialogManager = eventDialogManager;
