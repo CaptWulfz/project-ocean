@@ -90,15 +90,25 @@ public class GameDirector : Singleton<GameDirector>
     #endregion
 
     #region Dialog Helpers
+    public void InitializeEventDialogList(EventDialog[] eventDialogs)
+    {
+        this.gameDirectorMain.InitializeDialogList(eventDialogs);
+    }
+
+    public void UpdateEventDialogList(EventDialog dialog, bool isTriggered)
+    {
+        this.gameDirectorMain.eventDialogs[dialog] = isTriggered;
+    }
+
     public void RegisterEventDialogManager(EventDialogManager dialogManager)
     {
         this.gameDirectorMain.RegisterDialogManager(dialogManager);
     }
 
-    public void PerformDialogSequence(TopicList topic) //previously called as PerformDialogSequence
+    public void PerformDialogSequence(TopicList topic)
     {
         EventDialog dialog = this.topicList.EventDialogs[(int)topic];
-        if (dialog.isDialogTriggered)
+        if (this.gameDirectorMain.eventDialogs[dialog]) //Checks if dialog was already presented
             return;
         else
             this.gameDirectorMain.StartDialogSequence(dialog);
