@@ -13,6 +13,7 @@ public class EventNames
     public const string REVEAL_ENDING = "REVEAL_ENDING";
     public const string RELIC_SHRINE_FINISHED = "RELIC_SHRINE_FINISHED";
     public const string ENTITY_KILL_YOURSELF = "ENTITY_KILL_YOURSELF";
+    public const string POWER_OUTAGE = "POWER_OUTAGE";
 }
 
 public class ParameterNames
