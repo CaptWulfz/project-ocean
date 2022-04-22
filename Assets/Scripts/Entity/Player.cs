@@ -171,6 +171,8 @@ public class Player : Entity
         {
             this.interactableObj.TriggerSkillCheck();
         }
+
+        
     }
     #endregion
 
