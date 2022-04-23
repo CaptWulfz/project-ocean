@@ -7,6 +7,8 @@ public class Oxygen : MonoBehaviour
 {
     [SerializeField] Player player;
     private bool noOxygen;
+    private bool paused;
+
 
     // In Seconds
     private const float MAX_OXYGEN = 120f;
@@ -44,25 +46,52 @@ public class Oxygen : MonoBehaviour
         if (stop)
             return;
 
-        //Debug.Log("OXYGEN CONSUMPTION: " + oxygenDecreaseMultiplier);
         if (noOxygen)
         {
             Debug.Log("NO MORE OXYGEN");
             return;
         }
+
+        if (!this.paused)
+        {
+            OxygenStart();
+        }
+        //Parameters param = new Parameters();
+        //float updatedOxygenValue = this.oxygenTimer / MAX_OXYGEN;
+        //if (this.oxygenTimer >= 0.01)
+        //{
+        //    param.AddParameter<float>("currOxygenValue", updatedOxygenValue);
+        //    EventBroadcaster.Instance.PostEvent(EventNames.ON_OXYGEN_MODIFIED, param);
+
+        //    this.oxygenTimer -= this.oxygenDecreaseMultiplier * Time.deltaTime;
+        //} else
+        //{
+        //    noOxygen = true;
+        //    this.player.OnOxygenStageDead();
+        //}
+    }
+
+    public void OxygenStart()
+    {
         Parameters param = new Parameters();
         float updatedOxygenValue = this.oxygenTimer / MAX_OXYGEN;
         if (this.oxygenTimer >= 0.01)
         {
             param.AddParameter<float>("currOxygenValue", updatedOxygenValue);
             EventBroadcaster.Instance.PostEvent(EventNames.ON_OXYGEN_MODIFIED, param);
-
+            //Debug.Log("OXYGEN CHECKER: " + this.oxygenTimer);
             this.oxygenTimer -= this.oxygenDecreaseMultiplier * Time.deltaTime;
-        } else
+        }
+        else
         {
             noOxygen = true;
             this.player.OnOxygenStageDead();
         }
+    }
+
+    public void CheckPause(bool paused)
+    {
+        this.paused = paused;
     }
 
     public void SetOxygenDecreaseMultiplier(float value)

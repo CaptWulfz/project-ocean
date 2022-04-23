@@ -134,6 +134,7 @@ MonoBehaviour:
   skillCheck: {fileID: 5312473181366588921}
   dialogManager: {fileID: 4158203319174533266}
   dialogGroup: {fileID: 11400000, guid: 50051570a50a6904ebae7347cde46abb, type: 2}
+  smartWatch: {fileID: 7360426222921651295}
 --- !u!1 &1761643836994901750
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +653,7 @@ GameObject:
   m_Component:
   - component: {fileID: 258136010697477406}
   - component: {fileID: 935008433826123861}
-  - component: {fileID: 7671015802184144771}
+  - component: {fileID: 1289984634521171952}
   m_Layer: 5
   m_Name: Oxygen Meter
   m_TagString: Untagged
@@ -732,7 +733,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7671015802184144771
+--- !u!114 &1289984634521171952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -741,10 +742,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8552318521995437763}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9039e6e06acf9d4bb010fe5a29e39e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 75aa1a0f4db8afb47ad4a76919e2f45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oxygen: {fileID: 935008433826123861}
+  smartWatch: {fileID: 935008433826123861}
 --- !u!1 &8841461526404144904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,6 +1289,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 1.071167
       objectReference: {fileID: 0}
+    - target: {fileID: 4983845457469848048, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6813623529308488820, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1380,10 +1385,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4983845457469848048, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
+--- !u!1 &7834042508025227761 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3352038081362507501, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
+  m_PrefabInstance: {fileID: 4772910464396353308}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5613391338845397617 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1142240200218688877, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
+  m_PrefabInstance: {fileID: 4772910464396353308}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834042508025227761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3458980411539256652 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8231468083580119632, guid: 323e23246f4365e43a336e7ac2a71e36, type: 3}
   m_PrefabInstance: {fileID: 4772910464396353308}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7360426222921651295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834042508025227761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75aa1a0f4db8afb47ad4a76919e2f45f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smartWatch: {fileID: 5613391338845397617}

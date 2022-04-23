@@ -18,6 +18,8 @@ public class Panic : MonoBehaviour
     private const float DANGER_THRESHOLD = 60f;
     private const float NORMAL_THRESHOLD = 30f;
 
+    private bool paused;
+
     bool firstTimeReaching50Percent = false;
     bool firstTimeReaching90Percent = false;
 
@@ -59,10 +61,22 @@ public class Panic : MonoBehaviour
 
     private void Update()
     {
-        this.panicValue += this.panicMultiplier * Time.deltaTime;
-
+        if (!this.paused)
+        {
+            PanicStart();
+        }
         DeterminePanicState();
         TriggerEventDialog();
+    }
+
+    public void PanicStart()
+    {
+        this.panicValue += this.panicMultiplier * Time.deltaTime;
+    }
+
+    public void CheckPause(bool paused)
+    {
+        this.paused = paused;
     }
 
     void TriggerEventDialog()

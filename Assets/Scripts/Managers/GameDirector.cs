@@ -89,6 +89,23 @@ public class GameDirector : Singleton<GameDirector>
     }
     #endregion
 
+    #region Smart Watch Helpers
+    public void RegisterSmartWatch(SmartWatch check)
+    {
+        this.gameDirectorMain.RegisterSmartWatch(check);
+    }
+
+    public void ShowSmartWatch()
+    {
+        this.gameDirectorMain.ShowSmartWatch();
+    }
+    public void HideSmartWatch()
+    {
+        this.gameDirectorMain.HideSmartWatch();
+    }
+    #endregion
+
+
     #region Dialog Helpers
     public void InitializeEventDialogList(EventDialog[] eventDialogs)
     {

@@ -32,7 +32,7 @@ public class Player : Entity
     [Header("Player Settings")]
     [SerializeField] private SpriteRenderer playerSprite;
     [SerializeField] private GameObject visionCone;
-    [SerializeField] private GameObject smartWatchHud;
+
 
     [SerializeField] private CapsuleCollider2D playerCollider;
     [SerializeField] private float smoothInputSpeed = 0.1f;         //SmoothDamp value for movement
@@ -125,7 +125,7 @@ public class Player : Entity
         // Audio
         this.sourceName = string.Format("Entity@{0}", this.GetInstanceID());
         this.audioController.Initialize(this.audioSource , this.sourceName);
-  //      this.heartBeatScript = GameObject.FindGameObjectWithTag("HeartHUD").GetComponent<HeartBeat>();
+
     }
 
     private void Update()
@@ -473,8 +473,7 @@ public class Player : Entity
         // Add Panic Death Animation here
         this.EntityControls.Player.Movement.Disable();
         this.visionCone.SetActive(false);
-        smartWatchHud = GameObject.FindGameObjectWithTag("SmartWatch");
-        smartWatchHud.SetActive(false);
+        GameDirector.Instance.HideSmartWatch();
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Panic", () =>
         {
             DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>(PopupNames.DEATH_POPUP);
@@ -489,8 +488,7 @@ public class Player : Entity
         this.audioController.SoundOxygenDeath();
         this.EntityControls.Player.Movement.Disable();
         this.visionCone.SetActive(false);
-        smartWatchHud = GameObject.FindGameObjectWithTag("SmartWatch");
-        smartWatchHud.SetActive(false);
+        GameDirector.Instance.HideSmartWatch();
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Oxygen", () =>
         {
             Debug.Log("NO MORE OXYGEN death popup: ");
@@ -506,8 +504,7 @@ public class Player : Entity
     {
         this.EntityControls.Player.Movement.Disable();
         this.gameObject.GetComponent<AudioSource>().volume = 0;
-        smartWatchHud = GameObject.FindGameObjectWithTag("SmartWatch");
-        smartWatchHud.SetActive(false);
+        GameDirector.Instance.HideSmartWatch();
         playerExplode = 1;
         StartCoroutine(this.animController.WaitForAnimationToFinish("Player_Death_Explode", () =>
         {
@@ -526,6 +523,7 @@ public class Player : Entity
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
+
         if (tag == TagNames.DAMAGE)
         {
             Damage damage = collision.GetComponent<Damage>();
@@ -535,6 +533,14 @@ public class Player : Entity
         if (tag == TagNames.INTERACTABLE)
         {
             this.interactableObj = collision.GetComponent<Interactable>();
+        }
+
+        if (tag == TagNames.OXY_PANIC_PAUSE)
+        {
+            Debug.Log("OXYGEN AND PANIC IS PAUSED");
+            this.panic.CheckPause(true);
+            this.oxygen.CheckPause(true);
+            GameDirector.Instance.HideSmartWatch();
         }
     }
 
@@ -550,6 +556,14 @@ public class Player : Entity
         if (collision.tag == TagNames.INTERACTABLE)
         {
             this.interactableObj = null;
+        }
+
+        if (collision.tag == TagNames.OXY_PANIC_PAUSE)
+        {
+            Debug.Log("OXYGEN AND PANIC IS ACTIVE");
+            this.panic.CheckPause(false);
+            this.oxygen.CheckPause(false);
+            GameDirector.Instance.ShowSmartWatch();
         }
     }
 
