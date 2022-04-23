@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Level1_Button : MonoBehaviour
+public class ButtonSwitchRoom : MonoBehaviour
 {
     bool isPlayerInteracting = false;
 
     void Update()
     {
         if (InputManager.Instance.GetControls().Player.Interact.WasPressedThisFrame() && isPlayerInteracting)
-            Debug.Log("Level 1: Player Pressed the Button");
+            EventBroadcaster.Instance.PostEvent(ButtonNames.L1_SWITCH_ROOM);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
