@@ -143,5 +143,6 @@ public enum TopicList
     ABYSS_THIRD_RELIC, //done -- to attach
     ABYSS_FOURTH_RELIC, //done -- to attach
     END_ENTER_ALTAR,
-    END_EXIT_ALTAR
-}
+    END_EXIT_ALTAR,
+    LEVEL_1_2_HALLWAY_1 //
+    }
