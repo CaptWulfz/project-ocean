@@ -188,5 +188,10 @@ public partial class GameDirectorMain
         this.stop = true;
         EventBroadcaster.Instance.PostEvent(EventNames.ENTITY_KILL_YOURSELF);
     }
+
+    public void SoftReset()
+    {
+        EventBroadcaster.Instance.PostEvent(EventNames.SOFT_RESET);
+    }
     #endregion
 }

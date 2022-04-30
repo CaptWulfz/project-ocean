@@ -6,13 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class DeathPopup : Popup
 {
+    private Player player;
     public void Setup()
     {
         this.popupOpen = "PopupFadeOpen_Pixel";
         this.popupClose = "PopupFadeClose_Pixel";
         this.onClose = () =>
         {
-            GameLoaderManager.Instance.ReloadGame();
+            player.Start();
+            //GameLoaderManager.Instance.ReloadGame();
         };
     }
 
