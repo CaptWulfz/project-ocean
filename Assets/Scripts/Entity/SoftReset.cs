@@ -16,8 +16,6 @@ public class SoftReset : MonoBehaviour
 
     public void PerformSoftReset(Parameters param = null)
     {
-        panic.Initialize();
-        oxgen.Initialize();
         this.gameObject.transform.position = this.initialTransform.position;
     }
 
