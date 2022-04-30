@@ -18,6 +18,7 @@ TagManager:
   - DialogCloseButton
   - Mine
   - Fake Mine
+  - Oxy Panic Pause
   layers:
   - Default
   - TransparentFX

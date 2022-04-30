@@ -24,4 +24,7 @@ public class TagNames
     //MINES
     public const string MINE = "Mine";
     public const string FAKE_MINE = "Fake Mine";
+
+    // STOP AND RESUME PANIC/OXYGEN
+    public const string OXY_PANIC_PAUSE = "Oxy Panic Pause";
 }
