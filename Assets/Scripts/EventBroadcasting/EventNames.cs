@@ -14,6 +14,8 @@ public class EventNames
     public const string RELIC_SHRINE_FINISHED = "RELIC_SHRINE_FINISHED";
     public const string ENTITY_KILL_YOURSELF = "ENTITY_KILL_YOURSELF";
     public const string ON_POWER_OUTAGE = "ON_POWER_OUTAGE";
+    public const string ON_H1_DIALOG_END = "ON_H1_DIALOG_END";
+    public const string ON_LADDER_TO_HUB_ENTRY = "ON_LADDER_TO_HUB_ENTRY";
     public const string SOFT_RESET = "SOFT_RESET";
 }
 
