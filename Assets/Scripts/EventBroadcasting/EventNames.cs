@@ -16,6 +16,7 @@ public class EventNames
     public const string ON_POWER_OUTAGE = "ON_POWER_OUTAGE";
     public const string ON_H1_DIALOG_END = "ON_H1_DIALOG_END";
     public const string ON_LADDER_TO_HUB_ENTRY = "ON_LADDER_TO_HUB_ENTRY";
+    public const string SOFT_RESET = "SOFT_RESET";
 }
 
 public class ParameterNames

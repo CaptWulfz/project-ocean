@@ -105,6 +105,12 @@ public class GameDirector : Singleton<GameDirector>
     }
     #endregion
 
+    #region Data Manager Helpers
+    public Vector3 SpawnToCheckpoint()
+    {
+        return this.gameDirectorMain.SpawnToCheckpoint();
+    }
+    #endregion
 
     #region Dialog Helpers
     public void InitializeEventDialogList(EventDialog[] eventDialogs)
@@ -136,6 +142,13 @@ public class GameDirector : Singleton<GameDirector>
     public void StopAllProcess()
     {
         this.gameDirectorMain.StopAllProcess();
+    }
+    #endregion
+
+    #region Soft Reset Helpers
+    public void SoftReset()
+    {
+        this.gameDirectorMain.SoftReset();
     }
     #endregion
 }

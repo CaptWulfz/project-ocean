@@ -104,7 +104,9 @@ public class Player : Entity
     #endregion
 
     #region MACHINE RUNTIME
-    private void Start()
+    
+
+    public void Start()
     {
         Initialize();
     }
@@ -112,6 +114,7 @@ public class Player : Entity
     protected override void Initialize()
     {
         base.Initialize();
+        EventBroadcaster.Instance.AddObserver(EventNames.SOFT_RESET, PerformSoftReset);
         this.EntityControls.Player.Enable();
         this.currentSpeed = 0f;
         this.minSpeed = 1.5f;
@@ -121,6 +124,8 @@ public class Player : Entity
         this.panic.Initialize();
         this.oxygen.Initialize();
         this.animController.InitializeAnimator();
+        ResetPlayerPosition();
+        GameDirector.Instance.ShowSmartWatch();
 
         // Audio
         this.sourceName = string.Format("Entity@{0}", this.GetInstanceID());
@@ -135,11 +140,11 @@ public class Player : Entity
         //    Debug.Log("Increased Panic by 10");
         //    this.panic.IncreasePanicValue(10f); // stimuli (collision)
         //}
-        //if (Keyboard.current.oKey.wasReleasedThisFrame)
-        //{
-        //    Debug.Log("Decreased Oxygen by 3.5"); // Bump into something
-        //    this.oxygen.DecreaseOxygenTimer(3.5f);
-        //}
+        if (Keyboard.current.oKey.wasReleasedThisFrame)
+        {
+            Debug.Log("Decreased Oxygen by 50.5"); // Bump into something
+            this.oxygen.DecreaseOxygenTimer(50.5f);
+        }
         //if (Keyboard.current.lKey.wasReleasedThisFrame)
         //{
         //    Debug.Log("Decreased Panic by 10 + Good points");
@@ -158,6 +163,15 @@ public class Player : Entity
         AdjustPlayerCollider();
         currentSpeed = rigidBody.velocity.magnitude;   //Records the current speed of the Player
         GameDirector.Instance.TrackPlayerSpeedState(this.currentSpeedState);
+    }
+
+    public void ResetPlayerPosition()
+    {
+        Vector3 spawn = GameDirector.Instance.SpawnToCheckpoint();
+        if (spawn != Vector3.zero)
+        {
+            this.gameObject.transform.position = spawn;
+        }
     }
     #endregion
 
@@ -480,6 +494,8 @@ public class Player : Entity
             this.gameObject.GetComponent<AudioSource>().volume = 0;
             popup.Setup();
             popup.Show();
+
+            GameDirector.Instance.SoftReset();
         }));
     }
 
@@ -497,6 +513,8 @@ public class Player : Entity
             DeathPopup popup = PopupManager.Instance.ShowPopup<DeathPopup>(PopupNames.DEATH_POPUP);
             popup.Setup();
             popup.Show();
+
+            GameDirector.Instance.SoftReset();
         }));
     }
 
@@ -537,7 +555,6 @@ public class Player : Entity
 
         if (tag == TagNames.OXY_PANIC_PAUSE)
         {
-            Debug.Log("OXYGEN AND PANIC IS PAUSED");
             this.panic.CheckPause(true);
             this.oxygen.CheckPause(true);
             GameDirector.Instance.HideSmartWatch();
@@ -560,7 +577,6 @@ public class Player : Entity
 
         if (collision.tag == TagNames.OXY_PANIC_PAUSE)
         {
-            Debug.Log("OXYGEN AND PANIC IS ACTIVE");
             this.panic.CheckPause(false);
             this.oxygen.CheckPause(false);
             GameDirector.Instance.ShowSmartWatch();
@@ -575,6 +591,13 @@ public class Player : Entity
             SoundSource source = collision.gameObject.GetComponent<SoundSource>();
             this.panic.IncreasePanicValue(source.InflictedPanicValue * 3);
         }
+    }
+
+    public void PerformSoftReset(Parameters param = null)
+    {
+        Start();
+        //this.panic.Initialize();
+        //this.oxygen.Initialize();
     }
     #endregion
 

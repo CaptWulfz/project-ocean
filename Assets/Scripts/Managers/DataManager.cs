@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class DataManager : Singleton<DataManager>
 {
+    //private DataManagerMain dataManagerMain;
+
     private const string FILE_NAME = "save_game.dat";
 
     private string filePath;
@@ -17,6 +19,11 @@ public class DataManager : Singleton<DataManager>
     public bool IsDone
     {
         get { return this.isDone; }
+    }
+
+    public GameSaveData GameSaveData
+    {
+        get { return this.gameSaveData; }
     }
 
     public void Initialize()
@@ -68,8 +75,13 @@ public class DataManager : Singleton<DataManager>
     /// <param name="data">Object data to be saved as a Json File and encoded into base 64</param>
     private void SaveFile(object data)
     {
-        string data64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonUtility.ToJson(data)));
-        File.WriteAllText(filePath, data64);
+        string json = JsonUtility.ToJson(data);
+        byte[] bytes = Encoding.UTF8.GetBytes(json);
+        string base64 = Convert.ToBase64String(bytes);
+        File.WriteAllText(filePath, base64);
+        //string data64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonUtility.ToJson(data)));
+        //File.WriteAllText(filePath, data64);
+        //Debug.Log("Saved");
     }
 
     /// <summary>
@@ -83,15 +95,45 @@ public class DataManager : Singleton<DataManager>
         byte[] data64 = Convert.FromBase64String(File.ReadAllText(filePath));
         return JsonUtility.FromJson<T>(Encoding.UTF8.GetString(data64));
     }
+
+    public void SaveCheckPoint(Transform checkpoint)
+    {
+        this.gameSaveData.SetCheckpoint(checkpoint);
+        Debug.Log("DATA FILE: " + this.gameSaveData);
+        SaveFile(this.gameSaveData);
+    }
 }
 
+[Serializable]
+public class CheckPoint
+{
+    public float x, y, z;
+}
 [Serializable]
 public class GameSaveData
 {
     public int level;
+    public CheckPoint checkpoint;
+
+    public CheckPoint Checkpoint
+    {
+        get { return this.checkpoint; }
+    }
 
     public GameSaveData(int level = 1)
     {
         this.level = level;
+        this.checkpoint = new CheckPoint();
+    }
+
+    public void SetCheckpoint(Transform transform)
+    {
+        if (checkpoint == null)
+        {
+            this.checkpoint = new CheckPoint();
+        }
+        checkpoint.x = transform.position.x;
+        checkpoint.y = transform.position.y;
+        checkpoint.z = transform.position.z;
     }
 }

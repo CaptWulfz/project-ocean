@@ -21,9 +21,9 @@ public class Startup : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Initialize()
     {
-        //DataManager.Instance.Initialize();
-        //yield return new WaitUntil(() => { return DataManager.Instance.IsDone; });
-        //this.splashScreen.SetLoadingProgress(0.25f);
+        DataManager.Instance.Initialize();
+        yield return new WaitUntil(() => { return DataManager.Instance.IsDone; });
+        this.splashScreen.SetLoadingProgress(0.25f);
 
         AudioManager.Instance.Initialize();
         yield return new WaitUntil(() => { return AudioManager.Instance.IsDone; });
